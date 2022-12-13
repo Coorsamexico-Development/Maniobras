@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ManiorbraController;
+use App\Http\Controllers\ManiobraController;
+use App\Models\Maniobra;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,4 +35,11 @@ Route::middleware([
         return Inertia::render('Dashboard');})->name('dashboard');
 });
 
-Route::get("/maniobras", [ManiorbraController::class, 'index'])->name('maniobras');
+
+Route::controller(ManiobraController::class)->group(
+    function()
+    {
+        Route::get('/maniobras', 'index')->name('maniobras');
+        Route::post('/maniobras','store')->name('maniobras.store');
+    }
+);

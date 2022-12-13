@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100)->unique();
             $table->integer('cant_personal');
+            $table->foreignId('maniobra_id')->constrained('maniobras');
             $table->timestamp('hora_inicio')->nullable();
             $table->timestamp('hora_fin')->nullable();
             $table->timestamps();

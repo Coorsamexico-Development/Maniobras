@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RolesSeeder::class,
             StatusManiobrasSeeder::class,
-            TurnosSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            ClientesSeeder::class
         ]);
     }
 }

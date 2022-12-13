@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Maniorbra;
+use App\Models\Cliente;
+use App\Models\Maniobra;
+use App\Models\StatusManiobra;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ManiorbraController extends Controller
+class ManiobraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +18,16 @@ class ManiorbraController extends Controller
     public function index()
     {
         //
-        
+        $maniobras = Maniobra::all();
+        $clientes = Cliente::all();
+        $status_maniobras = StatusManiobra::all();
         
         return Inertia::render('Maniobras/Maniobras.Index', 
-        []);
+        [
+            'maniobras' => $maniobras,
+            'clientes' => $clientes,
+            'status_maniobras' => $status_maniobras
+        ]);
     }
 
     /**
@@ -41,26 +49,34 @@ class ManiorbraController extends Controller
     public function store(Request $request)
     {
         //
+        Maniobra::create([
+            'name' => $request['name'],
+            'descripcion' => $request['descripcion'],
+            'salario' => $request['salario'],
+            'cliente_id' =>$request['cliente_id'],
+            'status_maniobra_id'=> $request['status_maniobra_id']
+       ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Maniorbra  $maniorbra
+     * @param  \App\Models\Maniobra  $maniobra
      * @return \Illuminate\Http\Response
      */
-    public function show(Maniorbra $maniorbra)
+    public function show(Maniobra $maniobra)
     {
         //
+       
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Maniorbra  $maniorbra
+     * @param  \App\Models\Maniobra  $maniobra
      * @return \Illuminate\Http\Response
      */
-    public function edit(Maniorbra $maniorbra)
+    public function edit(Maniobra $maniobra)
     {
         //
     }
@@ -69,10 +85,10 @@ class ManiorbraController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Maniorbra  $maniorbra
+     * @param  \App\Models\Maniobra  $maniobra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Maniorbra $maniorbra)
+    public function update(Request $request, Maniobra $maniobra)
     {
         //
     }
@@ -80,10 +96,10 @@ class ManiorbraController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Maniorbra  $maniorbra
+     * @param  \App\Models\Maniobra  $maniobra
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Maniorbra $maniorbra)
+    public function destroy(Maniobra $maniobra)
     {
         //
     }
