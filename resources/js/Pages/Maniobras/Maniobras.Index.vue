@@ -43,7 +43,7 @@ const closeModalNewManiobra = () =>
                 <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                     <ButtonAdd class="m-6" @click="nuevaManiobra">Nueva maniobra</ButtonAdd>
                     <div class="flex flerx-col">
-                         {{maniobras}}
+                      
                     </div>
                 </div>
             </div>
