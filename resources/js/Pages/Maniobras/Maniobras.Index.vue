@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import ButtonAdd from '@/Components/ButtonAdd.vue';
-
+import ModalAddManiobra from '../Maniobras/Partials/ModalAddManiobra.vue';
 
 const props=defineProps(
     {
