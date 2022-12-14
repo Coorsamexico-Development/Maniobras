@@ -17,6 +17,12 @@ class TurnoController extends Controller
         //
     }
 
+    public function getTurnos($maniobra_id)
+    {
+      return Turno::all()
+      ->where('maniobra_id','=',$maniobra_id);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

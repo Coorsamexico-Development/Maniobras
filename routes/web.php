@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ManiobraController;
+use App\Http\Controllers\TurnoController;
 use App\Models\Maniobra;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -43,3 +44,7 @@ Route::controller(ManiobraController::class)->group(
         Route::post('/maniobras','store')->name('maniobras.store');
     }
 );
+
+
+
+Route::get('/turnosPorManiobra/{maniobra_id}', [TurnoController::class, 'getTurnos']);

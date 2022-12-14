@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Components/Welcome.vue";
-import Tabla from "@/Components/ManiobrasList.vue";
+
 //import Tabla from "@/Components/Tabla.vue";
 
 </script>

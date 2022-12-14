@@ -18,7 +18,19 @@ class ManiobraController extends Controller
     public function index()
     {
         //
-        $maniobras = Maniobra::all();
+        $maniobras = Maniobra::select(
+        'maniobras.id AS maniobra_id',
+        'maniobras.name AS maniobra_name',
+        'maniobras.descripcion AS maniobra_desc',
+        'maniobras.salario AS maniobra_salario',
+        'maniobras.status_maniobra_id AS maniobra_status',
+        'clientes.name AS cliente_name'
+        )
+        ->join('clientes','maniobras.cliente_id','clientes.id')
+        ->get();
+
+
+
         $clientes = Cliente::all();
         $status_maniobras = StatusManiobra::all();
         

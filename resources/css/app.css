@@ -32,3 +32,35 @@
     background-size: cover;
     background-position: center center;
 }
+
+/*ToolTip*/
+/* Tooltip container */
+.tooltip {
+    position: absolute;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 15rem;
+    top: 100%;
+    left: 0%;
+    background-color: #ededed;
+    color: #949494;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 2;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+/*En ToolTip*/
