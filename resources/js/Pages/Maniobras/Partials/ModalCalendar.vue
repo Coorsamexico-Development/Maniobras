@@ -28,13 +28,13 @@ let date = ref(null);
           
             </template>
             <template #content >
-              <div class="grid grid-cols-2">
+              <div class="grid grid-cols-2 m-2">
                 <div class="border-r-4 border-solid" style="overflow-y: scroll;height: 30rem;">
                         <h3 class="text-center">Calendario</h3>
                         <DatePicker class="" is-expanded :rows="12"  v-model="date" /> 
                 </div>
-                <div class="">
-                   <div class="grid-cols-3" style="overflow-y: scroll;height: 30rem;">
+                <div >
+                   <div  style="overflow-y: scroll;height: 30rem;">
                      <SecondaryButton class="m-2" v-for="turno in turnos" :key="turno.id">{{turno.name}}</SecondaryButton>
                       <div>
                         <TableManiobristas :maniobristas="maniobristas"></TableManiobristas>

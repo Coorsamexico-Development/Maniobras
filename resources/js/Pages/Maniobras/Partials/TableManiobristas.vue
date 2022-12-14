@@ -1,5 +1,6 @@
 <script setup>
 import DataTable from '../../../Components/DataTable.vue';
+import Checkbox from '@/Components/Checkbox.vue';
 
 var props = defineProps({
   maniobristas:Object
@@ -27,7 +28,7 @@ var props = defineProps({
                 <tr  v-for="maniobrista in maniobristas" :key="maniobrista.id">
                   <td>{{maniobrista.name+' '+maniobrista.ap_paterno+' '+maniobrista.ap_materno}}</td>
                   <td>
-                    
+                     <Checkbox></Checkbox>
                   </td>
                 </tr>
             </template>
