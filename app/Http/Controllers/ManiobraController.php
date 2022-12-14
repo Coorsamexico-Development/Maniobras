@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Maniobra;
+use App\Models\Maniobrista;
 use App\Models\StatusManiobra;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,6 +31,11 @@ class ManiobraController extends Controller
         ->get();
 
 
+        $maniobristas = Maniobrista::select(
+            'maniobristas.*'
+        )
+        ->where('maniobristas.active','=',1)
+        ->get();
 
         $clientes = Cliente::all();
         $status_maniobras = StatusManiobra::all();
@@ -38,7 +44,8 @@ class ManiobraController extends Controller
         [
             'maniobras' => $maniobras,
             'clientes' => $clientes,
-            'status_maniobras' => $status_maniobras
+            'status_maniobras' => $status_maniobras,
+            'maniobristas' => $maniobristas
         ]);
     }
 

@@ -7,6 +7,7 @@ import ModalCalendar from '../Partials/ModalCalendar.vue';
 const props=defineProps(
     {
       maniobra:Object,
+      maniobristas:Object
     }
 );
 
@@ -375,5 +376,5 @@ const closeCalendar = () =>
         </div>
     </div>
     <!--MODALS -->
-    <ModalCalendar :show="modalCalendar" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
+    <ModalCalendar :show="modalCalendar" :maniobristas="maniobristas" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
 </template>
