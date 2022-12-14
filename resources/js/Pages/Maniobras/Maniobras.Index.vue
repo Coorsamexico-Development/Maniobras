@@ -46,7 +46,7 @@ const closeModalNewManiobra = () =>
                     <ButtonAdd  class="m-6" @click="nuevaManiobra">+</ButtonAdd>
                     <tabla>
                             
-                        </tabla>
+                    </tabla>
                 </div>
             </div>
 
