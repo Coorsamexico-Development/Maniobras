@@ -44,6 +44,7 @@ const closeModalNewManiobra = () =>
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                     <ButtonAdd  class="m-6" @click="nuevaManiobra">+</ButtonAdd>
+
                 </div>
             </div>
             <div class="ml-10 mr-10" v-for="maniobra in maniobras" :key="maniobra.id">
