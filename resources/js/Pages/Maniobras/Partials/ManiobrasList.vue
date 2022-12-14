@@ -1,4 +1,8 @@
 <script setup>
+import { Inertia } from '@inertiajs/inertia';
+import { ref } from 'vue';
+import axios from 'axios';
+import ModalCalendar from '../Partials/ModalCalendar.vue';
 
 const props=defineProps(
     {
@@ -6,21 +10,44 @@ const props=defineProps(
     }
 );
 
-console.log(props.maniobra);
+let maniobra_id = ref(-1);
+maniobra_id.value = props.maniobra.maniobra_id;
+
+let turnos = ref([]);
+
+axios.get('turnosPorManiobra/'+maniobra_id.value,{maniobra_id: maniobra_id.value}) //enviamos el dato a la ruta
+        .then((resp)=>{
+           //console.log(resp);
+           turnos.value = resp.data;
+          })
+        .catch(function (error) {
+           console.log(error);
+          });
+
+let modalCalendar = ref(false);
+
+const watchCalendar = () => 
+{
+    modalCalendar.value= true;
+}
+
+const closeCalendar = () => 
+{
+  modalCalendar.value =false;
+}
 
 </script>
 
 <template>
     <div class="w-full p-2 mt-6 bg-white shadow-md rounded-3xl">
-
         <div class="grid grid-cols-2 grid-rows-1 gap-2 overflow-hidden wrapper md:grid-cols-10 md:grid-rows-1 md:overflow-hidden">
-            <div class="p-4 pl-16 md:p-4 ">{{props.maniobra.cliente_id}}</div>
-            <div class="col-start-2 p-4 md:col-span-3 md:p-4 ">{{props.maniobra.name}}</div>
+            <div class="p-4 pl-16 md:p-4 ">{{props.maniobra.cliente_name}}</div>
+            <div class="col-start-2 p-4 md:col-span-3 md:p-4 "><strong>Nombre de maniobra:</strong> {{props.maniobra.maniobra_name}}</div>
             <div class="">
-                <button
+                <button 
                     type="button"
-                    class="p-1 px-5 my-2 ml-16 text-sm text-white bg-blue-800 rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                >
+                    class="p-1 px-5 my-2 ml-16 text-sm text-white bg-blue-800 tooltip btn btn-primary rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                  >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="26.839"
@@ -62,10 +89,31 @@ console.log(props.maniobra);
                             />
                         </g>
                     </svg>
+                    <span class="tooltiptext">
+                        <table >
+                          <tr style="border-bottom:1px solid #949494">
+                            <th style="margin:1rem; margin-right: 5rem; padding-right: 1rem;padding-left: 1rem;">TURNO</th>
+                            <th style="margin:1rem; margin-right: 5rem; padding-right: 0.5rem; ">HR INICIO</th>
+                            <th style="margin:1rem;margin-left: 5rem; padding-left:0.2rem">HR FINAL</th>
+                          </tr>
+                          <tr>
+                            <td v-for="turno in turnos" :key="turno.id">
+                                {{turno.name}}
+                            </td>
+                            <td v-for="turno in turnos" :key="turno.id">
+                                {{turno.hora_inicio}}
+                            </td>
+                            <td v-for="turno in turnos" :key="turno.id">
+                                {{turno.hora_fin}}
+                            </td>
+                          </tr>
+                        </table>
+                    </span>
+                    
                 </button>
             </div>
             <div class="box">
-                <button
+                <button @click="watchCalendar"
                     type="button"
                     class="p-1 px-5 my-2 ml-10 text-sm text-white bg-blue-800 rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                 >
@@ -326,4 +374,6 @@ console.log(props.maniobra);
             </div>
         </div>
     </div>
+    <!--MODALS -->
+    <ModalCalendar :show="modalCalendar" @close="closeCalendar"></ModalCalendar>
 </template>
