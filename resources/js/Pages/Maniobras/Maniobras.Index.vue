@@ -5,7 +5,7 @@ import { Inertia } from '@inertiajs/inertia';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import ButtonAdd from '@/Components/ButtonAdd.vue';
 import ModalAddManiobra from '../Maniobras/Partials/ModalAddManiobra.vue';
-import Tabla from "@/Components/ManiobrasList.vue";
+import ManiobrasList from "../Maniobras/Partials/ManiobrasList.vue";
 
 
 const props=defineProps(
@@ -44,13 +44,19 @@ const closeModalNewManiobra = () =>
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                     <ButtonAdd  class="m-6" @click="nuevaManiobra">+</ButtonAdd>
+<<<<<<< HEAD
                     <tabla>
                             
                     </tabla>
+=======
+            
+>>>>>>> 059c8f204ad424afa10864df0682f4ce19ce8450
                 </div>
             </div>
-
-        </div>
+            <div class="mx-auto" v-for="maniobra in maniobras" :key="maniobra.id">
+                <ManiobrasList :maniobra="maniobra"></ManiobrasList>
+            </div>       
+       </div>
         <ModalAddManiobra :clientes="clientes" :status_maniobras="status_maniobras" :show="openModalNewManiobra" @close="closeModalNewManiobra"></ModalAddManiobra>
     </AppLayout>
 </template>
