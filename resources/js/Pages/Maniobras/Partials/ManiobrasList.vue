@@ -374,5 +374,5 @@ const closeCalendar = () =>
         </div>
     </div>
     <!--MODALS -->
-    <ModalCalendar :show="modalCalendar" @close="closeCalendar"></ModalCalendar>
+    <ModalCalendar :show="modalCalendar" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
 </template>
