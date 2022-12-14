@@ -7,6 +7,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import ButtonLogin from '@/Components/ButtonLogin.vue';
+
 
 defineProps({
     canResetPassword: Boolean,
@@ -30,60 +32,52 @@ const submit = () => {
 </script>
 
 <template>
+
+<div class="w-full h-full bg-no-repeat bg-cover">
     <Head title="Log in" />
 
     <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
+            <div class="w-full mb-4 -ml-8 text-4xl text-blue-800 txt_titulo font-Montserrat">
+                Iniciar Sesión
+            </div>
+            <div class="mb-24 -ml-8 text-lg text-gray-400 font-Montserra">
+                PLATAFORMA MANIOBRAS P&G.
+            </div>
             <div>
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
+                <div class="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-indigo-500">
+                    <TextInput id="email" v-model="form.email" type="email" required autofocus
+                        placeholder="Usuario"
+                        class="w-full bg-transparent border-none outline-none placeholder:italic focus:outline-none" />
+                </div>
+                <InputError class="mt-2 font-Montserrat" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="current-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
+                <div class="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-indigo-500">
+                    <TextInput id="password" v-model="form.password" type="password" required
+                    placeholder="Contraseña"
+                    autocomplete="current-password" class="w-full bg-transparent border-none outline-none placeholder:italic focus:outline-none" />
+            </div>
+            <InputError class="mt-2 font-Montserrat" :message="form.errors.password" />
             </div>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
 
             <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    Forgot your password?
-                </Link>
 
                 <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </PrimaryButton>
             </div>
+
+            
         </form>
     </AuthenticationCard>
+
+
+</div>
 </template>
