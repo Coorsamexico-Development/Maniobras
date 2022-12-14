@@ -147,6 +147,7 @@ console.log(props.maniobra);
                     </svg>
                 </button>
             </div>
+            
             <div class="box">
                 <button
                     type="button"
