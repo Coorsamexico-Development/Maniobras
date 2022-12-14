@@ -1,13 +1,21 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import Welcome from "@/Components/Welcome.vue";
+
+const props=defineProps(
+    {
+      maniobra:Object,
+    }
+);
+
+console.log(props.maniobra);
+
 </script>
 
 <template>
-    <div class="w-full p-2 bg-gray-200 shadow-md rounded-3xl">
+    <div class="w-full p-2 mt-6 bg-white shadow-md rounded-3xl">
+
         <div class="grid grid-cols-2 grid-rows-1 gap-2 overflow-hidden wrapper md:grid-cols-10 md:grid-rows-1 md:overflow-hidden">
-            <div class="p-4 pl-16 md:p-4 ">Unilever</div>
-            <div class="col-start-2 p-4 md:col-span-3 md:p-4 ">Nombre de maniobra</div>
+            <div class="p-4 pl-16 md:p-4 ">{{props.maniobra.cliente_id}}</div>
+            <div class="col-start-2 p-4 md:col-span-3 md:p-4 ">{{props.maniobra.name}}</div>
             <div class="">
                 <button
                     type="button"
