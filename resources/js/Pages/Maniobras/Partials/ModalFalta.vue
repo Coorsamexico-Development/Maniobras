@@ -24,7 +24,7 @@ const close = () => {
 <template>
      <DialogModal  :show="show" @close="close()" >
            <template #title>
-            <h2 class="p-3 pl-6 -mx-6 text-xl font-bold text-blue-900">Turnos</h2>
+            <h2 class="p-3 pl-6 -mx-6 text-xl font-bold text-blue-900">Faltas</h2>
 
             </template>
             <template #content >
@@ -38,22 +38,18 @@ const close = () => {
                            <tr class="text-center text-md" >
                                <th scope="col" class="px-2 py-1 text-sm font-semibold tracking-wider uppercase cursor-pointer ">
                                    <span>
-                                       Turno 
+                                       Nombre
                                    </span>
                                </th>
                                <th class="px-2 py-1 text-sm font-semibold tracking-wider uppercase cursor-pointer "> 
-                                   Hora Inicio
-                               </th>
-                               <th class="px-2 py-1 text-sm font-semibold tracking-wider uppercase cursor-pointer ">
-                                   Hora Final
+                                   Faltas
                                </th>
                            </tr>
                        </template>
                        <template #table-body>
-                          <tr v-for="turno in turnos" :key="turno.id">
-                             <td> {{turno.name}}</td>
-                             <td>{{turno.hora_inicio}}</td>
-                             <td>{{turno.hora_fin}}</td>
+                          <tr v-for="falta in faltas" :key="falta.id">
+                             <td> {{falta.name}}</td>
+                             <td>{{falta.falt}}</td>
                           </tr>
                          
                        </template>

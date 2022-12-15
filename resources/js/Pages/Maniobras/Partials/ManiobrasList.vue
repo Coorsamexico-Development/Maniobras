@@ -4,6 +4,8 @@ import { ref } from 'vue';
 import axios from 'axios';
 import ModalCalendar from '../Partials/ModalCalendar.vue';
 import ModalTurno from '../Partials/ModalTurno.vue';
+import ModalFalta from '../Partials/ModalFalta.vue';
+
 
 const props=defineProps(
     {
@@ -28,6 +30,8 @@ axios.get('turnosPorManiobra/'+maniobra_id.value,{maniobra_id: maniobra_id.value
 
 let modalCalendar = ref(false);
 let modalTurno = ref(false);
+let modalFalta = ref(false);
+
 
 const watchCalendar = () => 
 {
@@ -47,6 +51,16 @@ const modalTurn = () =>
 const closeModalTurn = () => 
 {
     modalTurno.value =false;
+}
+
+const modalFalt = () =>
+{
+  modalFalta.value=true;
+}
+
+const closeFalt = () => 
+{
+    modalFalta.value =false;
 }
 
 </script>
@@ -189,7 +203,7 @@ const closeModalTurn = () =>
             </div>
             
             <div class="box">
-                <button
+                <button @click="modalFalt"
                     type="button"
                     class="p-1 px-5 my-2 ml-3 text-sm text-white bg-orange-500 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline"
                 >
