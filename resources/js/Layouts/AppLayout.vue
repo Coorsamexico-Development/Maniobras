@@ -34,11 +34,11 @@ const logout = () => {
 
         <Banner />
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen fondo">
             
             <nav class="bg-white border-b border-gray-100 fondo_navbar">
                 <!-- Primary Navigation Menu -->
-                <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8 ">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
@@ -49,7 +49,7 @@ const logout = () => {
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
@@ -135,12 +135,12 @@ const logout = () => {
                             <div class="relative ml-3">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
-                                        <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                            <img class="object-cover w-8 h-8 rounded-full" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
+                                        <button v-if="$page.props.jetstream.managesProfilePhotos" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 ">
+                                            <img class="object-cover w-8 h-8 rounded-full " :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
                                         </button>
 
                                         <span v-else class="inline-flex rounded-md">
-                                            <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none">
+                                            <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none ">
                                                 {{ $page.props.user.name }}
 
                                                 <svg
@@ -184,7 +184,7 @@ const logout = () => {
 
                         <!-- Hamburger -->
                         <div class="flex items-center -mr-2 sm:hidden">
-                            <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500" @click="showingNavigationDropdown = ! showingNavigationDropdown">
+                            <button class="inline-flex items-center justify-center p-2 text-white transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500" @click="showingNavigationDropdown = ! showingNavigationDropdown">
                                 <svg
                                     class="w-6 h-6"
                                     stroke="currentColor"
@@ -213,9 +213,15 @@ const logout = () => {
 
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
-                    <div class="pt-2 pb-3 space-y-1">
+                    <div class="pt-2 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </ResponsiveNavLink>
+                    </div>
+
+                    <div class="pt-2 pb-3 space-y-1">
+                        <ResponsiveNavLink :href="route('maniobras')" >
+                            Maniobras
                         </ResponsiveNavLink>
                     </div>
 
@@ -227,16 +233,16 @@ const logout = () => {
                             </div>
 
                             <div>
-                                <div class="text-base font-medium text-gray-800">
+                                <div class="text-base font-bold text-white uppercase">
                                     {{ $page.props.user.name }}
                                 </div>
-                                <div class="text-sm font-medium text-gray-500">
+                                <div class="text-sm font-medium text-white">
                                     {{ $page.props.user.email }}
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mt-3 space-y-1">
+                        <div class="mt-3 space-y-1 ">
                             <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
                                 Profile
                             </ResponsiveNavLink>

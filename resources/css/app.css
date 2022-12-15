@@ -10,9 +10,22 @@
     background-size: cover;
     background-position: center center;
 }
+
+@media only screen and (max-width: 640px) {
+  .main {
+    background-image: url("./img/bg-movil.jpg");
+     background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+}
 .caja_texto {
     text-transform: uppercase;
     letter-spacing: 7px;
+}
+.texto_login {
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
 .txt_titulo {
@@ -25,12 +38,11 @@
     background-size: cover;
     background-position: center center;
 }
-
-.img_btn1 {
-    background-image: url("./img/btn1.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+.fondo {
+  background-image: url("./img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 /*ToolTip*/
