@@ -9,7 +9,6 @@ import { SetupCalendar, Calendar, DatePicker } from 'v-calendar';
 
 var props = defineProps({
   turnos:Object,
-  maniobristas:Object
 });
 
 const emit = defineEmits(["close",])
@@ -21,6 +20,12 @@ const close = () => {
 
 let date = ref(null);
 
+let turnoSelect = ref(null);
+const selectedTurn = (event, turno) =>
+{
+    turnoSelect.value = turno;
+}
+
 </script>
 <template>
      <DialogModal  :show="show" @close="close()" >
@@ -31,13 +36,13 @@ let date = ref(null);
               <div class="grid grid-cols-2 m-2">
                 <div class="border-r-4 border-solid" style="overflow-y: scroll;height: 30rem;">
                         <h3 class="text-center">Calendario</h3>
-                        <DatePicker class="" is-expanded :rows="12"  v-model="date" /> 
+                        <DatePicker   is-expanded :rows="12"  v-model="date" /> 
                 </div>
                 <div >
                    <div  style="overflow-y: scroll;height: 30rem;">
-                     <SecondaryButton class="m-2" v-for="turno in turnos" :key="turno.id">{{turno.name}}</SecondaryButton>
+                     <SecondaryButton class="m-2" v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</SecondaryButton>
                       <div>
-                        <TableManiobristas :maniobristas="maniobristas"></TableManiobristas>
+                        <TableManiobristas v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
                       </div>
                    </div>
                 </div>

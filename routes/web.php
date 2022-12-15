@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ListaAsitenciaController;
 use App\Http\Controllers\ManiobraController;
 use App\Http\Controllers\TurnoController;
 use App\Models\Maniobra;
@@ -48,3 +49,13 @@ Route::controller(ManiobraController::class)->group(
 
 
 Route::get('/turnosPorManiobra/{maniobra_id}', [TurnoController::class, 'getTurnos']);
+Route::put('/listaasistencia/{turno}/{maniobrista}/{fecha}', [ListaAsitenciaController::class, 'listaUpdate'])->name('lista.maniobrista.update');
+//Route::apiResource('/listaasistencia', FacturaController::class)->except('show');
+
+
+Route::controller(ListaAsitenciaController::class)->group(
+    function()
+    {
+        Route::post('/lista','store')->name('lista.store');
+    }
+);

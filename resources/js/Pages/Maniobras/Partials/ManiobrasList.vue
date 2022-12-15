@@ -3,6 +3,7 @@ import { Inertia } from '@inertiajs/inertia';
 import { ref } from 'vue';
 import axios from 'axios';
 import ModalCalendar from '../Partials/ModalCalendar.vue';
+import ModalTurno from '../Partials/ModalTurno.vue';
 
 const props=defineProps(
     {
@@ -26,6 +27,7 @@ axios.get('turnosPorManiobra/'+maniobra_id.value,{maniobra_id: maniobra_id.value
           });
 
 let modalCalendar = ref(false);
+let modalTurno = ref(false);
 
 const watchCalendar = () => 
 {
@@ -37,6 +39,16 @@ const closeCalendar = () =>
   modalCalendar.value =false;
 }
 
+const modalTurn = () =>
+{
+  modalTurno.value=true;
+}
+
+const closeModalTurn = () => 
+{
+    modalTurno.value =false;
+}
+
 </script>
 
 <template>
@@ -45,7 +57,7 @@ const closeCalendar = () =>
             <div class="p-4 pl-16 md:p-4 ">{{props.maniobra.cliente_name}}</div>
             <div class="col-start-2 p-4 md:col-span-3 md:p-4 "><strong>Nombre de maniobra:</strong> {{props.maniobra.maniobra_name}}</div>
             <div class="">
-                <button 
+                <button  @click="modalTurn"
                     type="button"
                     class="p-1 px-5 my-2 ml-16 text-sm text-white bg-blue-800 tooltip btn btn-primary rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                   >
@@ -89,28 +101,7 @@ const closeCalendar = () =>
                                 fill="#fff"
                             />
                         </g>
-                    </svg>
-                    <span class="tooltiptext">
-                        <table >
-                          <tr style="border-bottom:1px solid #949494">
-                            <th style="margin:1rem; margin-right: 5rem; padding-right: 1rem;padding-left: 1rem;">TURNO</th>
-                            <th style="margin:1rem; margin-right: 5rem; padding-right: 0.5rem; ">HR INICIO</th>
-                            <th style="margin:1rem;margin-left: 5rem; padding-left:0.2rem">HR FINAL</th>
-                          </tr>
-                          <tr>
-                            <td v-for="turno in turnos" :key="turno.id">
-                                {{turno.name}}
-                            </td>
-                            <td v-for="turno in turnos" :key="turno.id">
-                                {{turno.hora_inicio}}
-                            </td>
-                            <td v-for="turno in turnos" :key="turno.id">
-                                {{turno.hora_fin}}
-                            </td>
-                          </tr>
-                        </table>
-                    </span>
-                    
+                    </svg>      
                 </button>
             </div>
             <div class="box">
@@ -377,4 +368,5 @@ const closeCalendar = () =>
     </div>
     <!--MODALS -->
     <ModalCalendar :show="modalCalendar" :maniobristas="maniobristas" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
+    <ModalTurno :show="modalTurno" @close="closeModalTurn" :turnos ="turnos"></ModalTurno>
 </template>

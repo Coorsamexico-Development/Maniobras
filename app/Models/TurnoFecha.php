@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class TurnoFecha extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'fecha',
+        'cant_asistencia',
+        'turno_id',
+    ];
 }

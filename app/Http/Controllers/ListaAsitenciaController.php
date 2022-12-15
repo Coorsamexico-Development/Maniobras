@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ManiobristasImport;
 use App\Models\ListaAsitencia;
+use App\Models\TurnoFecha;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ListaAsitenciaController extends Controller
 {
@@ -22,6 +25,9 @@ class ListaAsitenciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+
     public function create()
     {
         //
@@ -36,6 +42,13 @@ class ListaAsitenciaController extends Controller
     public function store(Request $request)
     {
         //
+        TurnoFecha::create([
+            'fecha' => $request['fecha'],
+            'turno_id' => $request['turno'],
+            'cant_asistencia' => 1  //definir como crear esto
+       ]);
+       
+       Excel::import(new ManiobristasImport, $request['file']);
     }
 
     /**
