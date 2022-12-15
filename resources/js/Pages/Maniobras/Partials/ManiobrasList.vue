@@ -41,9 +41,9 @@ const closeCalendar = () =>
 
 <template>
     <div class="w-full p-2 mt-6 bg-white shadow-md rounded-3xl">
-        <div class="grid grid-cols-2 grid-rows-1 gap-2 overflow-hidden wrapper md:grid-cols-10 md:grid-rows-1 md:overflow-hidden">
+        <div class="grid grid-cols-3 grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-10 lg:grid-rows-1 ">
             <div class="p-4 pl-16 md:p-4 ">{{props.maniobra.cliente_name}}</div>
-            <div class="col-start-2 p-4 md:col-span-3 md:p-4 "><strong>Nombre de maniobra:</strong> {{props.maniobra.maniobra_name}}</div>
+            <div class="col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-3 "><strong>Nombre de maniobra:</strong> {{props.maniobra.maniobra_name}}</div>
             <div class="">
                 <button 
                     type="button"
@@ -262,7 +262,7 @@ const closeCalendar = () =>
             <div class="box">
                 <button
                     type="button"
-                    class="p-1 px-4 my-2 -ml-2 text-sm text-white bg-orange-500 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline"
+                    class="p-1 px-4 my-2 ml-16 text-sm text-white bg-orange-500 lg:-ml-2 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -330,7 +330,7 @@ const closeCalendar = () =>
             <div class="box">
                 <button
                     type="button"
-                    class="p-1 px-5 my-2 -ml-10 text-sm text-white bg-blue-800 rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                    class="p-1 px-5 my-2 ml-10 text-sm text-white bg-blue-800 lg:-ml-10 rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -351,7 +351,7 @@ const closeCalendar = () =>
             <div class="box">
                 <button
                     type="button"
-                    class="p-1 px-6 my-2 -ml-16 text-sm text-white bg-green-600 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline"
+                    class="p-1 px-6 my-2 ml-3.5 text-sm text-white bg-green-600 lg:-ml-16 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

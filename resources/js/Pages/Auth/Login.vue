@@ -42,23 +42,23 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <div class="w-full mb-4 -ml-8 text-4xl text-blue-800 txt_titulo font-Montserrat">
-                Iniciar Sesión
+            <div class="w-full mb-4 -ml-8 text-4xl font-bold text-blue-800 txt_titulo font-Montserrat">
+                Iniciar Sesión<strong class="font-bold text-yellow-500">.</strong>
             </div>
-            <div class="mb-24 -ml-8 text-lg text-gray-400 font-Montserra">
+            <div class="mb-24 -mt-5 -ml-8 text-lg text-gray-400 texto_login font-Montserra">
                 PLATAFORMA MANIOBRAS P&G.
             </div>
             <div>
-                <div class="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-indigo-500">
+                <div class="w-full text-lg duration-300 transform bg-transparent border-b-2 -ml-11 focus-within:border-indigo-500">
                     <TextInput id="email" v-model="form.email" type="email" required autofocus
                         placeholder="Usuario"
                         class="w-full bg-transparent border-none outline-none placeholder:italic focus:outline-none" />
                 </div>
-                <InputError class="mt-2 font-Montserrat" :message="form.errors.email" />
+                <InputError class="mt-2 font-Montserra" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
-                <div class="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-indigo-500">
+                <div class="w-full -ml-5 text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-indigo-500">
                     <TextInput id="password" v-model="form.password" type="password" required
                     placeholder="Contraseña"
                     autocomplete="current-password" class="w-full bg-transparent border-none outline-none placeholder:italic focus:outline-none" />
@@ -69,9 +69,9 @@ const submit = () => {
 
             <div class="flex items-center justify-end mt-4">
 
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <ButtonLogin class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
-                </PrimaryButton>
+                </ButtonLogin>
             </div>
 
             

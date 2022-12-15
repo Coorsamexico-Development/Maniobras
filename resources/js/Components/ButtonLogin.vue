@@ -10,7 +10,7 @@ defineProps({
 <template>
     <button
         :type="type"
-        class="py-1 mb-2 -mr-6 text-sm text-white transition bg-blue-900 px-7 ml-96 hover:bg-blue-800 focus:ring-2 rounded-3xl disabled:opacity-25"
+        class="py-1 mb-2 text-sm text-white transition bg-blue-900 mr-36 sm:mr-12 lg:-mr-6 px-7 lg:ml-96 hover:bg-blue-800 focus:ring-2 rounded-3xl disabled:opacity-25"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
