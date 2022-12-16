@@ -61,14 +61,13 @@ const selectedTurn = (event, turno) =>
 
                         
                 </div>
-                <div class=" modal_scroll -mb-96 sm:hidden">
+                <div class=" -mb-96 sm:hidden" style="overflow-y: scroll; width: 25rem; height: 23rem;">
                   <div class="mt-10 ml-16 -mb-96 sm:hidden">
                     <div>
                         <TableManiobristas v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
                       </div>
-                        </div>
+                   </div>
                 </div>
-    
 
                 <div>
                    <div class="hidden modal_scroll sm:grid ">
@@ -80,7 +79,6 @@ const selectedTurn = (event, turno) =>
                       </div>
                    </div>
                 </div>
-
               </div>
 
             </template>
