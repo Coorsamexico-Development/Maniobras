@@ -6,7 +6,6 @@ import ModalCalendar from '../Partials/ModalCalendar.vue';
 import ModalTurno from '../Partials/ModalTurno.vue';
 import ModalFalta from '../Partials/ModalFalta.vue';
 
-
 const props=defineProps(
     {
       maniobra:Object,
@@ -58,7 +57,7 @@ const modalFalt = () =>
   modalFalta.value=true;
 }
 
-const closeFalt = () => 
+const closeModalFalt = () => 
 {
     modalFalta.value =false;
 }
@@ -383,4 +382,6 @@ const closeFalt = () =>
     <!--MODALS -->
     <ModalCalendar :show="modalCalendar" :maniobristas="maniobristas" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
     <ModalTurno :show="modalTurno" @close="closeModalTurn" :turnos ="turnos"></ModalTurno>
+    <ModalFalta :show="modalFalta" @close="closeModalFalt" :faltas ="faltas"></ModalFalta>
+
 </template>

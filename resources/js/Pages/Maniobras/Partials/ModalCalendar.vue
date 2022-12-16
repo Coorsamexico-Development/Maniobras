@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import DialogModal from '@/Components/DialogModal2.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import BtnCerrar from '@/Components/BtnCerrar.vue';
-
 import TableManiobristas from './TableManiobristas.vue';
 import { useForm } from '@inertiajs/inertia-vue3' 
 import 'v-calendar/dist/style.css';
@@ -34,14 +33,27 @@ const selectedTurn = (event, turno) =>
            <template #title>
           
             </template>
-            <template #content >
-              <div class="grid grid-cols-2 m-2">
-                <div class="border-r-4 border-solid" style="overflow-y: scroll;height: 30rem;">
-                        <h3 class="text-center">Calendario</h3>
-                        <DatePicker is-expanded :rows="12"  v-model="date"/> 
+            <template #content>
+
+              <div class="grid-cols-1 grid-rows-2 m-2 sm:grid w-80 sm:w-full sm:grid-cols-2 -mb-96">
+                <div class="border-r-0 border-none sm:border-r-4 sm:border-solid modal_scroll">
+                        <div class="hidden sm:grid" >
+                          <h3 class="mr-12 text-center sm:mr-0">Calendario</h3>
+                        </div>
+
+                        <div class="hidden sm:grid" >
+                          <DatePicker is-expanded :rows="12"  v-model="date"/> 
+                        </div>
+
+                        <div class="mt-10 sm:hidden">
+                          <DatePicker :rows="1"  v-model="date"/> 
+                        </div>
                 </div>
+
+                
+                
                 <div >
-                   <div  style="overflow-y: scroll;height: 30rem;">
+                   <div  class="modal_scroll">
                      <SecondaryButton class="m-2" v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</SecondaryButton>
                       <div>
                         <TableManiobristas v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
@@ -49,6 +61,8 @@ const selectedTurn = (event, turno) =>
                    </div>
                 </div>
               </div>
+
+
             </template>
             <template #footer>
               <BtnCerrar  @click="close()" style="float:right">
