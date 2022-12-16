@@ -6,6 +6,7 @@ import axios from 'axios';
 import InputLabel from '@/Components/InputLabel.vue';
 import { useForm } from "@inertiajs/inertia-vue3";
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { Inertia } from '@inertiajs/inertia';
 
 var props = defineProps({
   date:{ type: String,
@@ -50,11 +51,6 @@ const uploadFile = () =>
     
 }
 
-const downloadExample = () =>
-{
-   
-}
-
 
 </script>
 <template>
@@ -65,7 +61,10 @@ const downloadExample = () =>
                     <input type="file" accept=".xlsx , text/xlsx"  ref="fileUpload"
                          @change="uploadFile">
                 </form>
-                <SecondaryButton @click="downloadExample">Descargar ejemplo</SecondaryButton>
+                <a :href="route('export')">
+                    <SecondaryButton >Descargar ejemplo</SecondaryButton>
+                </a>
+
             </slot>
         </template>
         <template #table-header>

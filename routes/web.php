@@ -57,5 +57,6 @@ Route::controller(ListaAsitenciaController::class)->group(
     function()
     {
         Route::post('/lista','store')->name('lista.store');
+        Route::get('/example','exportExample')->name('export');
     }
 );

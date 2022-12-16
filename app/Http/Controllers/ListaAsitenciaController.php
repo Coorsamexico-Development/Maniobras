@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ManiobristasExampleExport;
 use App\Imports\ManiobristasImport;
 use App\Models\ListaAsitencia;
 use App\Models\TurnoFecha;
@@ -42,13 +43,18 @@ class ListaAsitenciaController extends Controller
     public function store(Request $request)
     {
         //
-        TurnoFecha::create([
+        TurnoFecha::updateOrCreate([
             'fecha' => $request['fecha'],
             'turno_id' => $request['turno'],
             'cant_asistencia' => 1  //definir como crear esto
        ]);
        
        Excel::import(new ManiobristasImport, $request['file']);
+    }
+
+    public function exportExample ()
+    {
+        return Excel::download(new ManiobristasExampleExport,'example.xlsx');
     }
 
     /**
