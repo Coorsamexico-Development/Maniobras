@@ -2,8 +2,10 @@
 import { ref } from 'vue';
 import DialogModal from '@/Components/DialogModal2.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import BtnCerrar from '@/Components/BtnCerrar.vue';
+import BtnCloseCalendar from '@/Components/BtnCloseCalendar.vue';
+import BtnCalendar from '@/Components/BtnCalendar.vue';
 import TableManiobristas from './TableManiobristas.vue';
+import DataTable from '@/Components/DataTable.vue';
 import { useForm } from '@inertiajs/inertia-vue3' 
 import 'v-calendar/dist/style.css';
 import { SetupCalendar, Calendar, DatePicker } from 'v-calendar';
@@ -45,7 +47,7 @@ const selectedTurn = (event, turno) =>
                           <DatePicker is-expanded :rows="12"  v-model="date"/> 
                         </div>
 
-                        <div class="ml-16 mt-14 sm:hidden">
+                        <div class="mt-20 ml-16 -mb-96 sm:hidden">
                           <DatePicker :rows="1"  v-model="date"/> 
                         </div>
                 </div>
@@ -60,14 +62,11 @@ const selectedTurn = (event, turno) =>
                    </div>
                 </div>
               </div>
-
-              
-
             </template>
             <template #footer>
-              <BtnCerrar  @click="close()" style="float:right">
+              <BtnCloseCalendar  @click="close()" style="float:right">
                       X
-                </BtnCerrar>
+              </BtnCloseCalendar>
             </template>
         </DialogModal>
 </template>
