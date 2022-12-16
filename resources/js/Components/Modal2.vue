@@ -99,7 +99,7 @@ const maxWidthClass = computed(() => {
 @media only screen and (max-width: 640px) {
   .modal_2 {
     width: 28rem;
-    height: 52rem;
+    height: 53rem;
   }
 }
 

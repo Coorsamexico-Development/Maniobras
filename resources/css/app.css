@@ -30,7 +30,7 @@
     overflow-y: hidden;
     overflow-x: hidden;
     width: 25rem;
-    height: 22rem;
+    height: 23rem;
   }
 }
 
@@ -59,6 +59,10 @@
   background-size: cover;
   background-position: center center;
 }
+
+.btn_calendar{
+  background-color: #122A5C;
+  }
 
 /*ToolTip*/
 /* Tooltip container */
