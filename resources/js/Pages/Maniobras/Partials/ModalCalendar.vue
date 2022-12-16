@@ -35,7 +35,7 @@ const selectedTurn = (event, turno) =>
             </template>
             <template #content>
 
-              <div class="grid-cols-1 grid-rows-2 m-2 sm:grid w-80 sm:w-full sm:grid-cols-2 -mb-96">
+              <div class="grid-cols-1 grid-rows-2 m-2 sm:grid w-80 sm:w-full sm:grid-cols-2 -mb-96 ">
                 <div class="border-r-0 border-none sm:border-r-4 sm:border-solid modal_scroll">
                         <div class="hidden sm:grid" >
                           <h3 class="mr-12 text-center sm:mr-0">Calendario</h3>
@@ -45,23 +45,23 @@ const selectedTurn = (event, turno) =>
                           <DatePicker is-expanded :rows="12"  v-model="date"/> 
                         </div>
 
-                        <div class="mt-10 sm:hidden">
+                        <div class="ml-16 mt-14 sm:hidden">
                           <DatePicker :rows="1"  v-model="date"/> 
                         </div>
                 </div>
 
-                
-                
                 <div >
                    <div  class="modal_scroll">
                      <SecondaryButton class="m-2" v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</SecondaryButton>
                       <div>
                         <TableManiobristas v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
                       </div>
+
                    </div>
                 </div>
               </div>
 
+              
 
             </template>
             <template #footer>

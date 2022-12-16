@@ -81,7 +81,7 @@ const maxWidthClass = computed(() => {
                     leave-from-class="translate-y-0 opacity-100 sm:scale-100"
                     leave-to-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
                 >
-                    <div v-show="show" style="width:80rem" class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto" >
+                    <div v-show="show"  class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl modal_2 sm:w-full sm:mx-auto" >
                         <slot v-if="show" />
                     </div>
                 </transition>
@@ -89,3 +89,18 @@ const maxWidthClass = computed(() => {
         </transition>
     </teleport>
 </template>
+
+
+<style>
+.modal_2{
+  width: 80rem;
+}
+
+@media only screen and (max-width: 640px) {
+  .modal_2 {
+    width: 28rem;
+  }
+}
+
+
+</style>
