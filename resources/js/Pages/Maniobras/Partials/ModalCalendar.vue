@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 import DialogModal from '@/Components/DialogModal2.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import BtnCloseCalendar from '@/Components/BtnCloseCalendar.vue';
@@ -9,8 +10,6 @@ import DataTable from '@/Components/DataTable.vue';
 import { useForm } from '@inertiajs/inertia-vue3' 
 import 'v-calendar/dist/style.css';
 import { SetupCalendar, Calendar, DatePicker } from 'v-calendar';
-
-
 
 var props = defineProps({
   turnos:Object,
@@ -26,6 +25,14 @@ const close = () => {
     };
 
 let date = ref(null);
+
+let attributes = ref(
+  [/*{
+          highlight: 'red',
+          dates: new Date(2022,11,21),
+
+    }*/
+]);
 
 let turnoSelect = ref(null);
 const selectedTurn = (turno) =>
@@ -53,6 +60,9 @@ const selectedTurn = (turno) =>
     }
 }
 
+
+
+
 </script>
 <template>
      <DialogModal  :show="show" @close="close()" >
@@ -73,7 +83,7 @@ const selectedTurn = (turno) =>
                      </div>
 
                         <div class="hidden mr-10 sm:grid" >
-                          <DatePicker is-expanded :rows="12"  v-model="date"/> 
+                          <DatePicker is-expanded :rows="12" :attributes="attributes"  v-model="date"/> 
                         </div>
 
                         <div class="mt-10 ml-16 -mb-96 sm:hidden">
@@ -82,10 +92,10 @@ const selectedTurn = (turno) =>
 
                         
                 </div>
-                <div class=" -mb-96 sm:hidden" style="overflow-y: scroll; width: 25rem; height: 23rem;">
+                <div class=" -mb-96 sm:hidden" style="overflow-y: scroll; width: 25rem; height: 1rem;">
                   <div class="mt-10 ml-16 -mb-96 sm:hidden">
                     <div>
-                        <TableManiobristas v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
+                        <TableManiobristas :maniobristas="maniobristas" v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
                       </div>
                    </div>
                 </div>
@@ -93,7 +103,7 @@ const selectedTurn = (turno) =>
                 <div>
                    <div class="hidden modal_scroll sm:grid ">
                     <div class="grid grid-cols-3 gap-5 m-5 text-center -mt-36 place-items-center">
-                      <BtnCalendar class="p-4" v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</BtnCalendar>
+                      <BtnCalendar class="p-4" v-for="turno in turnos" :key="turno.id" @click="selectedTurn(turno)">{{turno.name}}</BtnCalendar>
                     </div>
                       <div>
                         <TableManiobristas :maniobristas="maniobristas" v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
