@@ -19,6 +19,21 @@
     background-position: center center;
   }
 }
+
+.modal_scroll {
+  overflow-y: scroll;
+  height: 26rem;
+}
+
+@media only screen and (max-width: 640px) {
+  .modal_scroll {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    width: 25rem;
+    height: 23rem;
+  }
+}
+
 .caja_texto {
     text-transform: uppercase;
     letter-spacing: 7px;
@@ -44,6 +59,10 @@
   background-size: cover;
   background-position: center center;
 }
+
+.btn_calendar{
+  background-color: #122A5C;
+  }
 
 /*ToolTip*/
 /* Tooltip container */
