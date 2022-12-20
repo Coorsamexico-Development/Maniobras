@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name', 100)->unique();
             $table->integer('cant_personal');
             $table->foreignId('maniobra_id')->constrained('maniobras');
-            $table->timestamp('hora_inicio')->nullable();
-            $table->timestamp('hora_fin')->nullable();
+            $table->time('hora_inicio',0)->nullable();
+            $table->time('hora_fin',0)->nullable();
             $table->timestamps();
         });
     }

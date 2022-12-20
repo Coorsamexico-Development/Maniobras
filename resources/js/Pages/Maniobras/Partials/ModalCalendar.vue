@@ -10,6 +10,7 @@ import DataTable from '@/Components/DataTable.vue';
 import { useForm } from '@inertiajs/inertia-vue3' 
 import 'v-calendar/dist/style.css';
 import { SetupCalendar, Calendar, DatePicker } from 'v-calendar';
+import ButtonClose from "@/Components/ButtonClose.vue";
 
 var props = defineProps({
   turnos:Object,
@@ -60,9 +61,6 @@ const selectedTurn = (turno) =>
     }
 }
 
-
-
-
 </script>
 <template>
      <DialogModal  :show="show" @close="close()" >
@@ -78,7 +76,7 @@ const selectedTurn = (turno) =>
                         </div>
 
                       
-                        <div class="grid grid-cols-3 -mt-10 place-items-center sm:hidden">
+                        <div class="grid grid-cols-3 place-items-center sm:hidden">
                       <BtnCalendar class="p-1 text-xs" v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</BtnCalendar>
                      </div>
 
@@ -89,8 +87,6 @@ const selectedTurn = (turno) =>
                         <div class="mt-10 ml-16 -mb-96 sm:hidden">
                           <DatePicker :rows="1"  v-model="date"/> 
                         </div>
-
-                        
                 </div>
                 <div class=" -mb-96 sm:hidden" style="overflow-y: scroll; width: 25rem; height: 1rem;">
                   <div class="mt-10 ml-16 -mb-96 sm:hidden">
@@ -102,8 +98,10 @@ const selectedTurn = (turno) =>
 
                 <div>
                    <div class="hidden modal_scroll sm:grid ">
+
                     <div class="grid grid-cols-3 gap-5 m-5 text-center -mt-36 place-items-center">
                       <BtnCalendar class="p-4" v-for="turno in turnos" :key="turno.id" @click="selectedTurn(turno)">{{turno.name}}</BtnCalendar>
+
                     </div>
                       <div>
                         <TableManiobristas :maniobristas="maniobristas" v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
@@ -114,8 +112,8 @@ const selectedTurn = (turno) =>
 
             </template>
             <template #footer>
-              <BtnCloseCalendar  @click="close()" style="float:right">
-                      X
+              <BtnCloseCalendar @click="close()" style="float:right">
+                     Cerrar
               </BtnCloseCalendar>
             </template>
         </DialogModal>

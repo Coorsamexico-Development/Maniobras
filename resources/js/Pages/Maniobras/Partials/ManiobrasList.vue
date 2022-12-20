@@ -1,17 +1,15 @@
 <script setup>
-import { Inertia } from '@inertiajs/inertia';
-import { ref } from 'vue';
-import axios from 'axios';
-import ModalCalendar from '../Partials/ModalCalendar.vue';
-import ModalTurno from '../Partials/ModalTurno.vue';
-import ModalFalta from '../Partials/ModalFalta.vue';
+import { Inertia } from "@inertiajs/inertia";
+import { ref } from "vue";
+import axios from "axios";
+import ModalCalendar from "../Partials/ModalCalendar.vue";
+import ModalTurno from "../Partials/ModalTurno.vue";
+import ModalFalta from "../Partials/ModalFalta.vue";
 
-const props=defineProps(
-    {
-      maniobra:Object,
-      maniobristas:Object
-    }
-);
+const props = defineProps({
+    maniobra: Object,
+    maniobristas: Object,
+});
 
 let maniobra_id = ref(-1);
 maniobra_id.value = props.maniobra.maniobra_id;
@@ -19,62 +17,75 @@ maniobra_id.value = props.maniobra.maniobra_id;
 
 let turnos = ref([]);
 
-axios.get('turnosPorManiobra/'+maniobra_id.value,{maniobra_id: maniobra_id.value}) //enviamos el dato a la ruta
-        .then((resp)=>{
-           //console.log(resp);
-           turnos.value = resp.data;
-          })
-        .catch(function (error) {
-           console.log(error);
-          });
+axios
+    .get("turnosPorManiobra/" + maniobra_id.value, {
+        maniobra_id: maniobra_id.value,
+    }) //enviamos el dato a la ruta
+    .then((resp) => {
+        //console.log(resp);
+        turnos.value = resp.data;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 
 let modalCalendar = ref(false);
 let modalTurno = ref(false);
 let modalFalta = ref(false);
 
+const watchCalendar = () => {
+    modalCalendar.value = true;
+};
 
-const watchCalendar = () => 
-{
-    modalCalendar.value= true;
-}
+const closeCalendar = () => {
+    modalCalendar.value = false;
+};
 
-const closeCalendar = () => 
-{
-  modalCalendar.value =false;
-}
+const modalTurn = () => {
+    modalTurno.value = true;
+};
 
-const modalTurn = () =>
-{
-  modalTurno.value=true;
-}
+const closeModalTurn = () => {
+    modalTurno.value = false;
+};
 
-const closeModalTurn = () => 
-{
-    modalTurno.value =false;
-}
+const modalFalt = () => {
+    modalFalta.value = true;
+};
 
-const modalFalt = () =>
-{
-  modalFalta.value=true;
-}
+const closeModalFalt = () => {
+    modalFalta.value = false;
+};
 
-const closeModalFalt = () => 
-{
-    modalFalta.value =false;
-}
+    let message = ref(true);
 
 </script>
 
 <template>
-    <div class="w-full p-2 mt-6 bg-white shadow-md rounded-3xl">
-        <div class="grid grid-cols-3 grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-10 lg:grid-rows-1 ">
-            <div class="p-4 pl-16 md:p-4 ">{{props.maniobra.cliente_name}}</div>
-            <div class="col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-3 "><strong>Nombre de maniobra:</strong> {{props.maniobra.maniobra_name}}</div>
-            <div class="">
-                <button  @click="modalTurn"
+    
+    <div class="p-2 mt-6 bg-white shadow-md rounded-3xl" 
+    :class="message ? 'w-full' : 'lg:w-1/3'">
+        <div
+            :class="message ? 'grid grid-cols-3 grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-10 lg:grid-rows-1' : 
+                              'grid grid-cols-3 grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-6 lg:grid-rows-1'">
+            
+            <div class="-ml-10 lg:-ml-0 p-4 pl-16 md:p-4">
+                {{ props.maniobra.cliente_name }}
+            </div>
+            <div
+                class="col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-3"
+            >
+                <strong>Nombre de maniobra:</strong>
+                {{ props.maniobra.maniobra_name }}
+            </div>
+
+            <transition name="slide-fade">            
+                <div v-if="message" >
+                <button
+                    @click="modalTurn"
                     type="button"
                     class="p-1 px-5 my-2 ml-16 text-sm text-white bg-blue-800 tooltip btn btn-primary rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-                  >
+                    >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="26.839"
@@ -115,11 +126,14 @@ const closeModalFalt = () =>
                                 fill="#fff"
                             />
                         </g>
-                    </svg>      
+                    </svg>
                 </button>
             </div>
-            <div class="box">
-                <button @click="watchCalendar"
+        </transition>
+        <transition name="slide-fade">
+            <div  v-if="message">
+                <button
+                    @click="watchCalendar"
                     type="button"
                     class="p-1 px-5 my-2 ml-10 text-sm text-white bg-blue-800 rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                 >
@@ -201,9 +215,11 @@ const closeModalFalt = () =>
                     </svg>
                 </button>
             </div>
-            
-            <div class="box">
-                <button @click="modalFalt"
+        </transition>
+        <transition name="slide-fade">            
+            <div  v-if="message">
+                <button
+                    @click="modalFalt"
                     type="button"
                     class="p-1 px-5 my-2 ml-3 text-sm text-white bg-orange-500 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline"
                 >
@@ -264,7 +280,9 @@ const closeModalFalt = () =>
                     </svg>
                 </button>
             </div>
-            <div class="box">
+        </transition>
+        <transition name="slide-fade">
+          <div  v-if="message">
                 <button
                     type="button"
                     class="p-1 px-4 my-2 ml-16 text-sm text-white bg-orange-500 lg:-ml-2 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline"
@@ -332,7 +350,10 @@ const closeModalFalt = () =>
                     </svg>
                 </button>
             </div>
-            <div class="box">
+        </transition>
+        <transition name="slide-fade">
+            
+            <div  v-if="message">
                 <button
                     type="button"
                     class="p-1 px-5 my-2 ml-10 text-sm text-white bg-blue-800 lg:-ml-10 rounded-3xl hover:bg-blue-700 focus:outline-none focus:shadow-outline"
@@ -353,36 +374,72 @@ const closeModalFalt = () =>
                     </svg>
                 </button>
             </div>
+        </transition>
+
             <div class="box">
                 <button
+                    id="botonOn" @click="message = !message" 
                     type="button"
-                    class="p-1 px-6 my-2 ml-3.5 text-sm text-white bg-green-600 lg:-ml-16 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="13.897"
-                        height="20.846"
-                        viewBox="0 0 13.897 22.794"
+                    :class="message ? 'p-1 px-6 my-2 ml-3.5 text-md text-white text-md font-bold bg-green-600 lg:-ml-16 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline' 
+                    : 'p-1 px-6 my-2 ml-3.5 mt-0 text-md text-white text-md font-bold bg-green-600 lg:ml-5  lg:mt-5 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline'"
                     >
-                        <path
-                            id="Trazado_42"
-                            data-name="Trazado 42"
-                            d="M3452.672-158.765l7.861,7.861-7.861,7.861"
-                            transform="translate(-3449.136 162.3)"
-                            fill="none"
-                            stroke="#fff"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="5"
-                        />
-                    </svg>
+                    {{message ? '>' : '<' }}
                 </button>
             </div>
+
         </div>
     </div>
     <!--MODALS -->
-    <ModalCalendar :show="modalCalendar" :maniobra_id="maniobra_id" :maniobristas="maniobristas" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
-    <ModalTurno :show="modalTurno" @close="closeModalTurn" :turnos ="turnos"></ModalTurno>
-    <ModalFalta :show="modalFalta" @close="closeModalFalt" :faltas ="faltas"></ModalFalta>
-
+    <ModalCalendar
+        :show="modalCalendar"
+        :maniobristas="maniobristas"
+        :turnos="turnos"
+        @close="closeCalendar"
+    ></ModalCalendar>
+    <ModalTurno
+        :show="modalTurno"
+        @close="closeModalTurn"
+        :turnos="turnos"
+        :maniobra_id="maniobra_id"
+    ></ModalTurno>
+    <ModalFalta
+        :show="modalFalta"
+        @close="closeModalFalt"
+        :faltas="faltas"
+    ></ModalFalta>
 </template>
+
+<style>
+
+.slide-fade-enter-active {
+  transition: all 2.5s ease-out;
+}
+
+/*
+.slide-fade-leave-active {
+  transition: all 1s cubic-bezier(1, 0.2, 0.4, 1);
+}*/
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+</style>

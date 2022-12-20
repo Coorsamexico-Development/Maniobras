@@ -52,12 +52,12 @@ class ManiobraController extends Controller
 
        }
 
-    
+    /*
        $contador_Maniobristas = ListaAsitencia::select('COUNT(lista_asistencias.id)')
        ->group_by('turno_fecha_id')
        ->get();
 
-
+*/
         $clientes = Cliente::all();
         $status_maniobras = StatusManiobra::all();
         
