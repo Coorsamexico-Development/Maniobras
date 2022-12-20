@@ -51,6 +51,6 @@ const closeModalNewManiobra = () =>
                 <ManiobrasList :maniobra="maniobra" :maniobristas="maniobristas"></ManiobrasList>
             </div>       
        </div>
-        <ModalAddManiobra :clientes="clientes" :status_maniobras="status_maniobras" :show="openModalNewManiobra" @close="closeModalNewManiobra"></ModalAddManiobra>
+        <ModalAddManiobra :clientes="clientes"  :status_maniobras="status_maniobras" :show="openModalNewManiobra" @close="closeModalNewManiobra"></ModalAddManiobra>
     </AppLayout>
 </template>

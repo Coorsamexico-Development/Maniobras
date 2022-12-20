@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class ListaAsitencia extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'turno_fecha_id',
+        'maniobrista_id',
+        'salario',
+        'asistencia',
+        'imagen_url'
+    ];
 }

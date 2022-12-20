@@ -15,6 +15,8 @@ import ButtonClose from "@/Components/ButtonClose.vue";
 
 var props = defineProps({
   turnos:Object,
+  maniobra_id:Number,
+  maniobristas: Object
 });
 
 const emit = defineEmits(["close",])
@@ -27,18 +29,37 @@ const close = () => {
 let date = ref(null);
 
 let turnoSelect = ref(null);
-const selectedTurn = (event, turno) =>
+const selectedTurn = (turno) =>
 {
-    turnoSelect.value = turno;
-}
+    //console.log(turno);
+    turnoSelect.value = turno.id;
 
+    if(date.value != null)
+    {
+         let formatDate = new Date(date.value);
+         const dia = formatDate.getDate();
+         const mes = formatDate.getMonth()+1;
+         const año = formatDate.getFullYear();
+
+        let fechaCompleta = año+'-'+mes+'-'+dia;
+         Inertia.visit(route('maniobras'), {
+          data: {
+            turno_id :turnoSelect.value,
+            fecha: fechaCompleta
+         },
+          preserveState: true,
+          preserveScroll: true,
+          only: ['maniobristas'],
+      })
+    }
+}
 
 
 </script>
 <template>
      <DialogModal  :show="show" @close="close()" >
            <template #title>
-          
+
             </template>
             <template #content>
 
@@ -75,7 +96,7 @@ const selectedTurn = (event, turno) =>
                       <BtnCalendar class="p-4 " v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</BtnCalendar>
                     </div>
                       <div>
-                        <TableManiobristas v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
+                        <TableManiobristas :maniobristas="maniobristas" v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
                       </div>
                    </div>
                 </div>

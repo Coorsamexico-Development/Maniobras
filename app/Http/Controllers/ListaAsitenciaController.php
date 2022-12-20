@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exports\ManiobristasExampleExport;
 use App\Imports\ManiobristasImport;
 use App\Models\ListaAsitencia;
+use App\Models\Maniobra;
+use App\Models\Turno;
 use App\Models\TurnoFecha;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -43,13 +45,26 @@ class ListaAsitenciaController extends Controller
     public function store(Request $request)
     {
         //
-        TurnoFecha::updateOrCreate([
+       $turnoFecha = TurnoFecha::updateOrCreate([
             'fecha' => $request['fecha'],
             'turno_id' => $request['turno'],
             'cant_asistencia' => 1  //definir como crear esto
        ]);
+
+
+       $turno_maniobra = Turno::select('turnos.*')
+       ->where('turnos.id','=',$request['turno'])
+       ->get();
+
+
+       $maniobra_salario = Maniobra::select('maniobras.*')
+       ->where('maniobras.id','=', $turno_maniobra[0]->maniobra_id)
+       ->get();
+ 
+       $turno_fecha_id = $turnoFecha ->id;
        
-       Excel::import(new ManiobristasImport, $request['file']);
+       Excel::import(new ManiobristasImport($turno_fecha_id, $maniobra_salario[0]->salario), $request['file']);
+
     }
 
     public function exportExample ()

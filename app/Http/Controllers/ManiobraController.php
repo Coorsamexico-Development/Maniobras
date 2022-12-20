@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\ListaAsitencia;
 use App\Models\Maniobra;
 use App\Models\Maniobrista;
 use App\Models\StatusManiobra;
+use App\Models\TurnoFecha;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -16,7 +18,7 @@ class ManiobraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $maniobras = Maniobra::select(
@@ -30,12 +32,26 @@ class ManiobraController extends Controller
         ->join('clientes','maniobras.cliente_id','clientes.id')
         ->get();
 
+        
+        $maniobristas = [];
 
-        $maniobristas = Maniobrista::select(
-            'maniobristas.*'
-        )
-        ->where('maniobristas.active','=',1)
-        ->get();
+       if($request->has('turno_id') && $request->has('fecha'))
+       {
+         $turno_fecha_id = TurnoFecha::select()
+         ->where('turno_id','=', $request['turno_id'])
+         ->where('fecha','LIKE' ,'%'.$request['fecha'].'%')
+         ->get();
+
+          if(count($turno_fecha_id) > 0)
+          {
+            $maniobristas = ListaAsitencia::select()
+            ->join('maniobristas','lista_asitencias.maniobrista_id','maniobristas.id')
+            ->where('turno_fecha_id','=',$turno_fecha_id[0]->id)
+            ->get();
+          }
+
+       }
+
 
         $clientes = Cliente::all();
         $status_maniobras = StatusManiobra::all();
