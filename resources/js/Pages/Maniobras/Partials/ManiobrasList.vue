@@ -390,7 +390,6 @@ const closeModalFalt = () => {
         </div>
     </div>
     <!--MODALS -->
-<<<<<<< HEAD
     <ModalCalendar
         :show="modalCalendar"
         :maniobristas="maniobristas"
@@ -408,12 +407,6 @@ const closeModalFalt = () => {
         @close="closeModalFalt"
         :faltas="faltas"
     ></ModalFalta>
-=======
-    <ModalCalendar :show="modalCalendar" :maniobra_id="maniobra_id" :maniobristas="maniobristas" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
-    <ModalTurno :show="modalTurno" @close="closeModalTurn" :turnos ="turnos"></ModalTurno>
-    <ModalFalta :show="modalFalta" @close="closeModalFalt" :faltas ="faltas"></ModalFalta>
-
->>>>>>> 3ebae28ad95d47bba8a84c2477087aa3bb2f46ed
 </template>
 
 <style>
