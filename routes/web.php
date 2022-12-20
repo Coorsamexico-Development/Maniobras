@@ -46,8 +46,6 @@ Route::controller(ManiobraController::class)->group(
     }
 );
 
-
-
 Route::get('/turnosPorManiobra/{maniobra_id}', [TurnoController::class, 'getTurnos']);
 Route::put('/listaasistencia/{turno}/{maniobrista}/{fecha}', [ListaAsitenciaController::class, 'listaUpdate'])->name('lista.maniobrista.update');
 //Route::apiResource('/listaasistencia', FacturaController::class)->except('show');
@@ -58,5 +56,13 @@ Route::controller(ListaAsitenciaController::class)->group(
     {
         Route::post('/lista','store')->name('lista.store');
         Route::get('/example','exportExample')->name('export');
+    }
+);
+
+Route::controller(TurnoController::class)->group(
+    function()
+    {
+        Route::get('/turnos', 'index')->name('turnos');
+        Route::post('/turnos','store')->name('turnos.store');
     }
 );

@@ -9,6 +9,7 @@ import DataTable from '@/Components/DataTable.vue';
 import { useForm } from '@inertiajs/inertia-vue3' 
 import 'v-calendar/dist/style.css';
 import { SetupCalendar, Calendar, DatePicker } from 'v-calendar';
+import ButtonClose from "@/Components/ButtonClose.vue";
 
 
 
@@ -32,6 +33,7 @@ const selectedTurn = (event, turno) =>
 }
 
 
+
 </script>
 <template>
      <DialogModal  :show="show" @close="close()" >
@@ -47,7 +49,7 @@ const selectedTurn = (event, turno) =>
                         </div>
 
                       
-                        <div class="grid grid-cols-3 -mt-10 place-items-center sm:hidden">
+                        <div class="grid grid-cols-3  place-items-center sm:hidden">
                       <BtnCalendar class="p-1 text-xs" v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</BtnCalendar>
                      </div>
 
@@ -58,8 +60,6 @@ const selectedTurn = (event, turno) =>
                         <div class="mt-10 ml-16 -mb-96 sm:hidden">
                           <DatePicker :rows="1"  v-model="date"/> 
                         </div>
-
-                        
                 </div>
                 <div class=" -mb-96 sm:hidden" style="overflow-y: scroll; width: 25rem; height: 23rem;">
                   <div class="mt-10 ml-16 -mb-96 sm:hidden">
@@ -71,8 +71,8 @@ const selectedTurn = (event, turno) =>
 
                 <div>
                    <div class="hidden modal_scroll sm:grid ">
-                    <div class="grid grid-cols-3 gap-5 m-5 text-center -mt-36 place-items-center">
-                      <BtnCalendar class="p-4" v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</BtnCalendar>
+                    <div class="grid grid-cols-4 gap-5 m-5 text-center -mt-16 place-items-center">
+                      <BtnCalendar class="p-4 " v-for="turno in turnos" :key="turno.id" @click="selectedTurn($event, turno)">{{turno.name}}</BtnCalendar>
                     </div>
                       <div>
                         <TableManiobristas v-if="date && turnoSelect" :date="date" :turno="turnoSelect"></TableManiobristas>
@@ -83,8 +83,8 @@ const selectedTurn = (event, turno) =>
 
             </template>
             <template #footer>
-              <BtnCloseCalendar  @click="close()" style="float:right">
-                      X
+              <BtnCloseCalendar @click="close()" style="float:right">
+                     Cerrar
               </BtnCloseCalendar>
             </template>
         </DialogModal>
