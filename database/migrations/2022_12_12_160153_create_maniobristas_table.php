@@ -22,7 +22,7 @@ return new class extends Migration
             $table->tinyInteger('active')->default(1);
             $table->integer('faltas_seguidas');
             $table->integer('faltas_totales');
-            $table->timestamp('created_at');
+            $table->timestamps();
         });
     }
 

@@ -17,6 +17,7 @@ const props=defineProps(
 let maniobra_id = ref(-1);
 maniobra_id.value = props.maniobra.maniobra_id;
 
+
 let turnos = ref([]);
 
 axios.get('turnosPorManiobra/'+maniobra_id.value,{maniobra_id: maniobra_id.value}) //enviamos el dato a la ruta
@@ -381,6 +382,6 @@ const closeFalt = () =>
         </div>
     </div>
     <!--MODALS -->
-    <ModalCalendar :show="modalCalendar" :maniobristas="maniobristas" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
+    <ModalCalendar :show="modalCalendar" :maniobra_id="maniobra_id" :maniobristas="maniobristas" :turnos="turnos" @close="closeCalendar"></ModalCalendar>
     <ModalTurno :show="modalTurno" @close="closeModalTurn" :turnos ="turnos"></ModalTurno>
 </template>

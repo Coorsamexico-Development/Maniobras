@@ -11,7 +11,8 @@ import { Inertia } from '@inertiajs/inertia';
 var props = defineProps({
   date:{ type: String,
         required: true},
-  turno:Object
+  turno:Object,
+  maniobristas:Object
 });
 
 const formManiobristas =useForm({
@@ -46,6 +47,7 @@ const uploadFile = () =>
     {
         formManiobristas.post(route("lista.store"), {
          onFinish: () => formManiobristas.reset(),
+
        });
     }
     
@@ -80,7 +82,11 @@ const uploadFile = () =>
                 </tr>
             </template>
             <template #table-body>
-
+                 <tr v-for="maniobrista in maniobristas" :key="maniobrista.id"> 
+                    <td>
+                        {{maniobrista.name+' '+ maniobrista.ap_paterno+' '+maniobrista.ap_materno}} 
+                    </td>
+                 </tr>
             </template>
     </DataTable>
 </template>

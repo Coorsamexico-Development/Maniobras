@@ -13,6 +13,7 @@ class Maniobrista extends Model
         'name',
         'ap_paterno',
         'ap_materno',
+        'telefono',
         'faltas_seguidas',
         'faltas_totales'
     ];
