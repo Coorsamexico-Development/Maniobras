@@ -38,8 +38,10 @@ let attributes = ref(
 let turnoSelect = ref(null);
 const selectedTurn = (turno) =>
 {
-    //console.log(turno);
+  
     turnoSelect.value = turno.id;
+
+    console.log(turnoSelect.value);
 
     if(date.value != null)
     {
