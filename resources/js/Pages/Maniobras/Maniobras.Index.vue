@@ -25,6 +25,9 @@ const closeModalNewManiobra = () => {
     openModalNewManiobra.value = false;
 };
 
+const message = ref(true);
+
+
 </script>
 
 <template>
@@ -54,16 +57,18 @@ const closeModalNewManiobra = () => {
         </template>
 
         <div class="inline-flex mt-5 mr-14" style="float: right">
-            <button
+            <!----<button
                 class="px-2 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-l opacity-50 cursor-not-allowed hover:bg-gray-400"
+            >-->
+            <button
+                class="px-2 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-l hover:bg-gray-400"
             >
                 Visualizar
             </button>
             <button
                 @click="message = !message" 
                 type="button"
-                class="px-3 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-r bo hover:bg-gray-400" 
-            >
+                class="px-3 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-r bo hover:bg-gray-400">
                 Ocultar
             </button>
         </div>

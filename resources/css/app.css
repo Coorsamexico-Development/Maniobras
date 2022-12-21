@@ -27,8 +27,8 @@
 
 @media only screen and (max-width: 640px) {
   .modal_scroll {
-    overflow-y: scroll;
-    overflow-x: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
     width: 25rem;
     height: 23rem;
   }

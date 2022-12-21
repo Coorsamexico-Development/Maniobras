@@ -59,6 +59,7 @@ const closeModalFalt = () => {
 
 const message = ref(true);
 
+
 </script>
 
 <template>
@@ -80,7 +81,7 @@ const message = ref(true);
             </div>
 
             <transition name="slide-fade">            
-                <div v-if="message" >
+                <div v-if="message">
                 <button
                     @click="modalTurn"
                     type="button"
