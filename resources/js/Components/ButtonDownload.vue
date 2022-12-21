@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-    <button type="button" class="inline-block px-6 pt-2.5 pb-2 mb-5 bg-blue-800 text-white font-medium text-xs leading-normal uppercase rounded-3xl shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out flex align-center">
+    <button type="button" class="inline-block px-6 ml-14 sm:ml-0 pt-2.5 pb-2 mb-5 bg-blue-800 text-white font-medium text-xs leading-normal uppercase rounded-3xl shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out flex align-center">
       <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download"
         class="w-3 mr-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
         <path fill="currentColor"

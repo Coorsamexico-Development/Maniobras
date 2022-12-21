@@ -60,20 +60,14 @@ const uploadFile = () =>
     <DataTable>
         <template #section-header>
             <slot name="section-header">
-                <div class="-ml-10 -mb-6 lg:ml-36 lg:-mt-14">
+                <div class="ml-12 -mt-8 -mb-6 sm:-ml-10 lg:ml-36 lg:-mt-14">
                 <form>
                         <input type="file" accept=".xlsx , text/xlsx"  ref="fileUpload"
-                         @change="uploadFile" class="block w-full text-sm text-slate-400
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-full file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-gray-100 file:text-blue-900
-                            hover:file:bg-blue-100
-    ">
+                         @change="uploadFile" class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-blue-900 hover:file:bg-blue-100 ">
                 </form>
                 </div>
             </slot>
-            <div class="lg:-ml-64 lg:-mt-10">
+            <div class="ml-12 lg:-ml-64 lg:-mt-10">
 
             <a :href="route('export')">
                     <br><br>
@@ -83,13 +77,14 @@ const uploadFile = () =>
         </template>
         <br><br><br>
         <template #table-header>
+            
                 <tr class="text-center text-md ">
-                    <th scope="col" class=" px-5 py-3 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">
+                    <th scope="col" class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">
                         <span>
                             Nombre 
                         </span>
                     </th>
-                    <th class="px-5 py-3 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 shadow-2xl border-gray-300">
+                    <th class="px-5 py-3 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300 shadow-2xl">
                         #
                     </th>
                 </tr>
