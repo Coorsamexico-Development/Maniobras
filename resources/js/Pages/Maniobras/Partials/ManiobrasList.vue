@@ -9,11 +9,11 @@ import ModalFalta from "../Partials/ModalFalta.vue";
 const props = defineProps({
     maniobra: Object,
     maniobristas: Object,
+    message: Boolean
 });
 
 let maniobra_id = ref(-1);
 maniobra_id.value = props.maniobra.maniobra_id;
-
 
 let turnos = ref([]);
 
@@ -57,7 +57,6 @@ const closeModalFalt = () => {
     modalFalta.value = false;
 };
 
-const message = ref(true);
 
 
 </script>
@@ -381,10 +380,10 @@ const message = ref(true);
                 <button
                     @click="message = !message" 
                     type="button"
-                    :class="message ? 'p-1 px-6 my-2 ml-3.5 text-md text-white text-md font-bold bg-green-600 lg:-ml-16 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline' 
+                    :class="message ? 'p-1 px-6 my-2 ml-3.5 hidden text-md text-white text-md font-bold bg-green-600 lg:-ml-16 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline' 
                     : 'p-1 px-6 my-2 ml-8 mt-0 text-md text-white text-md font-bold bg-green-600 lg:-ml-3  lg:mt-5 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline'"
                     >
-                    {{message ? '>' : '<' }}
+                    {{message ? '>' : '>' }}
                 </button>
             </div>
 
