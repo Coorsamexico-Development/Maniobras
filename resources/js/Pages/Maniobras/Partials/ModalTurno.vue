@@ -9,6 +9,8 @@ import "v-calendar/dist/style.css";
 import { SetupCalendar, Calendar, DatePicker } from "v-calendar";
 import ButtonAdd from "@/Components/ButtonAdd.vue";
 import ModalAddTurno from "../Partials/ModalAddTurno.vue";
+import { Inertia } from "@inertiajs/inertia";
+
 var props = defineProps({
     turnos: Object,
     maniobra_id: Number,
@@ -86,7 +88,7 @@ const closeModalNewTurno = () => {
                     <tr
                         v-for="turno in turnos"
                         :key="turno.id"
-                        class="px-5 py-5 text-sm bg-white border-b border-gray-400  hover:bg-gray-200"
+                        class="px-5 py-5 text-sm bg-white border-b border-gray-400 hover:bg-gray-200"
                     >
                         <td>{{ turno.name }}</td>
                         <td>{{ turno.hora_inicio }}</td>

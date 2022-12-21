@@ -57,30 +57,31 @@ const closeModalFalt = () => {
     modalFalta.value = false;
 };
 
-    let message = ref(true);
+const message = ref(true);
+
 
 </script>
 
 <template>
-    
     <div class="p-2 mt-6 bg-white shadow-md rounded-3xl" 
     :class="message ? 'w-full' : 'lg:w-1/3'">
         <div
             :class="message ? 'grid grid-cols-3 grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-10 lg:grid-rows-1' : 
                               'grid grid-cols-3 grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-6 lg:grid-rows-1'">
             
-            <div class="-ml-10 lg:-ml-0 p-4 pl-16 md:p-4">
+            <div class="p-4 pl-16 -ml-10 lg:-ml-0 md:p-4">
                 {{ props.maniobra.cliente_name }}
             </div>
             <div
-                class="col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-3"
+            :class="message ? 'col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-3' : 
+                              'col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-4 ml-4'"
             >
                 <strong>Nombre de maniobra:</strong>
                 {{ props.maniobra.maniobra_name }}
             </div>
 
             <transition name="slide-fade">            
-                <div v-if="message" >
+                <div v-if="message">
                 <button
                     @click="modalTurn"
                     type="button"
@@ -378,10 +379,10 @@ const closeModalFalt = () => {
 
             <div class="box">
                 <button
-                    id="botonOn" @click="message = !message" 
+                    @click="message = !message" 
                     type="button"
                     :class="message ? 'p-1 px-6 my-2 ml-3.5 text-md text-white text-md font-bold bg-green-600 lg:-ml-16 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline' 
-                    : 'p-1 px-6 my-2 ml-3.5 mt-0 text-md text-white text-md font-bold bg-green-600 lg:ml-5  lg:mt-5 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline'"
+                    : 'p-1 px-6 my-2 ml-8 mt-0 text-md text-white text-md font-bold bg-green-600 lg:-ml-3  lg:mt-5 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline'"
                     >
                     {{message ? '>' : '<' }}
                 </button>
@@ -422,7 +423,7 @@ const closeModalFalt = () => {
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(30px);
+  transform: translateX(-30px);
   opacity: 0;
 }
 

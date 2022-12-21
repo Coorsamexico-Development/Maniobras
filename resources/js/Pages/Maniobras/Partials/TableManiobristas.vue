@@ -16,6 +16,8 @@ var props = defineProps({
   maniobristas:Object
 });
 
+
+
 const formManiobristas =useForm({
      fecha:null,
      turno:null,
@@ -41,7 +43,7 @@ const uploadFile = () =>
     const año = fecha.getFullYear();
 
     let fechaCompleta = año+'-'+mes+'-'+dia;
-    formManiobristas.turno = props.turno.id;
+    formManiobristas.turno = props.turno;
     formManiobristas.fecha = fechaCompleta;
   
     if(fileUpload.value != null)
