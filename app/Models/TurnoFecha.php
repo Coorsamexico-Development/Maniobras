@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TurnoFecha extends Model
 {
@@ -14,4 +15,10 @@ class TurnoFecha extends Model
         'cant_asistencia',
         'turno_id',
     ];
+
+
+    public function listaAsitencias(): HasMany
+    {
+        return $this->hasMany(listaAsitencia::class, 'turno_fecha_id');
+    }
 }
