@@ -63,7 +63,6 @@ const message = ref(true);
 </script>
 
 <template>
-
     <div class="p-2 mt-6 bg-white shadow-md rounded-3xl" 
     :class="message ? 'w-full' : 'lg:w-1/3'">
         <div
@@ -74,7 +73,8 @@ const message = ref(true);
                 {{ props.maniobra.cliente_name }}
             </div>
             <div
-                class="col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-3"
+            :class="message ? 'col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-3' : 
+                              'col-span-2 row-start-1 p-4 lg:col-start-2 lg:col-span-4 ml-4'"
             >
                 <strong>Nombre de maniobra:</strong>
                 {{ props.maniobra.maniobra_name }}
@@ -382,7 +382,7 @@ const message = ref(true);
                     @click="message = !message" 
                     type="button"
                     :class="message ? 'p-1 px-6 my-2 ml-3.5 text-md text-white text-md font-bold bg-green-600 lg:-ml-16 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline' 
-                    : 'p-1 px-6 my-2 ml-3.5 mt-0 text-md text-white text-md font-bold bg-green-600 lg:ml-5  lg:mt-5 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline'"
+                    : 'p-1 px-6 my-2 ml-8 mt-0 text-md text-white text-md font-bold bg-green-600 lg:-ml-3  lg:mt-5 rounded-3xl hover:bg-green-500 focus:outline-none focus:shadow-outline'"
                     >
                     {{message ? '>' : '<' }}
                 </button>
@@ -423,7 +423,7 @@ const message = ref(true);
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-  transform: translateX(30px);
+  transform: translateX(-30px);
   opacity: 0;
 }
 
