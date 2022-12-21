@@ -57,5 +57,11 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'is_admin'
     ];
+
+    public function getIsAdminAttribute()
+    {
+        return $this->role_id === 1;
+    }
 }
