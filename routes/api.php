@@ -32,7 +32,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(ManiobraController::class)->group(function () {
         Route::get('/maniobras', 'index');
     });
-    Route::get('/maniobras/{maniobra}/turno-fechas', [TurnoFechaController::class, 'index']);
+    Route::controller(TurnoFechaController::class)->group(function () {
+        Route::get('/maniobras/{maniobra}/turno-fechas', 'index');
+        Route::match(['put', 'patch'], '/turno-fechas/{turnoFecha}', 'update');
+    });
+
     Route::get('/turno-fechas/{turnoFecha}/lista-asitencias', [ListaAsitenciaController::class, 'index']);
     Route::match(['put', 'post'], '/lista-asitencias/{listaAsitencia}', [ListaAsitenciaController::class, 'update']);
 });

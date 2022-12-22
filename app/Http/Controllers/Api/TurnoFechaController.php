@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Maniobra;
+use App\Models\TurnoFecha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -35,6 +36,19 @@ class TurnoFechaController extends Controller
 
         return response()->json([
             'data' =>  $turnos->get()
+        ]);
+    }
+
+
+    public function update(Request $request, TurnoFecha $turnoFecha)
+    {
+        $validated =   $request->validate([
+            'active' => ['required', 'boolean']
+        ]);
+
+        $turnoFecha->update($validated);
+        return response()->json([
+            'message' => 'UPDATED'
         ]);
     }
 }

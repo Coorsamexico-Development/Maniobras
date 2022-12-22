@@ -15,7 +15,8 @@ class ListaAsitencia extends Model
         'maniobrista_id',
         'salario',
         'asistencia',
-        'imagen_url'
+        'imagen_url',
+        'active',
     ];
 
     protected $casts = [

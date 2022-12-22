@@ -27,7 +27,8 @@ class ListaAsitenciaController extends Controller
                 'maniobristas.ap_paterno',
                 'maniobristas.ap_materno'
             )
-            ->join('maniobristas', 'lista_asitencias.maniobrista_id', '=', 'maniobristas.id');
+            ->join('maniobristas', 'lista_asitencias.maniobrista_id', '=', 'maniobristas.id')
+            ->where('lista_asitencias.active', '=', 1);
         if ($request->has('search')) {
             $search = '%' . str($request->inut('search'))->replace('%', '\%') . '%';
             $maniobritas->where(function ($query) use ($search) {

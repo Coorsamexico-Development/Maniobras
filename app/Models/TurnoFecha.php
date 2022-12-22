@@ -14,8 +14,12 @@ class TurnoFecha extends Model
         'fecha',
         'cant_asistencia',
         'turno_id',
+        'active',
     ];
 
+    protected $casts = [
+        'active' => 'boolean'
+    ];
 
     public function listaAsitencias(): HasMany
     {

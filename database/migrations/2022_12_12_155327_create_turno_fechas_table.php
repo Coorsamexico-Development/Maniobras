@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('turno_fechas', function (Blueprint $table) {
             $table->id();
             $table->date('fecha');
+            $table->boolean('active')->default(1);
             $table->integer('cant_asistencia');
             $table->foreignId('turno_id')->constrained('turnos');
             $table->timestamps();
