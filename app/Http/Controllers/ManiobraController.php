@@ -60,6 +60,7 @@ class ManiobraController extends Controller
          DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia'))
         ->join('lista_asitencias','turno_fechas.id','lista_asitencias.turno_fecha_id')
         ->groupby('lista_asitencias.turno_fecha_id')
+        ->where('lista_asitencias.active','=','1')
         ->get();
 
 

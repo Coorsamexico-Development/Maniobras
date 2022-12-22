@@ -37,6 +37,8 @@ let attributes = ref([
 ]);
 
 
+console.log(props.arregloCalendar)
+
 for (let index = 0; index < props.arregloCalendar.length; index++) 
 {
     const element = props.arregloCalendar[index];
@@ -52,7 +54,7 @@ for (let index = 0; index < props.arregloCalendar.length; index++)
         const mes = formatDate.getMonth();
         const año = formatDate.getFullYear();
 
-        console.log(año +'-'+mes+'-'+dia);
+        //console.log(año +'-'+mes+'-'+dia);
         
          attributes.value.push(
             {
@@ -80,7 +82,7 @@ for (let index = 0; index < props.arregloCalendar.length; index++)
     
 }
 
-console.log(attributes.value)
+//console.log(attributes.value)
 
 
 let turnoSelect = ref(null);

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ListaAsitenciaController;
 use App\Http\Controllers\ManiobraController;
+use App\Http\Controllers\ManiobristaController;
 use App\Http\Controllers\TurnoController;
 use App\Models\Maniobra;
 use Illuminate\Foundation\Application;
@@ -56,6 +57,13 @@ Route::controller(ListaAsitenciaController::class)->group(
     {
         Route::post('/lista','store')->name('lista.store');
         Route::get('/example','exportExample')->name('export');
+    }
+);
+
+Route::controller(ManiobristaController::class)->group(
+    function()
+    {
+      Route::get('/maniobristas','index') -> name('maniobristas');
     }
 );
 

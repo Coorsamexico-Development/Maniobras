@@ -59,6 +59,11 @@ const logout = () => {
                                     Maniobras
                                 </NavLink>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <NavLink :href="route('maniobristas')" :active="route().current('maniobristas')">
+                                    Maniobristas
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">

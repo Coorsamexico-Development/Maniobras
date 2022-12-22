@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Maniobrista;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ManiobristaController extends Controller
 {
@@ -15,6 +16,21 @@ class ManiobristaController extends Controller
     public function index()
     {
         //
+        $maniobristas = Maniobrista::select("maniobristas.*");
+
+        if( request('search'))
+        {
+            $busqueda = request('search');
+            $maniobristas = $maniobristas->where(
+                'maniobristas.name','LIKE','%'.$busqueda.'%'   
+            );
+        }
+
+        return Inertia::render('Maniobristas/Maniobristas.Index', 
+        [
+            "maniobristas" => fn() => $maniobristas->get(),
+            'filters' => request()->all(['search'])
+        ]);
     }
 
     /**
