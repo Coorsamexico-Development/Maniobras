@@ -7,7 +7,6 @@ use App\Models\ListaAsitencia;
 use App\Models\TurnoFecha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
 
 class ListaAsitenciaController extends Controller
 {
@@ -44,17 +43,6 @@ class ListaAsitenciaController extends Controller
 
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -82,16 +70,5 @@ class ListaAsitenciaController extends Controller
             'asistencia' => $request->input('asistencia'),
             'imagen_url' => asset('storage/' . $path)
         ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -25,15 +25,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('login', [AuthenticationController::class, 'store']);
 
-
-Route::controller(ManiobraController::class)->group(function () {
-    Route::get('/maniobras', 'index');
-});
-Route::get('/maniobras/{maniobra}/turno-fechas', [TurnoFechaController::class, 'index']);
-Route::get('/turno-fechas/{turnoFecha}/lista-asitencias', [ListaAsitenciaController::class, 'index']);
-Route::match(['put', 'post'], '/lista-asitencias/{listaAsitencia}', [ListaAsitenciaController::class, 'update']);
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthenticationController::class, 'destroy']);
     Route::post('valid-token', [AuthenticationController::class, 'validToken']);
+
+    Route::controller(ManiobraController::class)->group(function () {
+        Route::get('/maniobras', 'index');
+    });
+    Route::get('/maniobras/{maniobra}/turno-fechas', [TurnoFechaController::class, 'index']);
+    Route::get('/turno-fechas/{turnoFecha}/lista-asitencias', [ListaAsitenciaController::class, 'index']);
+    Route::match(['put', 'post'], '/lista-asitencias/{listaAsitencia}', [ListaAsitenciaController::class, 'update']);
 });
