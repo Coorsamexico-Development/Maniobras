@@ -10,6 +10,10 @@ const props = defineProps({
     maniobra: Object,
     maniobristas: Object,
     message: Boolean,
+<<<<<<< HEAD
+=======
+    arregloCalendar:Object
+>>>>>>> e85e11edd9ce6f597773da226e0f10150049f73b
 });
 
 let maniobra_id = ref(-1);
@@ -421,6 +425,7 @@ const closeModalFalt = () => {
         :show="modalCalendar"
         :maniobristas="maniobristas"
         :turnos="turnos"
+        :arregloCalendar = "arregloCalendar"
         @close="closeCalendar"
     ></ModalCalendar>
     <ModalTurno

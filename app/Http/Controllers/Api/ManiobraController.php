@@ -17,12 +17,12 @@ class ManiobraController extends Controller
     public function index(Request $request)
     {
         $maniobras = Maniobra::select(
-            'maniobras.id AS maniobra_id',
-            'maniobras.name AS maniobra_name',
-            'maniobras.descripcion AS maniobra_desc',
-            'maniobras.salario AS maniobra_salario',
-            'maniobras.status_maniobra_id AS maniobra_status',
-            'clientes.name AS cliente_name'
+            'maniobras.id',
+            'maniobras.name',
+            'maniobras.descripcion',
+            'maniobras.salario',
+            'maniobras.status_maniobra_id',
+            'clientes.name AS cliente'
         )
             ->join('clientes', 'maniobras.cliente_id', 'clientes.id')
             ->where('maniobras.status_maniobra_id', '=', StatusManiobra::PENDIENTE->value);

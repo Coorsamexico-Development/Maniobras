@@ -12,7 +12,59 @@ const props = defineProps({
     clientes: Object,
     status_maniobras: Object,
     maniobristas: Object,
+    total_turnos_fecha:Object
 });
+
+
+/*Recorrido */
+
+let arregloCalendar = ref([]);
+let varTemp = "";
+for (let index = 0; index < props.total_turnos_fecha.length; index++) //recorrido generañ
+{
+    const element = props.total_turnos_fecha[index];
+     
+    if(element.fecha == props.total_turnos_fecha[0].fecha) //agregamos el primero al arreglo de objetos
+    {
+        arregloCalendar.value.push({ //si es igual crea el primer objeto del arreglo
+          fecha: element.fecha,
+          lista_asistencia: element.lista_asistencia,
+          cant_asistencia: element.cant_asistencia
+        });
+
+        varTemp = element.fecha;
+    }
+    else
+    {
+    
+       if(varTemp != element.fecha) //si es diferente a la varibale temporal la cambia
+       {
+          varTemp = element.fecha;
+          arregloCalendar.value.push(
+            {
+                fecha:element.fecha,
+                lista_asistencia: element.lista_asistencia,
+                cant_asistencia: element.cant_asistencia
+            }
+          )
+       }
+       else
+       {
+          for (let index2 = 0; index2 < arregloCalendar.value.length; index2++) 
+          {
+            const element2 = arregloCalendar.value[index2];
+            if(element2.fecha == element.fecha)
+            {
+                element2.lista_asistencia += element.lista_asistencia,
+                element2.cant_asistencia += element.cant_asistencia
+            }
+          }
+       }
+        
+    }
+
+}
+
 
 /*Modales*/
 const openModalNewManiobra = ref(false);
@@ -98,6 +150,7 @@ const message = ref(true);
                 :key="maniobra.id"
             >
                 <ManiobrasList
+                    :arregloCalendar ="arregloCalendar"
                     :maniobra="maniobra"
                     :maniobristas="maniobristas"
                     :message="message"
