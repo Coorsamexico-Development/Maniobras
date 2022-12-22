@@ -9,6 +9,7 @@ use App\Models\Maniobrista;
 use App\Models\StatusManiobra;
 use App\Models\TurnoFecha;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class ManiobraController extends Controller
@@ -52,12 +53,16 @@ class ManiobraController extends Controller
 
        }
 
-    /*
-       $contador_Maniobristas = ListaAsitencia::select('COUNT(lista_asistencias.id)')
-       ->group_by('turno_fecha_id')
-       ->get();
+    
+       $total_turno_fecha = TurnoFecha::select(
+        'turno_fechas.fecha',
+        'turno_fechas.cant_asistencia',
+         DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia'))
+        ->join('lista_asitencias','turno_fechas.id','lista_asitencias.turno_fecha_id')
+        ->groupby('lista_asitencias.turno_fecha_id')
+        ->get();
 
-*/
+
         $clientes = Cliente::all();
         $status_maniobras = StatusManiobra::all();
         
@@ -66,7 +71,8 @@ class ManiobraController extends Controller
             'maniobras' => $maniobras,
             'clientes' => $clientes,
             'status_maniobras' => $status_maniobras,
-            'maniobristas' => $maniobristas
+            'maniobristas' => $maniobristas,
+            'total_turnos_fecha' => $total_turno_fecha
         ]);
     }
 

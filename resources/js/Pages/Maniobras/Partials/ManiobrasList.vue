@@ -9,6 +9,7 @@ import ModalFalta from "../Partials/ModalFalta.vue";
 const props = defineProps({
     maniobra: Object,
     maniobristas: Object,
+    arregloCalendar:Object
 });
 
 let maniobra_id = ref(-1);
@@ -394,6 +395,7 @@ const message = ref(true);
         :show="modalCalendar"
         :maniobristas="maniobristas"
         :turnos="turnos"
+        :arregloCalendar = "arregloCalendar"
         @close="closeCalendar"
     ></ModalCalendar>
     <ModalTurno
