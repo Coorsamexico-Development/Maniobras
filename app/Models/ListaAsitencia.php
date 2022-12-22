@@ -18,6 +18,10 @@ class ListaAsitencia extends Model
         'imagen_url'
     ];
 
+    protected $casts = [
+        'asistencia' => 'boolean',
+    ];
+
 
     public function maniobrista(): BelongsTo
     {
