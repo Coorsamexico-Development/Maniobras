@@ -16,7 +16,9 @@ var props = defineProps({
     turnos: Object,
     maniobra_id: Number,
     maniobristas: Object,
+    arregloCalendar:Object
 });
+
 
 const emit = defineEmits(["close"]);
 
@@ -33,6 +35,53 @@ let attributes = ref([
 
     }*/
 ]);
+
+
+for (let index = 0; index < props.arregloCalendar.length; index++) 
+{
+    const element = props.arregloCalendar[index];
+    let total = 0;
+    
+    if(element.lista_asistencia && element.cant_asistencia)
+    {
+       total = element.cant_asistencia - element.lista_asistencia;
+       if(total > 0)
+       {
+        let formatDate = new Date(element.fecha);
+        const dia = formatDate.getDate()+1;
+        const mes = formatDate.getMonth();
+        const año = formatDate.getFullYear();
+
+        console.log(año +'-'+mes+'-'+dia);
+        
+         attributes.value.push(
+            {
+                dates:new Date(año, mes, dia),
+                highlight: 'red'
+            }
+         );
+       }
+       if(total <= 0)
+       {
+        let formatDate = new Date(element.fecha);
+        const dia = formatDate.getDate()+1;
+        const mes = formatDate.getMonth();
+        const año = formatDate.getFullYear();
+
+
+        attributes.value.push(
+            {
+                dates:new Date(año, mes, dia),
+                highlight: 'green'
+            }
+         );
+       }
+    }
+    
+}
+
+console.log(attributes.value)
+
 
 let turnoSelect = ref(null);
 const selectedTurn = (turno) => {
