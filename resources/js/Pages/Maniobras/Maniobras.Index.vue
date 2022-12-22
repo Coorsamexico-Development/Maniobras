@@ -77,6 +77,7 @@ const closeModalNewManiobra = () => {
     openModalNewManiobra.value = false;
 };
 
+const message = ref(true);
 </script>
 
 <template>
@@ -105,21 +106,43 @@ const closeModalNewManiobra = () => {
             </ButtonAdd>
         </template>
 
-        <div class="inline-flex mt-5 mr-14" style="float: right">
-            <button
+        <div class="inline-flex mt-5 mr-28" style="float: right">
+            <!----<button
                 class="px-2 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-l opacity-50 cursor-not-allowed hover:bg-gray-400"
-            >
-                Visualizar
-            </button>
+            >-->
             <button
-                @click="message = !message" 
+                @click="message = !message"
                 type="button"
-                class="px-3 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-r bo hover:bg-gray-400" 
+                class="inline-flex items-center px-2 py-2 -mr-16 text-xs text-blue-600 uppercase bg-white rounded-xl font-xs hover:bg-slate-100 border-slate-200"
             >
-                Ocultar
+                <svg
+                    version="1.1"
+                    id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    height="20px"
+                    width="15px"
+                    x="5px"
+                    y="5px"
+                    viewBox="0 0 455 455"
+                    style="enable-background: new 0 0 455 455"
+                >
+                    <path
+                        d="M415,102.509c-22.091,0-40,17.909-40,40c0,5.542,1.128,10.821,3.166,15.62l-83.791,83.792
+	c-4.799-2.038-10.078-3.167-15.621-3.167s-10.822,1.129-15.621,3.167l-50.053-50.053c2.038-4.799,3.166-10.078,3.166-15.621
+	c0-22.091-17.909-40-40-40c-22.091,0-40,17.909-40,40c0,5.542,1.128,10.821,3.166,15.62l-83.792,83.791
+	c-4.799-2.038-10.078-3.167-15.621-3.167c-22.091,0-40,17.909-40,40s17.909,40,40,40s40-17.909,40-40
+	c0-5.542-1.128-10.821-3.166-15.62l83.792-83.791c4.799,2.038,10.078,3.166,15.621,3.166c5.542,0,10.821-1.128,15.62-3.166
+	l50.054,50.054c-2.038,4.799-3.166,10.078-3.166,15.62c0,22.091,17.909,40,40,40c22.091,0,40-17.909,40-40
+	c0-5.542-1.128-10.821-3.166-15.62l83.791-83.792c4.799,2.038,10.078,3.166,15.621,3.166c22.091,0,40-17.909,40-40
+	S437.091,102.509,415,102.509z"
+                    />
+                </svg>
+
+                {{ message ? " Grafícas" : " Ocultar" }}
             </button>
         </div>
-        
+
         <div class="py-12">
             <div
                 class="ml-10 mr-10"
@@ -130,6 +153,7 @@ const closeModalNewManiobra = () => {
                     :arregloCalendar ="arregloCalendar"
                     :maniobra="maniobra"
                     :maniobristas="maniobristas"
+                    :message="message"
                 ></ManiobrasList>
             </div>
         </div>

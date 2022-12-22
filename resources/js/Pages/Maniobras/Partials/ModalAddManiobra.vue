@@ -118,7 +118,7 @@ const close = () => {
       </form>
 
       <div class="float-right m-4 mt-8 -mr-1">
-        <ButtonSave @click="enviarFormManiobra()"> Guardar </ButtonSave>
+        <ButtonSave @click="enviarFormManiobra()" >Guardar </ButtonSave>
       </div>
     </template>
     <template #footer>

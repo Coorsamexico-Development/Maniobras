@@ -8,6 +8,8 @@ import SelectComponent from "@/Components/SelectComponent.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import ButtonClose from "@/Components/ButtonClose.vue";
 import ButtonSave from "@/Components/ButtonSave.vue";
+import { Inertia } from "@inertiajs/inertia";
+
 
 var props = defineProps({
   maniobra_id: Number,
