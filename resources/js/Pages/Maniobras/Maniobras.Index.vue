@@ -160,7 +160,13 @@ const message = ref(true);
 
             <div>
                 
-                <div class="grid grid-cols-1 gap-20 grafica_scroll mt-24" >
+                <div 
+                :class="
+                            message
+                                ? 'grid grid-cols-1 gap-20 grafica_scroll_sm mt-24'
+                                : 'grid grid-cols-1 gap-20 grafica_scroll mt-24'
+                        "
+                >
                     <div
                         :class="
                             message
@@ -200,5 +206,10 @@ const message = ref(true);
     overflow-x: scroll;
     width: 100%;
     height: 40%;
+}
+
+.grafica_scroll_sm {
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 </style>
