@@ -72,7 +72,7 @@ const change = (maniobrista_id, check) =>
 <template>
     <DataTable>
         <template #section-header>
-            <Buscador class="mt-2" v-model="params.search"></Buscador>    
+            <Buscador class="mt-2 " v-model="params.search"></Buscador>    
         </template>
         <template #table-header>
            <tr>
@@ -86,8 +86,8 @@ const change = (maniobrista_id, check) =>
            </tr>
         </template>
         <template #table-body>
-             <tr v-for="maniobrista in maniobristas" :key="maniobrista.id">
-                <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.name}}</td>
+             <tr v-for="maniobrista in maniobristas" :key="maniobrista.id" class="hover:table-fixed hover:bg-gray-200 px-5 py-5 text-sm bg-white border-b border-gray-300">
+                <td class="w-1/12 px-4 py-4 text-sm  ">{{maniobrista.name}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.ap_paterno}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.ap_materno}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.telefono}}</td>
