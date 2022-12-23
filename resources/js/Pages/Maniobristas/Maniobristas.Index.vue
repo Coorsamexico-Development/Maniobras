@@ -24,7 +24,7 @@ const props = defineProps({
         </template>
         <div>
             <div class="max-w-screen-xl mx-auto mt-10 sm:px-8 lg:px-10">
-                <div class="overflow-hidden bg-white shadow-3xl rounded-3xl">
+                <div class="overflow-hidden  shadow-3xl rounded-3xl">
                     <div>
                          <TableManiobristas :maniobristas="props.maniobristas" :filters="props.filters"></TableManiobristas>
                     </div>

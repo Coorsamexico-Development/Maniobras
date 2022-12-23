@@ -76,17 +76,17 @@ const change = (maniobrista_id, check) =>
         </template>
         <template #table-header>
            <tr>
-            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Nombre</th>
-            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Apellido paterno</th>
-            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Apellido materno</th>
-            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Telefono</th>
-            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Faltas seguidas</th>
-            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Faltas totales</th>
-            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Acciones</th>
+            <th class="px-8 py-3 ml-12  -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Nombre</th>
+            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Apellido paterno</th>
+            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Apellido materno</th>
+            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Telefono</th>
+            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Faltas seguidas</th>
+            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Faltas totales</th>
+            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Acciones</th>
            </tr>
         </template>
         <template #table-body>
-             <tr v-for="maniobrista in maniobristas" :key="maniobrista.id" class="hover:table-fixed hover:bg-gray-200 px-5 py-5 text-sm bg-white border-b border-gray-300">
+             <tr v-for="maniobrista in maniobristas" :key="maniobrista.id" class="hover:table-fixed hover:bg-gray-200 px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <td class="w-1/12 px-4 py-4 text-sm  ">{{maniobrista.name}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.ap_paterno}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.ap_materno}}</td>
