@@ -15,7 +15,65 @@ const props = defineProps({
     status_maniobras: Object,
     maniobristas: Object,
     total_turnos_fecha: Object,
+
+    data_grafico_circulo:Object,
+    data_grafico_series:Object
 });
+
+
+/*Recorrido reestructuracion data para grafico circular*/ 
+let arregloGraphCircular = ref([]);
+let turnoTemp = "";
+
+for (let indice = 0; indice < props.data_grafico_circulo.length; indice++)
+ {
+    const elemento = props.data_grafico_circulo[indice];
+    if(elemento == props.data_grafico_circulo[0])
+    {
+        arregloGraphCircular.value.push(
+            {
+                turno:elemento.turno,
+                cant_asistencia:elemento.cant_asistencia,
+                lista_asistencia:elemento.lista_asistencia,
+                salario:elemento.salario
+            }
+        );
+        turnoTemp = elemento.turno;
+    }
+    else
+    {
+      if(elemento.turno !== turnoTemp)
+      {
+        arregloGraphCircular.value.push(
+            {
+                turno:elemento.turno,
+                cant_asistencia:elemento.cant_asistencia,
+                lista_asistencia:elemento.lista_asistencia,
+                salario:elemento.salario
+            }
+        );
+        turnoTemp = elemento.turno
+      }
+      else
+      {
+        
+         for (let indice2 = 0; indice2 < arregloGraphCircular.value.length; indice2++)
+         {
+            const elemento2 = arregloGraphCircular.value[indice2];
+            if(elemento2.turno == elemento.turno)
+            {
+               elemento2.cant_asistencia += elemento.cant_asistencia;
+               elemento2.lista_asistencia += elemento.lista_asistencia,
+               elemento2.salario += elemento.salario
+            }
+         }
+      }
+    }
+ }
+
+ //console.log(arregloGraphCircular.value);
+
+/*Fin recorrido reestructuracion data para grafico circular*/ 
 
 /*Recorrido */
 
@@ -74,6 +132,7 @@ const closeModalNewManiobra = () => {
     openModalNewManiobra.value = false;
 };
 
+
 const message = ref(true);
 </script>
 
@@ -102,7 +161,6 @@ const message = ref(true);
                 </svg>
             </ButtonAdd>
         </template>
-
         <div>
             <div class="inline-flex mt-10 mr-28" style="float: right">
                 <!----<button
@@ -184,7 +242,7 @@ const message = ref(true);
                                 : 'bg-white rounded-3xl shadow-2xl'
                         "
                     >
-                        <Graph1></Graph1>
+                        <Graph1 :data="arregloGraphCircular"></Graph1>
                     </div>
                 </div>
             </div>

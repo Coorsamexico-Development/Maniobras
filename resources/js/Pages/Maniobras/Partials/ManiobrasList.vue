@@ -6,6 +6,9 @@ import ModalCalendar from "../Partials/ModalCalendar.vue";
 import ModalTurno from "../Partials/ModalTurno.vue";
 import ModalFalta from "../Partials/ModalFalta.vue";
 
+
+const emit = defineEmits(['selected']);
+
 const props = defineProps({
     maniobra: Object,
     maniobristas: Object,
@@ -57,6 +60,20 @@ const modalFalt = () => {
 const closeModalFalt = () => {
     modalFalta.value = false;
 };
+
+const emision = (id) => 
+{
+    Inertia.visit(route("maniobras"),
+        {
+            data: {
+                maniobra_id:id
+            },
+            replace: true,
+            preserveScroll: true,
+            preserveState: true,
+            only: ['data_grafico_circulo','data_grafico_series']
+        });
+}
 </script>
 
 <template>
@@ -383,6 +400,7 @@ const closeModalFalt = () => {
 
             <div class="box">
                 <button
+                    @click="emision(props.maniobra.maniobra_id)"
                     type="button"
                     :class="
                         message

@@ -63,29 +63,41 @@ class ManiobraController extends Controller
         ->where('lista_asitencias.active','=','1')
         ->get();
 
+
+        //Datos para graficas
+
         $data_grafico_circulo = TurnoFecha::select(
             "turnos.name AS turno",
             "turno_fechas.cant_asistencia",
-             DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia'))
-             ->join('lista_asitencias','turno_fechas.id','lista_asitencias.turno_fecha_id')
-             ->join('turnos', 'turno_fechas.turno_id','turnos.id')
-             ->groupby('turno_fechas.id')
-             ->get();
-
-        $data_grafico_series = TurnoFecha::select(
-            "maniobras.name AS maniobra",
-            "turnos.name AS turno",
-            "turno_fechas.cant_asistencia",
-            "turno_fechas.fecha",
-            "lista_asitencias.salario",
-             DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia'))
+             DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia'),
+             DB::raw('SUM(lista_asitencias.salario) AS salario'),
+             "lista_asitencias.salario"
+             )
              ->join('lista_asitencias','turno_fechas.id','lista_asitencias.turno_fecha_id')
              ->join('turnos', 'turno_fechas.turno_id','turnos.id')
              ->join('maniobras', 'turnos.maniobra_id','maniobras.id')
-             ->groupby('turno_fechas.id')
-             ->get();
-        
-        
+             ->where('lista_asitencias.asistencia','=',1)
+             ->groupby('turno_fechas.id');
+
+       
+        $data_grafico_series = TurnoFecha::select(
+                "maniobras.name AS maniobra",
+                "turnos.name AS turno",
+                "turno_fechas.cant_asistencia",
+                "turno_fechas.fecha",
+                "lista_asitencias.salario",
+                 DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia'))
+                 ->join('lista_asitencias','turno_fechas.id','lista_asitencias.turno_fecha_id')
+                 ->join('turnos', 'turno_fechas.turno_id','turnos.id')
+                 ->join('maniobras', 'turnos.maniobra_id','maniobras.id')
+                 ->groupby('turno_fechas.id');
+
+        if($request->has('maniobra_id'))
+        {
+           $data_grafico_circulo -> where('maniobras.id','=',$request['maniobra_id']);
+           $data_grafico_series -> where('maniobras.id','=',$request['maniobra_id']);
+        }
+
 
         $clientes = Cliente::all();
         $status_maniobras = StatusManiobra::all();
@@ -97,8 +109,8 @@ class ManiobraController extends Controller
             'status_maniobras' => $status_maniobras,
             'maniobristas' => $maniobristas,
             'total_turnos_fecha' => $total_turno_fecha,
-            'data_grafico_circulo' => $data_grafico_circulo,
-            'data_grafico-series' => $data_grafico_series
+            'data_grafico_circulo' => fn() => $data_grafico_circulo->get(),
+            'data_grafico_series' => fn() => $data_grafico_series->get()
         ]);
     }
 
