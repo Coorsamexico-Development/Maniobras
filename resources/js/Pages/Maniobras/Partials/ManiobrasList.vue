@@ -61,14 +61,14 @@ const closeModalFalt = () => {
 
 <template>
     <div
-        class="p-2 mt-6 bg-white shadow-md rounded-3xl"
-        :class="message ? 'w-full' : 'lg:w-1/3'"
+        class="p-2 mt-6 bg-white shadow-md rounded-3xl "
+        :class="message ? 'w-full ' : 'maniobra'"
     >
         <div
             :class="
                 message
-                    ? 'grid grid-cols-3 grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-10 lg:grid-rows-1'
-                    : 'grid grid-cols-3 grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-6 lg:grid-rows-1'
+                    ? 'grid grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-10 lg:grid-rows-1'
+                    : 'grid grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-6 lg:grid-rows-1'
             "
         >
             <div class="p-4 pl-16 -ml-10 lg:-ml-0 md:p-4">
@@ -383,7 +383,6 @@ const closeModalFalt = () => {
 
             <div class="box">
                 <button
-                    @click="message = !message"
                     type="button"
                     :class="
                         message
@@ -469,4 +468,9 @@ const closeModalFalt = () => {
         transform: scale(1);
     }
 }
+
+.maniobra{
+width: 500px;
+}
+
 </style>
