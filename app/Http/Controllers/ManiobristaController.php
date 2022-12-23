@@ -86,6 +86,22 @@ class ManiobristaController extends Controller
     public function update(Request $request, Maniobrista $maniobrista)
     {
         //
+        if($request['checkChange'] == false)
+        {
+           Maniobrista::where('id','=',$request['maniobristaid'])
+           ->update([
+             'active' => $request['checkChange']
+           ]);
+        }
+
+        if($request['checkChange'] == true)
+        {
+            Maniobrista::where('id','=',$request['maniobristaid'])
+            ->update([
+              'active' => $request['checkChange']
+            ]);
+        }
+ 
     }
 
     /**

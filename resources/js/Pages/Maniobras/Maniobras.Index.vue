@@ -12,7 +12,7 @@ const props = defineProps({
     clientes: Object,
     status_maniobras: Object,
     maniobristas: Object,
-    total_turnos_fecha:Object
+    total_turnos_fecha:Object,
 });
 
 

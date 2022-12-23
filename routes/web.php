@@ -64,6 +64,7 @@ Route::controller(ManiobristaController::class)->group(
     function()
     {
       Route::get('/maniobristas','index') -> name('maniobristas');
+      Route::post('/maniobristas/{maniobrista_id}','update')->name('maniobristas.update');
     }
 );
 

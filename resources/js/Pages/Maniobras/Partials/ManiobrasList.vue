@@ -10,6 +10,7 @@ const props = defineProps({
     maniobra: Object,
     maniobristas: Object,
     message: Boolean,
+    arregloCalendar:Object
 });
 
 let maniobra_id = ref(-1);

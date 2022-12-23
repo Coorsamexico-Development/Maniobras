@@ -39,6 +39,8 @@ let attributes = ref([
 
 console.log(props.arregloCalendar)
 
+
+//console.log(attributes.value)
 for (let index = 0; index < props.arregloCalendar.length; index++) 
 {
     const element = props.arregloCalendar[index];
@@ -81,8 +83,6 @@ for (let index = 0; index < props.arregloCalendar.length; index++)
     }
     
 }
-
-//console.log(attributes.value)
 
 
 let turnoSelect = ref(null);

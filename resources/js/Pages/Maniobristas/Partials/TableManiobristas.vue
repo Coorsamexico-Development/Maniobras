@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import DataTable from '@/Components/DataTable.vue';
 import Buscador from '@/Components/Buscador.vue';
+import SwitchButton from '@/Components/SwitchButton.vue';
 import axios from 'axios';
 import { useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from '@inertiajs/inertia';
@@ -13,14 +14,13 @@ var props = defineProps({
   filters:Object
 });
 
+//Funciones buscador
 const params = reactive({
     search: props.filters.search
-})
+});
 
 
 watch(params, (newValue) => {
-    console.log(newValue);
-
     Inertia.visit(route("maniobristas"),
         {
             data: {
@@ -30,14 +30,49 @@ watch(params, (newValue) => {
             preserveScroll: true,
             preserveState: true,
         });
-})
+});
+
+//Funciones switch
 
 
+const change = (maniobrista_id, check) =>
+{
+   let newCheck = -1;
+   if(check == 1)
+   {
+
+      newCheck = !check;
+   }
+   else
+   {
+     newCheck = !check;
+   }
+   
+   console.log(newCheck)
+   axios.post(route('maniobristas.update', maniobrista_id),
+         {
+                    maniobristaid: maniobrista_id,
+                    checkChange: newCheck,
+
+             }).catch( error =>{
+                    if (error.response) {
+                        let messageError = '';
+                        const messageServer = error.response.data.message
+                        if(error.response.status != 500){
+                            messageError = messageServer;
+                        }else{
+                            messageError = 'Internal Server Error';
+                        }
+                    }
+                });
+  
+ 
+}
 </script>
 <template>
     <DataTable>
         <template #section-header>
-            <Buscador v-model="params.search"></Buscador>
+            <Buscador class="mt-2" v-model="params.search"></Buscador>    
         </template>
         <template #table-header>
            <tr>
@@ -47,6 +82,7 @@ watch(params, (newValue) => {
             <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Telefono</th>
             <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Faltas seguidas</th>
             <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Faltas totales</th>
+            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300">Acciones</th>
            </tr>
         </template>
         <template #table-body>
@@ -57,6 +93,10 @@ watch(params, (newValue) => {
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.telefono}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.faltas_seguidas}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.faltas_totales}}</td>
+                <td>
+                    <SwitchButton v-if="maniobrista.active" @change="change(maniobrista.id, maniobrista.active)" checked></SwitchButton>
+                    <SwitchButton v-if="!maniobrista.active" @change="change(maniobrista.id, maniobrista.active)" ></SwitchButton>
+                </td>
              </tr>    
         </template>
     </DataTable>
