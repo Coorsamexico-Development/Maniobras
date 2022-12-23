@@ -37,7 +37,7 @@ let attributes = ref([
 ]);
 
 
-console.log(props.arregloCalendar)
+//console.log(props.arregloCalendar)
 
 
 //console.log(attributes.value)

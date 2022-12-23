@@ -6,6 +6,7 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import ButtonAdd from "@/Components/ButtonAdd.vue";
 import ModalAddManiobra from "../Maniobras/Partials/ModalAddManiobra.vue";
 import ManiobrasList from "../Maniobras/Partials/ManiobrasList.vue";
+import Graph2 from "../Maniobras/Partials/Graph2.vue";
 
 const props = defineProps({
     maniobras: Object,
@@ -65,7 +66,6 @@ for (let index = 0; index < props.total_turnos_fecha.length; index++) //recorrid
 
 }
 
-
 /*Modales*/
 const openModalNewManiobra = ref(false);
 
@@ -105,6 +105,9 @@ const message = ref(true);
                 </svg>
             </ButtonAdd>
         </template>
+        <div >
+            <Graph2></Graph2>
+        </div>
 
         <div class="inline-flex mt-5 mr-28" style="float: right">
             <!----<button
@@ -157,6 +160,7 @@ const message = ref(true);
                 ></ManiobrasList>
             </div>
         </div>
+
         <ModalAddManiobra
             :clientes="clientes"
             :status_maniobras="status_maniobras"
@@ -164,4 +168,5 @@ const message = ref(true);
             @close="closeModalNewManiobra"
         ></ModalAddManiobra>
     </AppLayout>
+    
 </template>

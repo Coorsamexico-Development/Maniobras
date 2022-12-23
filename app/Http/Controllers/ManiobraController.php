@@ -63,6 +63,29 @@ class ManiobraController extends Controller
         ->where('lista_asitencias.active','=','1')
         ->get();
 
+        $data_grafico_circulo = TurnoFecha::select(
+            "turnos.name AS turno",
+            "turno_fechas.cant_asistencia",
+             DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia'))
+             ->join('lista_asitencias','turno_fechas.id','lista_asitencias.turno_fecha_id')
+             ->join('turnos', 'turno_fechas.turno_id','turnos.id')
+             ->groupby('turno_fechas.id')
+             ->get();
+
+        $data_grafico_series = TurnoFecha::select(
+            "maniobras.name AS maniobra",
+            "turnos.name AS turno",
+            "turno_fechas.cant_asistencia",
+            "turno_fechas.fecha",
+            "lista_asitencias.salario",
+             DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia'))
+             ->join('lista_asitencias','turno_fechas.id','lista_asitencias.turno_fecha_id')
+             ->join('turnos', 'turno_fechas.turno_id','turnos.id')
+             ->join('maniobras', 'turnos.maniobra_id','maniobras.id')
+             ->groupby('turno_fechas.id')
+             ->get();
+        
+        
 
         $clientes = Cliente::all();
         $status_maniobras = StatusManiobra::all();
@@ -73,7 +96,9 @@ class ManiobraController extends Controller
             'clientes' => $clientes,
             'status_maniobras' => $status_maniobras,
             'maniobristas' => $maniobristas,
-            'total_turnos_fecha' => $total_turno_fecha
+            'total_turnos_fecha' => $total_turno_fecha,
+            'data_grafico_circulo' => $data_grafico_circulo,
+            'data_grafico-series' => $data_grafico_series
         ]);
     }
 
