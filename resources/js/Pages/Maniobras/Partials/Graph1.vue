@@ -1,3 +1,7 @@
+<template>
+  <div class="hello" ref="chartdiv">
+  </div>
+</template>
 <script>
   import AppLayout from "@/Layouts/AppLayout.vue";
   import Welcome from "@/Components/Welcome.vue";
