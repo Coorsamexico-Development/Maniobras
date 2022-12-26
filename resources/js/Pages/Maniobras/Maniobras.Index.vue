@@ -161,14 +161,14 @@ const message = ref(true);
             </ButtonAdd>
         </template>
         <div>
-            <div class="inline-flex mt-10 mr-28" style="float: right">
+    <div style="margin-left: 42px; margin-top: 30px; margin-bottom: -50px">
                 <!----<button
                 class="px-2 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-l opacity-50 cursor-not-allowed hover:bg-gray-400"
             >-->
                 <button
                     @click="message = !message"
                     type="button"
-                    class="inline-flex items-center px-2 py-2 -mr-16 text-xs text-blue-600 uppercase bg-white rounded-xl font-xs hover:bg-slate-100 border-slate-200"
+                    class="inline-flex  items-center px-2 py-2 -mr-16 text-xs text-blue-600 uppercase bg-white rounded-xl font-xs hover:bg-slate-100 border-slate-200"
                 >
                     <svg
                         version="1.1"
@@ -199,7 +199,7 @@ const message = ref(true);
             </div>
         </div>
 
-        <div :class="message ? 'grid grid-cols-1 ' : 'lg:grid grid-cols-2'">
+        <div :class="message ? 'grid grid-cols-1 sm:mr-12 ' : 'lg:grid grid-cols-2 sm:mr-12 mr-0'">
             <div class="mt-20">
                 <div
                     class="ml-10 mr-10"
@@ -241,8 +241,8 @@ const message = ref(true);
                                 : 'bg-white rounded-3xl shadow-2xl'
                         "
                     >
-                        <Graph1 :data="arregloGraphCircular"></Graph1> 
-                        {{ arregloGraphCircular }}
+                    <!----<Graph1 :data="arregloGraphCircular"></Graph1>-->
+            
                     </div>
                 </div>
             </div>
@@ -270,4 +270,5 @@ const message = ref(true);
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
 </style>

@@ -89,7 +89,7 @@ chart.data = [{
 for (let index = 0; index < datos.length; index++) {
             const element = datos[index];
             //console.log(element.name);
-            ejey.push({ category: element.nombre, ceco:element.ceco});
+            datos.push({ name: element.name, ceco:element.ceco});
             //AGRUPACION 
             if(this.filtros.grupoType)
             {
