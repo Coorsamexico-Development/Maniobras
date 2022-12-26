@@ -13,7 +13,7 @@
     mounted() {
       let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
         
-             // Add data
+      // Add data
       chart.data = [{
         "date": "2013-01-16",
         "market1": 71,

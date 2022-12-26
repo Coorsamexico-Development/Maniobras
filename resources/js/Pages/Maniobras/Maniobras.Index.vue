@@ -6,8 +6,8 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import ButtonAdd from "@/Components/ButtonAdd.vue";
 import ModalAddManiobra from "../Maniobras/Partials/ModalAddManiobra.vue";
 import ManiobrasList from "../Maniobras/Partials/ManiobrasList.vue";
+import Graph1 from "../Maniobras/Partials/Graph1.vue";
 import Graph2 from "../Maniobras/Partials/Graph2.vue";
-import Graph1 from "@/Components/Graph1.vue";
 
 const props = defineProps({
     maniobras: Object,
@@ -15,7 +15,6 @@ const props = defineProps({
     status_maniobras: Object,
     maniobristas: Object,
     total_turnos_fecha: Object,
-
     data_grafico_circulo:Object,
     data_grafico_series:Object
 });
@@ -82,7 +81,7 @@ let varTemp = "";
 for (
     let index = 0;
     index < props.total_turnos_fecha.length;
-    index++ //recorrido generañ
+    index++ //recorrido general
 ) {
     const element = props.total_turnos_fecha[index];
 
@@ -242,7 +241,8 @@ const message = ref(true);
                                 : 'bg-white rounded-3xl shadow-2xl'
                         "
                     >
-                        <Graph1 :data="arregloGraphCircular"></Graph1>
+                        <Graph1 :data="arregloGraphCircular"></Graph1> 
+                        {{ arregloGraphCircular }}
                     </div>
                 </div>
             </div>
