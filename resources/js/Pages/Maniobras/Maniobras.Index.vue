@@ -6,8 +6,8 @@ import { Head, Link } from "@inertiajs/inertia-vue3";
 import ButtonAdd from "@/Components/ButtonAdd.vue";
 import ModalAddManiobra from "../Maniobras/Partials/ModalAddManiobra.vue";
 import ManiobrasList from "../Maniobras/Partials/ManiobrasList.vue";
+import Graph1 from "../Maniobras/Partials/Graph1.vue";
 import Graph2 from "../Maniobras/Partials/Graph2.vue";
-import Graph1 from "@/Components/Graph1.vue";
 
 const props = defineProps({
     maniobras: Object,
@@ -15,7 +15,6 @@ const props = defineProps({
     status_maniobras: Object,
     maniobristas: Object,
     total_turnos_fecha: Object,
-
     data_grafico_circulo:Object,
     data_grafico_series:Object
 });
@@ -161,7 +160,7 @@ let varTemp = "";
 for (
     let index = 0;
     index < props.total_turnos_fecha.length;
-    index++ //recorrido generañ
+    index++ //recorrido general
 ) {
     const element = props.total_turnos_fecha[index];
 
@@ -241,14 +240,14 @@ const message = ref(true);
             </ButtonAdd>
         </template>
         <div>
-            <div class="inline-flex mt-10 mr-28" style="float: right">
+    <div style="margin-right: 82px; margin-top: 30px; margin-bottom: -50px; float: right">
                 <!----<button
                 class="px-2 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-l opacity-50 cursor-not-allowed hover:bg-gray-400"
             >-->
                 <button
                     @click="message = !message"
                     type="button"
-                    class="inline-flex items-center px-2 py-2 -mr-16 text-xs text-blue-600 uppercase bg-white rounded-xl font-xs hover:bg-slate-100 border-slate-200"
+                    class="inline-flex  items-center px-2 py-2 -mr-16 text-xs text-blue-600 uppercase bg-white rounded-xl font-xs hover:bg-slate-100 border-slate-200"
                 >
                     <svg
                         version="1.1"
@@ -279,7 +278,7 @@ const message = ref(true);
             </div>
         </div>
 
-        <div :class="message ? 'grid grid-cols-1 ' : 'lg:grid grid-cols-2'">
+        <div :class="message ? 'grid grid-cols-1 sm:mr-12 ' : 'lg:grid grid-cols-2 sm:mr-12 mr-0'">
             <div class="mt-20">
                 <div
                     class="ml-10 mr-10"
@@ -321,7 +320,8 @@ const message = ref(true);
                                 : 'bg-white rounded-3xl shadow-2xl'
                         "
                     >
-                        <Graph1 :data="arregloGraphCircular"></Graph1>
+                    <!----<Graph1 :data="arregloGraphCircular"></Graph1>-->
+            
                     </div>
                 </div>
             </div>
@@ -349,4 +349,5 @@ const message = ref(true);
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
 </style>

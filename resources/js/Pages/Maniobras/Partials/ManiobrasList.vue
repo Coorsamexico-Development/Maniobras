@@ -84,7 +84,7 @@ const emision = (id) =>
         <div
             :class="
                 message
-                    ? 'grid grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-10 lg:grid-rows-1'
+                    ? 'grid grid-rows-1 gap-2 grid-cols-3  overflow-hidden wrapper lg:grid-cols-10 lg:grid-rows-1'
                     : 'grid grid-rows-1 gap-2 overflow-hidden wrapper lg:grid-cols-6 lg:grid-rows-1'
             "
         >
@@ -480,7 +480,7 @@ const emision = (id) =>
         transform: scale(0);
     }
     50% {
-        transform: scale(1.5);
+        transform: scale(1);
     }
     100% {
         transform: scale(1);
