@@ -20,6 +20,85 @@ const props = defineProps({
     data_grafico_series:Object
 });
 
+/*Recorrido reestructuracion data para grafico series*/ 
+
+let arregloGraphSeries = ref([]);
+let fechaTemporal = "";
+let turnoTemporal = "";
+
+let ObjetoTemporalFecha = {};
+let ObjetoTemporalTurno = {};
+
+for (let indi = 0; indi < props.data_grafico_series.length; indi++) 
+{
+    const Obj = props.data_grafico_series[indi];
+    //console.log(Obj);
+    if(Obj == props.data_grafico_series[0])
+    {
+        ObjetoTemporalTurno[`${Obj.turno}`] = {
+             requeridos: Obj.cant_asistencia,
+             asistieron: Obj.lista_asistencia,
+             salario:Obj.salario
+          }
+        ObjetoTemporalFecha[`${Obj.fecha}`] = ObjetoTemporalTurno;
+
+        arregloGraphSeries.value.push(ObjetoTemporalFecha);
+        fechaTemporal = Obj.fecha;
+        turnoTemporal = Obj.turno;
+    }
+    else
+    {
+        if(Obj.fecha == fechaTemporal)
+        {
+          if(Obj.turno == turnoTemporal) 
+          {
+           //console.log( ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`]);
+           ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`].requeridos += Obj.cant_asistencia;
+           ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`].asistieron += Obj.lista_asistencia;
+           ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`].salario += Obj.salario;
+          }
+          else //si el turno es diferente
+          {
+           //console.log(ObjetoTemporalFecha[`${Obj.fecha}`] );
+            ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`] = 
+            {
+              requeridos: Obj.cant_asistencia,
+              asistieron: Obj.lista_asistencia,
+              salario:Obj.salario
+            };   
+          }
+
+          fechaTemporal = Obj.fecha;
+          turnoTemporal = Obj.turno;
+        }
+        else //si la fecha es distinta
+        {
+           let newObjectFecha = {};
+           let newObjectTurno = {};
+
+           newObjectTurno[`${Obj.turno}`] = {
+             requeridos: Obj.cant_asistencia,
+             asistieron: Obj.lista_asistencia,
+             salario:Obj.salario
+          }
+          newObjectFecha[`${Obj.fecha}`] = newObjectTurno;
+
+          arregloGraphSeries.value.push(newObjectFecha);
+          fechaTemporal = Obj.fecha;
+          turnoTemporal = Obj.turno;
+        }
+    }
+
+
+ 
+}
+
+//console.log(arregloGraphSeries.value);
+
+//console.log(arregloGraphSeries);
+
+/*Fin recorrido reestructuracion data para grafico series*/ 
+
 
 /*Recorrido reestructuracion data para grafico circular*/ 
 let arregloGraphCircular = ref([]);
@@ -232,7 +311,7 @@ const message = ref(true);
                                 : 'bg-white rounded-3xl shadow-2xl'
                         "
                     >
-                      <Graph2></Graph2>
+                      <Graph2 :data ="arregloGraphSeries"></Graph2>
 
                     </div>
                     <div

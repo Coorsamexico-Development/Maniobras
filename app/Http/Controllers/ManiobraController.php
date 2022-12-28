@@ -90,6 +90,7 @@ class ManiobraController extends Controller
                  ->join('lista_asitencias','turno_fechas.id','lista_asitencias.turno_fecha_id')
                  ->join('turnos', 'turno_fechas.turno_id','turnos.id')
                  ->join('maniobras', 'turnos.maniobra_id','maniobras.id')
+                 ->where('lista_asitencias.asistencia','=',1)
                  ->groupby('turno_fechas.id');
 
         if($request->has('maniobra_id'))
