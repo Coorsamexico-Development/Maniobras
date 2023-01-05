@@ -14,6 +14,7 @@ import { Inertia } from "@inertiajs/inertia";
 var props = defineProps({
     turnos: Object,
     maniobra_id: Number,
+    show:Boolean
 });
 
 const emit = defineEmits(["close"]);

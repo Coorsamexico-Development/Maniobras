@@ -12,6 +12,7 @@ import ButtonSave from "@/Components/ButtonSave.vue";
 var props = defineProps({
   clientes: Object,
   status_maniobras: Object,
+  show:Boolean
 });
 
 const formManiobra = useForm({

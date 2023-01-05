@@ -2,6 +2,7 @@
 import { Inertia } from "@inertiajs/inertia";
 import { ref } from "vue";
 import axios from "axios";
+import { Link } from '@inertiajs/inertia-vue3'
 import ModalCalendar from "../Partials/ModalCalendar.vue";
 import ModalTurno from "../Partials/ModalTurno.vue";
 import ModalFalta from "../Partials/ModalFalta.vue";
@@ -61,6 +62,7 @@ const closeModalFalt = () => {
     modalFalta.value = false;
 };
 
+/*
 const emision = (id) => 
 {
     Inertia.visit(route("maniobras"),
@@ -71,9 +73,10 @@ const emision = (id) =>
             replace: true,
             preserveScroll: true,
             preserveState: true,
-            only: ['data_grafico_circulo','data_grafico_series']
+            only: ['data_grafico_series']
         });
 }
+*/
 </script>
 
 <template>
@@ -399,8 +402,8 @@ const emision = (id) =>
             </transition>
 
             <div class="box">
-                <button
-                    @click="emision(props.maniobra.maniobra_id)"
+                <Link  :href="'/maniobras?maniobra_id='+props.maniobra.maniobra_id" preserve-state preserve-scroll :only="['data_grafico_series','data_grafico_circulo']">
+                    <button
                     type="button"
                     :class="
                         message
@@ -431,6 +434,7 @@ const emision = (id) =>
                         />
                     </svg>
                 </button>
+                </Link>
             </div>
         </div>
     </div>
@@ -448,11 +452,6 @@ const emision = (id) =>
         :turnos="turnos"
         :maniobra_id="maniobra_id"
     ></ModalTurno>
-    <ModalFalta
-        :show="modalFalta"
-        @close="closeModalFalt"
-        :faltas="faltas"
-    ></ModalFalta>
 </template>
 
 <style>

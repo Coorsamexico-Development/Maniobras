@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { ref } from "vue";
+import { ref, computed  } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, Link } from "@inertiajs/inertia-vue3";
 import ButtonAdd from "@/Components/ButtonAdd.vue";
@@ -8,6 +8,7 @@ import ModalAddManiobra from "../Maniobras/Partials/ModalAddManiobra.vue";
 import ManiobrasList from "../Maniobras/Partials/ManiobrasList.vue";
 import Graph1 from "../Maniobras/Partials/Graph1.vue";
 import Graph2 from "../Maniobras/Partials/Graph2.vue";
+import CalendarModule from '../Maniobras/Partials/CalendarModule.vue';
 
 const props = defineProps({
     maniobras: Object,
@@ -16,81 +17,66 @@ const props = defineProps({
     maniobristas: Object,
     total_turnos_fecha: Object,
     data_grafico_circulo:Object,
-    data_grafico_series:Object
+    data_grafico_series:Object,
+    turnos:Object
 });
 
 /*Recorrido reestructuracion data para grafico series*/ 
 
-let arregloGraphSeries = ref([]);
+//let arregloGraphSeries = ref([]);
 let fechaTemporal = "";
 let turnoTemporal = "";
 
 let ObjetoTemporalFecha = {};
 let ObjetoTemporalTurno = {};
 
-for (let indi = 0; indi < props.data_grafico_series.length; indi++) 
+
+//console.log(props.data_grafico_series);
+
+
+// a computed ref
+const arregloGraphSeries = computed(() => 
 {
-    const Obj = props.data_grafico_series[indi];
-    //console.log(Obj);
-    if(Obj == props.data_grafico_series[0])
+    //console.log(props.data_grafico_series);
+    let newArreglo = [];
+    for (const fecha in props.data_grafico_series) //recorremos cada objeto
     {
-        ObjetoTemporalTurno[`${Obj.turno}`] = {
-             requeridos: Obj.cant_asistencia,
-             asistieron: Obj.lista_asistencia,
-             salario:Obj.salario
-          }
-        ObjetoTemporalFecha[`${Obj.fecha}`] = ObjetoTemporalTurno;
-
-        arregloGraphSeries.value.push(ObjetoTemporalFecha);
-        fechaTemporal = Obj.fecha;
-        turnoTemporal = Obj.turno;
-    }
-    else
-    {
-        if(Obj.fecha == fechaTemporal)
-        {
-          if(Obj.turno == turnoTemporal) 
-          {
-           //console.log( ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`]);
-           ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`].requeridos += Obj.cant_asistencia;
-           ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`].asistieron += Obj.lista_asistencia;
-           ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`].salario += Obj.salario;
-          }
-          else //si el turno es diferente
-          {
-           //console.log(ObjetoTemporalFecha[`${Obj.fecha}`] );
-            ObjetoTemporalFecha[`${Obj.fecha}`][`${Obj.turno}`] = 
-            {
-              requeridos: Obj.cant_asistencia,
-              asistieron: Obj.lista_asistencia,
-              salario:Obj.salario
-            };   
-          }
-
-          fechaTemporal = Obj.fecha;
-          turnoTemporal = Obj.turno;
+        let newObj = {
+            date:fecha
         }
-        else //si la fecha es distinta
+    
+        let  totalAsistencia = 0;
+        let  totalRequeridos= 0;
+        let  faltas = 0;
+        let  totalSalario = 0;
+        for (let index = 0; index < props.data_grafico_series[fecha].length; index++) 
         {
-           let newObjectFecha = {};
-           let newObjectTurno = {};
+            let salarioXAsistencias = 0;
+            const element = props.data_grafico_series[fecha][index];
+            //console.log(element);
+            totalRequeridos+= element.cant_asistencia;
+            totalAsistencia+= element.lista_asistencia;
+            faltas = totalRequeridos-totalAsistencia;
+            salarioXAsistencias = element.lista_asistencia * element.salario;
+            totalSalario += salarioXAsistencias;
 
-           newObjectTurno[`${Obj.turno}`] = {
-             requeridos: Obj.cant_asistencia,
-             asistieron: Obj.lista_asistencia,
-             salario:Obj.salario
-          }
-          newObjectFecha[`${Obj.fecha}`] = newObjectTurno;
-
-          arregloGraphSeries.value.push(newObjectFecha);
-          fechaTemporal = Obj.fecha;
-          turnoTemporal = Obj.turno;
+            let objTurno = {};
+            let turno = element.identificador_turno;
+            let asistenciaXTurno = element.lista_asistencia;
+            
+            newObj[`${element.identificador_turno}`] = asistenciaXTurno;
         }
+        newObj.requeridos = totalRequeridos;
+        newObj.faltas = faltas
+        newObj.pagado = totalSalario;
+        newArreglo.push(newObj);
     }
+    
+    console.log(newArreglo);
+    return newArreglo;
 
+});
 
- 
-}
 
 //console.log(arregloGraphSeries.value);
 
@@ -100,15 +86,18 @@ for (let indi = 0; indi < props.data_grafico_series.length; indi++)
 
 
 /*Recorrido reestructuracion data para grafico circular*/ 
-let arregloGraphCircular = ref([]);
-let turnoTemp = "";
 
-for (let indice = 0; indice < props.data_grafico_circulo.length; indice++)
+
+const arregloGraphCircular = computed(() => {
+  let turnoTemp = "";
+  let arregloGraphCircularaux = [];
+    for (let indice = 0; indice < props.data_grafico_circulo.length; indice++)
  {
     const elemento = props.data_grafico_circulo[indice];
+    //console.log(elemento);
     if(elemento == props.data_grafico_circulo[0])
     {
-        arregloGraphCircular.value.push(
+        arregloGraphCircularaux.push(
             {
                 turno:elemento.turno,
                 cant_asistencia:elemento.cant_asistencia,
@@ -122,7 +111,7 @@ for (let indice = 0; indice < props.data_grafico_circulo.length; indice++)
     {
       if(elemento.turno !== turnoTemp)
       {
-        arregloGraphCircular.value.push(
+        arregloGraphCircularaux.push(
             {
                 turno:elemento.turno,
                 cant_asistencia:elemento.cant_asistencia,
@@ -135,9 +124,9 @@ for (let indice = 0; indice < props.data_grafico_circulo.length; indice++)
       else
       {
         
-         for (let indice2 = 0; indice2 < arregloGraphCircular.value.length; indice2++)
+         for (let indice2 = 0; indice2 < arregloGraphCircularaux.length; indice2++)
          {
-            const elemento2 = arregloGraphCircular.value[indice2];
+            const elemento2 = arregloGraphCircularaux[indice2];
             if(elemento2.turno == elemento.turno)
             {
                elemento2.cant_asistencia += elemento.cant_asistencia;
@@ -149,7 +138,70 @@ for (let indice = 0; indice < props.data_grafico_circulo.length; indice++)
     }
  }
 
- //console.log(arregloGraphCircular.value);
+
+
+     //Variables
+  //console.log(this.data);
+  let datos = arregloGraphCircularaux; //guardamos en una variable data para iterarlos
+  let newDatos = [];
+  let turnoTemp2 = null;
+  
+  for (let index = 0; index < datos.length; index++) 
+  {
+    const element = datos[index];
+    if(element === datos[0]) // si el primero es igual al primero
+    {
+       let faltas = element.cant_asistencia - element.lista_asistencia;
+        newDatos.push(
+          {
+            name:element.turno,
+            children:[
+              {name: "Asistencias", value:element.lista_asistencia},
+              {name: "Faltas", value:faltas}
+            ]
+          }
+        );
+        turnoTemp2 = element.turno;
+    }
+    else //sino, pasamos al sig
+    {
+      if(element.turno == turnoTemp2)
+      {
+        for (let index = 0; index < newDatos.length; index++) 
+        {
+          const newElement = newDatos[index];
+          //console.log(newElement); 
+          if(element.turno == newElement.name)
+          {
+             let faltas = element.cant_asistencia - element.lista_asistencia;
+             newElement.children[0].value += element.lista_asistencia;
+             newElement.children[1].value += faltas;
+          }
+        }
+        turnoTemp2 = element.turno;
+      }
+      else
+      {
+        //console.log(false);
+        let faltas = element.cant_asistencia - element.lista_asistencia;
+        newDatos.push(
+           {
+            name:element.turno,
+            children:[
+              {name: "Asistencias", value:element.lista_asistencia},
+              {name: "Faltas", value:faltas}
+            ]
+           }
+        );
+        
+      }
+    }
+  }
+
+
+ return newDatos;
+});
+
 
 /*Fin recorrido reestructuracion data para grafico circular*/ 
 
@@ -238,16 +290,18 @@ const message = ref(true);
                     />
                 </svg>
             </ButtonAdd>
+
         </template>
         <div>
     <div style="margin-right: 82px; margin-top: 30px; margin-bottom: -50px; float: right">
                 <!----<button
                 class="px-2 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-l opacity-50 cursor-not-allowed hover:bg-gray-400"
             >-->
+               <CalendarModule></CalendarModule>
                 <button
                     @click="message = !message"
                     type="button"
-                    class="inline-flex  items-center px-2 py-2 -mr-16 text-xs text-blue-600 uppercase bg-white rounded-xl font-xs hover:bg-slate-100 border-slate-200"
+                    class="inline-flex items-center px-2 py-2 -mr-16 text-xs text-blue-600 uppercase bg-white rounded-xl font-xs hover:bg-slate-100 border-slate-200"
                 >
                     <svg
                         version="1.1"
@@ -293,7 +347,6 @@ const message = ref(true);
                     ></ManiobrasList>
                 </div>
             </div>
-
             <div>
                 
                 <div 
@@ -310,7 +363,8 @@ const message = ref(true);
                                 : 'bg-white rounded-3xl shadow-2xl'
                         "
                     >
-                      <Graph2 :data ="arregloGraphSeries"></Graph2>
+                      <Graph2 :data ="arregloGraphSeries" :turnos="turnos"></Graph2>
+                      <Graph1 :data="arregloGraphCircular"></Graph1>
 
                     </div>
                     <div
@@ -342,7 +396,7 @@ const message = ref(true);
     overflow-y: scroll;
     overflow-x: scroll;
     width: 100%;
-    height: 40%;
+    height: 80%;
 }
 
 .grafica_scroll_sm {

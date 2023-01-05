@@ -16,7 +16,8 @@ var props = defineProps({
     turnos: Object,
     maniobra_id: Number,
     maniobristas: Object,
-    arregloCalendar:Object
+    arregloCalendar:Object,
+    show:Boolean
 });
 
 

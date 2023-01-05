@@ -5,20 +5,31 @@
   
   am4core.useTheme(am4themes_animated);
   
+  let chart =null;
+
   export default {
     props:{
-       data:Object
+       data:Object,
+       turnos:Object
+    },
+
+    watch: {
+      data(newData, oldData) 
+      {
+         //console.log(newData);
+         chart.data = newData;
+      }
     },
 
     mounted() {
-      let chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
-        
-      // Add data
-      chart.data = [{
+      chart = am4core.create(this.$refs.chartdiv, am4charts.XYChart);
+     //console.log(this.data);
+      /*Arreglo anterior
+      [{
         "date": "2013-01-16",
         "market1": 71,
         "market2": 75,
-        "sales1": 5,
+        "asistieron": 5,
         "sales2": 8
       }, {
         "date": "2013-01-17",
@@ -104,10 +115,19 @@
         "market2": 85,
         "sales1": 4,
         "sales2": 7
-      }];
-
+      }]
+      */ 
+      chart.data = this.$props.data;
     // Create axes
     var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+
+    dateAxis.periodChangeDateFormats.setKey("month", "[bold]yyyy[/]"); 
+    dateAxis.groupData = true;
+    dateAxis.baseInterval = {
+     "timeUnit": "day",
+     "count": 1
+      };
+    dateAxis.groupCount = 500;
     //dateAxis.renderer.grid.template.location = 0;
     //dateAxis.renderer.minGridDistance = 30;
     
@@ -120,30 +140,33 @@
     valueAxis2.renderer.grid.template.disabled = true;
     
     // Create series
-    var series1 = chart.series.push(new am4charts.ColumnSeries());
-    series1.dataFields.valueY = "asistieron";
-    series1.dataFields.dateX = "date";
-    series1.yAxis = valueAxis1;
-    series1.name = "Asistencias";
-    series1.tooltipText = "{name}\n[bold font-size: 20]${valueY}M[/]";
-    series1.fill = chart.colors.getIndex(0);
-    series1.strokeWidth = 0;
-    series1.clustered = false;
-    series1.columns.template.width = am4core.percent(40);
+   /* 
+     var series1 = chart.series.push(new am4charts.ColumnSeries());
+     series1.dataFields.valueY = "asistencias";
+     series1.dataFields.dateX = "date";
+     series1.yAxis = valueAxis1;
+     series1.name = "Asistencias";
+     series1.tooltipText = "{name}\n[bold font-size: 20]{valueY}[/]";
+     series1.fill = chart.colors.getIndex(0);
+     series1.strokeWidth = 0;
+     series1.clustered = true;
+     series1.columns.template.width = am4core.percent(40);
+     series1.stacked = true;
     
+   */
     var series2 = chart.series.push(new am4charts.ColumnSeries());
-    series2.dataFields.valueY = "sales2";
+    series2.dataFields.valueY = "requeridos";
     series2.dataFields.dateX = "date";
     series2.yAxis = valueAxis1;
     series2.name = "Requeridos";
-    series2.tooltipText = "{name}\n[bold font-size: 20]${valueY}M[/]";
+    series2.tooltipText = "{name}\n[bold font-size: 20]{valueY}[/]";
     series2.fill = chart.colors.getIndex(0).lighten(0.5);
     series2.strokeWidth = 0;
     series2.clustered = false;
     series2.toBack();
-    
+ 
     var series3 = chart.series.push(new am4charts.LineSeries());
-    series3.dataFields.valueY = "market1";
+    series3.dataFields.valueY = "faltas";
     series3.dataFields.dateX = "date";
     series3.name = "Faltas";
     series3.strokeWidth = 2;
@@ -155,9 +178,9 @@
     bullet3.circle.radius = 3;
     bullet3.circle.strokeWidth = 2;
     bullet3.circle.fill = am4core.color("#fff");
-    
+
     var series4 = chart.series.push(new am4charts.LineSeries());
-    series4.dataFields.valueY = "market2";
+    series4.dataFields.valueY = "pagado";
     series4.dataFields.dateX = "date";
     series4.name = "$";
     series4.strokeWidth = 2;
@@ -181,10 +204,48 @@
     
     // Add scrollbar
     chart.scrollbarX = new am4charts.XYChartScrollbar();
-    chart.scrollbarX.series.push(series1);
-    chart.scrollbarX.series.push(series3);
+    //chart.scrollbarX.series.push(series1);
+    //chart.scrollbarX.series.push(series3);
     chart.scrollbarX.parent = chart.bottomAxesContainer;
+
+
+    // Create series
+    function createSeries(field, name, stack) 
+    {
+  
+      var series1 = chart.series.push(new am4charts.ColumnSeries());
+      series1.dataFields.valueY = field;
+      series1.dataFields.dateX = "date";
+      series1.yAxis = valueAxis1;
+      series1.name = name;
+      series1.tooltipText = "{name}\n[bold font-size: 20]{valueY}[/]";
+      //series1.fill = chart.colors.getIndex(0);
+      series1.strokeWidth = 0;
+      series1.clustered = true;
+      series1.columns.template.width = am4core.percent(60);
+      series1.stacked = stack;
+        
+        return series1;
+      }
+      
+      for (let index = 0; index < this.turnos.length; index++) 
+      {
+        const element = this.turnos[index];
+        console.log(element);
+       
+          createSeries(element.identificador_turno, element.name, index !== 0);
+        
+      }
+
+       this.chart = chart;
+    //chart.zoomOutButton.dispatchImmediately("hit");
     },
+
+    methods:
+    {
+      
+    },
+    
   
     beforeDestroy() {
       if (this.chart) {
@@ -204,6 +265,7 @@
 
 
 <template>
+ 
     <div class="hello" ref="chartdiv">
     </div>
 </template>

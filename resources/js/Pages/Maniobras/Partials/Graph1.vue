@@ -4,6 +4,8 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import * as am4plugins from "@amcharts/amcharts4/plugins/sunburst"; 
 
+let chart =null;
+
 am4core.useTheme(am4themes_animated);
 
 export default {
@@ -11,21 +13,45 @@ export default {
       data: Object,
   },
 
-  mounted() {
-    //Variables
-  console.log(this.data);
-  let datos = this.data; //guardamos en una variable data para iterarlos
+  data()
+    {
+       return {
+       
+       }
+    },
 
+  watch: {
+      data(newData, oldData) 
+      {
+         chart.invalidateRawData();
+         am4core.array.each(chart.data, function (item)
+          {
+            //recorrer children y vaciar las propiedades
+            //console.log(item);
+            item.children =[];
+         
+          })
+          chart.data = newData;
+          //console.log(chart.data);
+      }
+    },
+
+  mounted() {
+
+
+//console.log(newDatos);
 // Themes begin
 am4core.useTheme(am4themes_animated);
 // Themes end
 
 // create chart
-let chart = am4core.create(this.$refs.chartdiv, am4plugins.Sunburst);
+chart = am4core.create(this.$refs.chartdiv, am4plugins.Sunburst);
 chart.padding(0,0,0,0);
 chart.radius = am4core.percent(98);
 
-chart.data = [{
+chart.data = this.data;
+/*
+[{
   name: "First",
   children: [
     { name: "A1", value: 100 },
@@ -85,49 +111,8 @@ chart.data = [{
     }
   ]
 }];
+*/
 
-for (let index = 0; index < datos.length; index++) {
-            const element = datos[index];
-            //console.log(element.name);
-            datos.push({ name: element.name, ceco:element.ceco});
-            //AGRUPACION 
-            if(this.filtros.grupoType)
-            {
-              if(auxiliarGrupo.nombre == null)
-              {
-                auxiliarGrupo = element; //guarda el cliente
-              }
-              else
-              {
-                //console.log(auxiliarGrupo);
-                if(auxiliarGrupo.grupoCliente != element.grupoCliente) //ya se tiene guardado el cliente
-                {
-                    var range = yAxis.makeDataItem({
-                                "category": auxiliarGrupo.nombre,
-                                "endCategory": auxiliarGrupo.nombre,
-                     });
-                     yAxis.createAxisRange(range);
-                    
-                     var label = range.get("label");
-                     
-                     label.setAll({
-                       text: auxiliarGrupo.grupoCliente,
-                       dx: -100,
-                       dy:-50,
-                       fontWeight: "bold",
-                       tooltipText: auxiliarGrupo.grupoCliente,
-                       rotation:270  });
-                     
-                     var tick = range.get("tick");
-                     tick.setAll({ visible: true, strokeOpacity: 1, length: 50, location: 1 });
-                     
-                    var grid = range.get("grid");
-                    grid.setAll({ strokeOpacity: 1 });
-                    //auxiliarGrupo = element;
-                 }
-              }
-           }
- }
 
 chart.colors.step = 2;
 chart.fontSize = 11;
@@ -139,6 +124,7 @@ chart.dataFields.name = "name";
 chart.dataFields.children = "children";
 
 // this makes labels to be hidden if they don't fit
+/*
 level0SeriesTemplate.labels.template.truncate = true;
 level0SeriesTemplate.labels.template.hideOversized = true;
 
@@ -167,6 +153,7 @@ level2SeriesTemplate.hiddenInLegend = true;
 
 //Leyenda de las categorias
 chart.legend = new am4charts.Legend();
+*/
   },
 
   beforeDestroy() {

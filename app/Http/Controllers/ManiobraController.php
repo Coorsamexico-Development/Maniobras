@@ -7,6 +7,7 @@ use App\Models\ListaAsitencia;
 use App\Models\Maniobra;
 use App\Models\Maniobrista;
 use App\Models\StatusManiobra;
+use App\Models\Turno;
 use App\Models\TurnoFecha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -82,7 +83,8 @@ class ManiobraController extends Controller
        
         $data_grafico_series = TurnoFecha::select(
                 "maniobras.name AS maniobra",
-                "turnos.name AS turno",
+                DB::raw('CONCAT(turnos.id,"_",turnos.name) AS identificador_turno'),
+                //"turnos.name AS turno",
                 "turno_fechas.cant_asistencia",
                 "turno_fechas.fecha",
                 "lista_asitencias.salario",
@@ -93,10 +95,14 @@ class ManiobraController extends Controller
                  ->where('lista_asitencias.asistencia','=',1)
                  ->groupby('turno_fechas.id');
 
+      $turnos = Turno::selectRaw('CONCAT(turnos.id,"_",turnos.name) AS identificador_turno,turnos.name')
+      ->join('maniobras', 'turnos.maniobra_id','maniobras.id')->get();
+
         if($request->has('maniobra_id'))
         {
-           $data_grafico_circulo -> where('maniobras.id','=',$request['maniobra_id']);
-           $data_grafico_series -> where('maniobras.id','=',$request['maniobra_id']);
+           $data_grafico_circulo ->where('maniobras.id','=',$request['maniobra_id']);
+           $data_grafico_series ->where('maniobras.id','=',$request['maniobra_id']);
+        //    $turnos ->where('maniobras.id','=',$request['maniobra_id']);
         }
 
 
@@ -105,13 +111,14 @@ class ManiobraController extends Controller
         
         return Inertia::render('Maniobras/Maniobras.Index', 
         [
+            'turnos' => $turnos,
             'maniobras' => $maniobras,
             'clientes' => $clientes,
             'status_maniobras' => $status_maniobras,
             'maniobristas' => $maniobristas,
             'total_turnos_fecha' => $total_turno_fecha,
             'data_grafico_circulo' => fn() => $data_grafico_circulo->get(),
-            'data_grafico_series' => fn() => $data_grafico_series->get()
+            'data_grafico_series' => fn() => $data_grafico_series->get()->groupBy('fecha')
         ]);
     }
 
