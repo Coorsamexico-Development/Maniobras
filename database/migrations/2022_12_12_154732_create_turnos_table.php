@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('turnos', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
+            $table->string('name');
             $table->integer('cant_personal');
             $table->foreignId('maniobra_id')->constrained('maniobras');
             $table->time('hora_inicio',0)->nullable();

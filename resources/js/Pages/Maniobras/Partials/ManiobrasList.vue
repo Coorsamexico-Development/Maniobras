@@ -6,6 +6,7 @@ import { Link } from '@inertiajs/inertia-vue3'
 import ModalCalendar from "../Partials/ModalCalendar.vue";
 import ModalTurno from "../Partials/ModalTurno.vue";
 import ModalFalta from "../Partials/ModalFalta.vue";
+import { json } from "d3-fetch";
 
 
 const emit = defineEmits(['selected']);
@@ -54,14 +55,6 @@ const closeModalTurn = () => {
     modalTurno.value = false;
 };
 
-const modalFalt = () => {
-    modalFalta.value = true;
-};
-
-const closeModalFalt = () => {
-    modalFalta.value = false;
-};
-
 /*
 const emision = (id) => 
 {
@@ -77,6 +70,103 @@ const emision = (id) =>
         });
 }
 */
+const consultar = (maniobra_id) => 
+{
+    //console.log(maniobra_id);
+    axios
+    .get("consultarReporteRH/" + maniobra_id, {maniobra_id: maniobra_id, }) //enviamos el dato a la ruta
+    .then((resp) => 
+    {
+        let data = resp.data;
+        let arregloTemporal = [];
+        let fechaTemporal = null;
+        let nombreTemporal = null;
+        for (let index = 0; index < data.length; index++)
+         {
+            const element = data[index];
+            let newObj = {};//se declara un objeto vacio por cada recorrido
+            let fechas = []; //se declara arreglo vacio de las fechas por usuario
+            let ObjFecha = {}; //se declara un objeto vacio para almacenar la fecha y si asistio o no
+          
+            //console.log(element);
+            if(element == data[0]) //si el primer obj es igual al primero, se crea en el arreglo
+            {
+              ObjFecha.fecha = element.FECHA;
+              ObjFecha.asistencia = element.ASISTENCIA;
+              fechas.push(ObjFecha);
+              //console.log(fechas);
+              newObj.name = element.NOMBRE;
+              newObj.fechas = fechas;
+              arregloTemporal.push(newObj);
+
+              fechaTemporal = element.FECHA;
+              //console.log(fechaTemporal);
+              nombreTemporal = element.NOMBRE;
+            }
+            else
+            {
+              if(nombreTemporal == element.NOMBRE) //son el mismo maniobrista
+              {
+                 for (let x = 0; x < arregloTemporal.length; x++) //recorremos el arreglo que llevamos
+                 {
+                    const element2 = arregloTemporal[x];//lo almacenamos
+                    if(element2.name == element.NOMBRE)
+                    {
+                        ObjFecha.fecha = element.FECHA;
+                        ObjFecha.asistencia = element.ASISTENCIA;
+                        element2.fechas.push(ObjFecha);
+
+                        //console.log(element2);
+                        nombreTemporal = element.NOMBRE;
+                    }
+                 }   
+              } //sino es el mismo maniobrista
+              else
+              {
+                ObjFecha.fecha = element.FECHA;
+                ObjFecha.asistencia = element.ASISTENCIA;
+                fechas.push(ObjFecha);
+                //console.log(fechas);
+                newObj.name = element.NOMBRE;
+                newObj.fechas = fechas;
+                arregloTemporal.push(newObj);
+
+                fechaTemporal = element.FECHA;
+                //console.log(fechaTemporal);
+                nombreTemporal = element.NOMBRE;
+              }
+            }
+        }
+
+        downloadReportRH(arregloTemporal);
+       
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+const downloadReportRH = (arregloPorManiobra) => 
+{
+    /*
+    console.log(arregloPorManiobra);
+
+    let objtArreglo = {arreglo:arregloPorManiobra};
+    axios
+    .get("downloadReportRh/" + objtArreglo, {arreglo: objtArreglo, }) //enviamos el dato a la ruta
+    .then((resp) => 
+    {
+       console.log(resp.data);
+       
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+ */
+
+}
+
 </script>
 
 <template>
@@ -244,8 +334,8 @@ const emision = (id) =>
             </transition>
             <transition name="slide-fade">
                 <div v-if="message">
-                    <button
-                        @click="modalFalt"
+                        <button
+                        @click="consultar(maniobra_id)"
                         type="button"
                         class="p-1 px-5 my-2 ml-3 text-sm text-white bg-orange-500 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline"
                     >

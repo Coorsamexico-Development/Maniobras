@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmpleadosRhExport;
 use App\Exports\ManiobristasExampleExport;
 use App\Imports\ManiobristasImport;
 use App\Models\ListaAsitencia;
@@ -9,7 +10,9 @@ use App\Models\Maniobra;
 use App\Models\Turno;
 use App\Models\TurnoFecha;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class ListaAsitenciaController extends Controller
 {
@@ -70,6 +73,34 @@ class ListaAsitenciaController extends Controller
     public function exportExample ()
     {
         return Excel::download(new ManiobristasExampleExport,'example.xlsx');
+    }
+
+
+    public function consultarReporteRH ($maniobra_id)
+    {
+        $query = ListaAsitencia::select(
+            DB::raw('CONCAT(maniobristas.name,"_",maniobristas.ap_paterno,"_",maniobristas.ap_materno) AS NOMBRE'),
+           'turno_fechas.fecha AS FECHA',
+           'lista_asitencias.asistencia AS ASISTENCIA'
+       )
+       ->join('maniobristas','lista_asitencias.maniobrista_id','maniobristas.id')
+       ->join('turno_fechas','lista_asitencias.turno_fecha_id','turno_fechas.id')
+       ->join('turnos','turno_fechas.turno_id','turnos.id')
+       ->join('maniobras','turnos.maniobra_id','maniobras.id')
+       ->where('maniobras.id','=',$maniobra_id)
+       ->orderBy('NOMBRE')
+       ->get();
+
+       return $query;
+    }
+
+    public function exportReporteRh ($lista)
+    {
+        
+        return $lista;
+       // return $arrayExcel;
+
+        //return Excel::download(new EmpleadosRhExport($maniobra_id),'reportRh.xlsx');
     }
 
     /**

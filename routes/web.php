@@ -57,6 +57,8 @@ Route::controller(ListaAsitenciaController::class)->group(
     {
         Route::post('/lista','store')->name('lista.store');
         Route::get('/example','exportExample')->name('export');
+        Route::get('/downloadReportRh/{lista}','exportReporteRh')->name('reportRh');
+        Route::get('/consultarReporteRH/{maniobra_id}','consultarReporteRH')->name('consultaRh');
     }
 );
 
