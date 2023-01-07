@@ -23,6 +23,6 @@ class TurnoFecha extends Model
 
     public function listaAsitencias(): HasMany
     {
-        return $this->hasMany(listaAsitencia::class, 'turno_fecha_id');
+        return $this->hasMany(ListaAsitencia::class, 'turno_fecha_id');
     }
 }
