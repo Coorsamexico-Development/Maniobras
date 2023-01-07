@@ -16,8 +16,8 @@ var props = defineProps({
     turnos: Object,
     maniobra_id: Number,
     maniobristas: Object,
-    arregloCalendar:Object,
-    show:Boolean
+    arregloCalendar: Object,
+    show: Boolean
 });
 
 
@@ -42,47 +42,43 @@ let attributes = ref([
 
 
 //console.log(attributes.value)
-for (let index = 0; index < props.arregloCalendar.length; index++) 
-{
+for (let index = 0; index < props.arregloCalendar.length; index++) {
     const element = props.arregloCalendar[index];
     let total = 0;
-    
-    if(element.lista_asistencia && element.cant_asistencia)
-    {
-       total = element.cant_asistencia - element.lista_asistencia;
-       if(total > 0)
-       {
-        let formatDate = new Date(element.fecha);
-        const dia = formatDate.getDate()+1;
-        const mes = formatDate.getMonth();
-        const año = formatDate.getFullYear();
 
-        //console.log(año +'-'+mes+'-'+dia);
-        
-         attributes.value.push(
-            {
-                dates:new Date(año, mes, dia),
-                highlight: 'red'
-            }
-         );
-       }
-       if(total <= 0)
-       {
-        let formatDate = new Date(element.fecha);
-        const dia = formatDate.getDate()+1;
-        const mes = formatDate.getMonth();
-        const año = formatDate.getFullYear();
+    if (element.lista_asistencia && element.cant_asistencia) {
+        total = element.cant_asistencia - element.lista_asistencia;
+        if (total > 0) {
+            let formatDate = new Date(element.fecha);
+            const dia = formatDate.getDate() + 1;
+            const mes = formatDate.getMonth();
+            const año = formatDate.getFullYear();
+
+            //console.log(año +'-'+mes+'-'+dia);
+
+            attributes.value.push(
+                {
+                    dates: new Date(año, mes, dia),
+                    highlight: 'red'
+                }
+            );
+        }
+        if (total <= 0) {
+            let formatDate = new Date(element.fecha);
+            const dia = formatDate.getDate() + 1;
+            const mes = formatDate.getMonth();
+            const año = formatDate.getFullYear();
 
 
-        attributes.value.push(
-            {
-                dates:new Date(año, mes, dia),
-                highlight: 'green'
-            }
-         );
-       }
+            attributes.value.push(
+                {
+                    dates: new Date(año, mes, dia),
+                    highlight: 'green'
+                }
+            );
+        }
     }
-    
+
 }
 
 
@@ -114,59 +110,37 @@ const selectedTurn = (turno) => {
     <DialogModal :show="show" @close="close()">
         <template #title> </template>
         <template #content>
-            <div
-                class="grid-cols-3 grid-rows-2 m-2 sm:grid w-80 sm:w-full sm:grid-cols-2 -mb-96"
-            >
-                <div
-                    class="border-r-0 border-none sm:border-r-4 sm:border-solid modal_scroll"
-                >
+            <div class="grid-cols-3 grid-rows-2 m-2 sm:grid w-80 sm:w-full sm:grid-cols-2 -mb-96">
+                <div class="border-r-0 border-none sm:border-r-4 sm:border-solid modal_scroll">
                     <div class="hidden sm:grid">
-                        <h3
-                            class="mb-2 ml-56 text-xl font-bold text-blue-900 sm:mr-0"
-                        >
+                        <h3 class="mb-2 ml-56 text-xl font-bold text-blue-900 sm:mr-0">
                             Calendario
                         </h3>
                     </div>
 
                     <div class="hidden mr-10 sm:grid">
-                        <DatePicker
-                            is-expanded
-                            :rows="12"
-                            :attributes="attributes"
-                            v-model="date"
-                        />
+                        <DatePicker is-expanded :rows="12" :attributes="attributes" v-model="date" />
                     </div>
 
-                  <!--BOTONES VERSIÓN MOVIL-->
+                    <!--BOTONES VERSIÓN MOVIL-->
                     <div class="grid grid-cols-3 place-items-center sm:hidden">
-                        <BtnCalendar
-                            class="p-1 text-xs"
-                            v-for="turno in turnos"
-                            :key="turno.id"
-                            @click="selectedTurn(turno)"
-                            >{{ turno.name }}
-                        </BtnCalendar
-                        >
+                        <BtnCalendar class="p-1 text-xs" v-for="turno in turnos" :key="turno.id"
+                            @click="selectedTurn(turno)">{{ turno.name }}
+                        </BtnCalendar>
                     </div>
-                    
-                <!--CALENDARIO VERSIÓN MOVIL-->
+
+                    <!--CALENDARIO VERSIÓN MOVIL-->
                     <div class="mt-10 ml-16 -mb-96 sm:hidden">
                         <DatePicker :rows="1" v-model="date" />
                     </div>
                 </div>
-                
+
                 <!--TABLA VERSIÓN MOVIL-->
-                <div
-                    class="-mb-96 sm:hidden modal_scroll" 
-                >
+                <div class="-mb-96 sm:hidden modal_scroll">
                     <div class="mt-10 ml-9 -mb-96 sm:hidden">
-                        <div >
-                            <TableManiobristas
-                                :maniobristas="maniobristas"
-                                v-if="date && turnoSelect"
-                                :date="date"
-                                :turno="turnoSelect"
-                          class="-ml-12 " style="width: 395px;">
+                        <div>
+                            <TableManiobristas :maniobristas="maniobristas" v-if="date && turnoSelect" :date="date"
+                                :turno="turnoSelect" class="-ml-12 " style="width: 395px;">
                             </TableManiobristas>
                         </div>
                     </div>
@@ -174,24 +148,13 @@ const selectedTurn = (turno) => {
 
                 <div>
                     <div class="hidden modal_scroll sm:grid">
-                        <div
-                            class="grid grid-cols-4 gap-5 m-5 text-center -mt-36 place-items-center"
-                        >
-                            <BtnCalendar
-                                class="p-4"
-                                v-for="turno in turnos"
-                                :key="turno.id"
-                                @click="selectedTurn(turno)"
-                                >{{ turno.name }}</BtnCalendar
-                            >
+                        <div class="grid grid-cols-4 gap-5 m-5 text-center -mt-36 place-items-center">
+                            <BtnCalendar class="p-4" v-for="turno in turnos" :key="turno.id"
+                                @click="selectedTurn(turno)">{{ turno.name }}</BtnCalendar>
                         </div>
                         <div>
-                            <TableManiobristas
-                                :maniobristas="maniobristas"
-                                v-if="date && turnoSelect"
-                                :date="date"
-                                :turno="turnoSelect"
-                            ></TableManiobristas>
+                            <TableManiobristas :maniobristas="maniobristas" v-if="date && turnoSelect" :date="date"
+                                :turno="turnoSelect"></TableManiobristas>
                         </div>
                     </div>
                 </div>

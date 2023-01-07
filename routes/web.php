@@ -35,15 +35,15 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');})->name('dashboard');
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 });
 
 
 Route::controller(ManiobraController::class)->group(
-    function()
-    {
+    function () {
         Route::get('/maniobras', 'index')->name('maniobras');
-        Route::post('/maniobras','store')->name('maniobras.store');
+        Route::post('/maniobras', 'store')->name('maniobras.store');
     }
 );
 
@@ -53,27 +53,24 @@ Route::put('/listaasistencia/{turno}/{maniobrista}/{fecha}', [ListaAsitenciaCont
 
 
 Route::controller(ListaAsitenciaController::class)->group(
-    function()
-    {
-        Route::post('/lista','store')->name('lista.store');
-        Route::get('/example','exportExample')->name('export');
-        Route::get('/downloadReportRh/{lista}','exportReporteRh')->name('reportRh');
-        Route::get('/consultarReporteRH/{maniobra_id}','consultarReporteRH')->name('consultaRh');
+    function () {
+        Route::post('/lista', 'store')->name('lista.store');
+        Route::get('/example', 'exportExample')->name('export');
+        Route::get('/downloadReportRh/{lista}', 'exportReporteRh')->name('reportRh');
+        Route::get('/consultarReporteRH/{maniobra_id}', 'consultarReporteRH')->name('consultaRh');
     }
 );
 
 Route::controller(ManiobristaController::class)->group(
-    function()
-    {
-      Route::get('/maniobristas','index') -> name('maniobristas');
-      Route::post('/maniobristas/{maniobrista_id}','update')->name('maniobristas.update');
+    function () {
+        Route::get('/maniobristas', 'index')->name('maniobristas');
+        Route::post('/maniobristas/{maniobrista_id}', 'update')->name('maniobristas.update');
     }
 );
 
 Route::controller(TurnoController::class)->group(
-    function()
-    {
+    function () {
         Route::get('/turnos', 'index')->name('turnos');
-        Route::post('/turnos','store')->name('turnos.store');
+        Route::post('/turnos', 'store')->name('turnos.store');
     }
 );

@@ -4,102 +4,65 @@ namespace App\Imports;
 
 use App\Models\ListaAsitencia;
 use App\Models\Maniobrista;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Collection;
+// use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 
-class ManiobristasImport implements ToCollection, WithHeadingRow
+class ManiobristasImport implements ToCollection, SkipsEmptyRows, WithHeadingRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+
+
+    protected $turno_fecha_id;
+    protected $salario;
 
     public function __construct(int $turno_fecha_id, int $salario)
     {
-      $this ->turno_fecha_id = $turno_fecha_id;   
-
-      $this -> salario = $salario;
+        $this->turno_fecha_id = $turno_fecha_id;
+        $this->salario = $salario;
     }
 
 
 
-    public function collection(Collection $rows)
+    public function collection(Collection $collection)
     {
-        foreach ($rows as $row) 
-        {
+
+        $rows = $collection->filter(function ($row) {
+            return !empty($row['nombre']);
+        });
+
+        foreach ($rows as $row) {
             /*To mayus*/
-           $nombre = strtoupper($row["nombre"]);
-           $ap_paterno = strtoupper($row["apellido_paterno"]);
-           $ap_materno = strtoupper($row["apellido_materno"]);
-
-           /*Recorrido de lo existente*/
-           $searchManiobrista = Maniobrista::select('maniobristas.*')
-           ->where('name','LIKE','%'.$nombre.'%')
-           ->where('ap_paterno','LIKE','%'.$ap_paterno.'%')
-           ->where('ap_materno','LIKE','%'.$ap_materno.'%')
-           ->get();
-
-           $newManiobrista = null;
-           $newLista = null;
-
-           if(count($searchManiobrista) > 0) //si existe o el arreglo es mayo a cero
-           {
-               Maniobrista::where('name','LIKE','%'.$nombre.'%')
-              ->where('ap_paterno','LIKE','%'.$ap_paterno.'%')
-              ->where('ap_materno','LIKE','%'.$ap_materno.'%')
-              ->update([
-                "name" => $nombre,
-                "ap_paterno" => $ap_paterno,
-                "ap_materno" => $ap_materno,
+            $nombre = str($row["nombre"])->trim()->upper();
+            $ap_paterno = str($row["apellido_paterno"])->trim()->upper();
+            $ap_materno = str($row["apellido_materno"])->trim()->upper();
+            /*Buscamos si existente*/
+            $maniobrista = Maniobrista::updateOrcreate([
+                'name' =>  $nombre,
+                'ap_paterno' => $ap_paterno,
+                'ap_materno' => $ap_materno
+            ], [
                 "telefono" => $row["telefono"],
                 "faltas_seguidas" => $row["faltas_seguidas"],
                 "faltas_totales" => $row["faltas_totales"]
-              ]);
+            ]);
 
-             $newManiobrista = Maniobrista::select('maniobristas.*')
-             ->where('name','LIKE','%'.$nombre.'%')
-             ->where('ap_paterno','LIKE','%'.$ap_paterno.'%')
-             ->where('ap_materno','LIKE','%'.$ap_materno.'%')
-             ->get();
- 
 
-             $newlista = ListaAsitencia::updateOrcreate([
+            ListaAsitencia::updateOrcreate([
                 "turno_fecha_id" => $this->turno_fecha_id,
-                "maniobrista_id" => $newManiobrista[0]-> id,
-                "salario" => $this ->salario,
+                "maniobrista_id" => $maniobrista->id,
+            ], [
+                "salario" => $this->salario,
                 "asistencia" => 0,
                 "active" => 1,
                 "imagen_url" => "-"
-             ]);
-
-           }
-           else
-           {
-              $newManiobrista = Maniobrista::create([
-                "name" => $nombre,
-                "ap_paterno" => $ap_paterno,
-                "ap_materno" => $ap_materno,
-                "telefono" => $row["telefono"],
-                "faltas_seguidas" => $row["faltas_seguidas"],
-                "faltas_totales" => $row["faltas_totales"]
-             ]);
-
-             
-            
-             $newlista = ListaAsitencia::updateOrcreate([
-                "turno_fecha_id" => $this->turno_fecha_id,
-                "maniobrista_id" => $newManiobrista-> id,
-                "salario" => $this ->salario,
-                "asistencia" => 0,
-                "active" => 1,
-                "imagen_url" => "-"
-             ]);
-
-
-           }
+            ]);
         }
     }
 }

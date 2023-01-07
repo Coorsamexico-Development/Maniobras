@@ -48,57 +48,57 @@ class ListaAsitenciaController extends Controller
     public function store(Request $request)
     {
         //
-       $turnoFecha = TurnoFecha::updateOrCreate([
+        $turnoFecha = TurnoFecha::updateOrCreate([
             'fecha' => $request['fecha'],
             'turno_id' => $request['turno'],
             'cant_asistencia' => 1  //definir como crear esto
-       ]);
+        ]);
 
 
-       $turno_maniobra = Turno::select('turnos.*')
-       ->where('turnos.id','=',$request['turno'])
-       ->get();
+        $turno_maniobra = Turno::select('turnos.*')
+            ->where('turnos.id', '=', $request['turno'])
+            ->get();
 
 
-       $maniobra_salario = Maniobra::select('maniobras.*')
-       ->where('maniobras.id','=', $turno_maniobra[0]->maniobra_id)
-       ->get();
- 
-       $turno_fecha_id = $turnoFecha ->id;
-       
-       Excel::import(new ManiobristasImport($turno_fecha_id, $maniobra_salario[0]->salario), $request['file']);
+        $maniobra_salario = Maniobra::select('maniobras.*')
+            ->where('maniobras.id', '=', $turno_maniobra[0]->maniobra_id)
+            ->get();
 
+        $turno_fecha_id = $turnoFecha->id;
+
+        Excel::import(new ManiobristasImport($turno_fecha_id, $maniobra_salario[0]->salario), $request['file']);
+        return redirect()->back();
     }
 
-    public function exportExample ()
+    public function exportExample()
     {
-        return Excel::download(new ManiobristasExampleExport,'example.xlsx');
+        return Excel::download(new ManiobristasExampleExport, 'example.xlsx');
     }
 
 
-    public function consultarReporteRH ($maniobra_id)
+    public function consultarReporteRH($maniobra_id)
     {
         $query = ListaAsitencia::select(
             DB::raw('CONCAT(maniobristas.name,"_",maniobristas.ap_paterno,"_",maniobristas.ap_materno) AS NOMBRE'),
-           'turno_fechas.fecha AS FECHA',
-           'lista_asitencias.asistencia AS ASISTENCIA'
-       )
-       ->join('maniobristas','lista_asitencias.maniobrista_id','maniobristas.id')
-       ->join('turno_fechas','lista_asitencias.turno_fecha_id','turno_fechas.id')
-       ->join('turnos','turno_fechas.turno_id','turnos.id')
-       ->join('maniobras','turnos.maniobra_id','maniobras.id')
-       ->where('maniobras.id','=',$maniobra_id)
-       ->orderBy('NOMBRE')
-       ->get();
+            'turno_fechas.fecha AS FECHA',
+            'lista_asitencias.asistencia AS ASISTENCIA'
+        )
+            ->join('maniobristas', 'lista_asitencias.maniobrista_id', 'maniobristas.id')
+            ->join('turno_fechas', 'lista_asitencias.turno_fecha_id', 'turno_fechas.id')
+            ->join('turnos', 'turno_fechas.turno_id', 'turnos.id')
+            ->join('maniobras', 'turnos.maniobra_id', 'maniobras.id')
+            ->where('maniobras.id', '=', $maniobra_id)
+            ->orderBy('NOMBRE')
+            ->get();
 
-       return $query;
+        return $query;
     }
 
-    public function exportReporteRh ($lista)
+    public function exportReporteRh($lista)
     {
-        
+
         return $lista;
-       // return $arrayExcel;
+        // return $arrayExcel;
 
         //return Excel::download(new EmpleadosRhExport($maniobra_id),'reportRh.xlsx');
     }

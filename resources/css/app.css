@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .main {
-    background-image: url("./img/bg-login.jpeg");
+    background-image: url("/img/bg-login.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -13,7 +13,7 @@
 
 @media only screen and (max-width: 640px) {
   .main {
-    background-image: url("./img/bg-movil.jpg");
+    background-image: url("/img/bg-movil.jpg");
      background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -48,13 +48,13 @@
 }
 
 .fondo_navbar {
-    background-image: url("./img/navbar.svg");
+    background-image: url("/img/navbar.svg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
 }
 .fondo {
-  background-image: url("./img/bg.jpg");
+  background-image: url("/img/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -71,7 +71,7 @@
     display: inline-block;
     border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
   }
-  
+
   /* Tooltip text */
   .tooltip .tooltiptext {
     visibility: hidden;
@@ -83,12 +83,12 @@
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;
-   
+
     /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 2;
   }
-  
+
   /* Show the tooltip text when you mouse over the tooltip container */
   .tooltip:hover .tooltiptext {
     visibility: visible;
