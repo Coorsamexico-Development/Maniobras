@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 60);
             $table->string('ap_paterno', 60);
             $table->string('ap_materno', 60)->nullable();
-            $table->integer('telefono')->unique();
+            $table->integer('telefono');
             $table->tinyInteger('active')->default(1);
             $table->integer('faltas_seguidas');
             $table->integer('faltas_totales');

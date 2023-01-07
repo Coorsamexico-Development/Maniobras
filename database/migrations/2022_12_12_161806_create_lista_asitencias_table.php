@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('turno_fecha_id')->references('id')->on('turno_fechas')->onDelete('cascade')->onUpdate('cascade')->unsigned();
             $table->foreignId('maniobrista_id')->references('id')->on('maniobristas')->onDelete('cascade')->onUpdate('cascade')->unsigned();
             $table->bigInteger('salario');
-            $table->integer('asistencia');
+            $table->integer('asistencia')->default(0);
             $table->tinyInteger('active')->default(1);
-            $table->string('imagen_url', 255);
+            $table->string('imagen_url', 255)->default("-");
             $table->timestamps();
         });
     }

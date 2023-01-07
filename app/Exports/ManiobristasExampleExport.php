@@ -9,11 +9,11 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class ManiobristasExampleExport implements WithHeadings
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
-    
+     * @return \Illuminate\Support\Collection
+     */
+
     public function headings(): array
     {
-        return ["nombre", "apellido_paterno", "apellido_materno", "telefono" ,"faltas_seguidas", "faltas_totales"];
+        return ["nombre", "apellido_paterno", "apellido_materno", "telefono"];
     }
 }
