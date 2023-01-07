@@ -19,8 +19,8 @@ class TurnoController extends Controller
 
     public function getTurnos($maniobra_id)
     {
-      return Turno::all()
-      ->where('maniobra_id','=',$maniobra_id);
+        return Turno::all()
+            ->where('maniobra_id', '=', $maniobra_id);
     }
 
     /**
@@ -46,9 +46,10 @@ class TurnoController extends Controller
             'name' => $request['name'],
             'cant_personal' => $request['cant_personal'],
             'maniobra_id' => $request['maniobra_id'],
-            'hora_inicio' =>$request['hora_inicio'],
-            'hora_fin'=> $request['hora_fin']
-       ]);
+            'hora_inicio' => $request['hora_inicio'],
+            'hora_fin' => $request['hora_fin']
+        ]);
+        return redirect()->back();
     }
 
     /**

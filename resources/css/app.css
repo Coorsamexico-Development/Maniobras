@@ -52,6 +52,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+    border-bottom-left-radius:30px ;
+    border-bottom-right-radius:30px ;
 }
 .fondo {
   background-image: url("/img/bg.jpg");

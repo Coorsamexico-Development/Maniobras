@@ -63,26 +63,29 @@ const uploadFile = () => {
     <DataTable>
         <template #section-header>
             <slot name="section-header">
-                <div class="ml-12 -mt-8 -mb-6 sm:-ml-10 lg:ml-36 lg:-mt-14">
-                    <form>
-                        <input type="file" accept=".xlsx , text/xlsx" ref="fileUpload" @change="uploadFile"
-                            class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-blue-900 hover:file:bg-blue-100 ">
-                    </form>
-                    <span v-show="formManiobristas.processing" class="text-sm">
-                        Cargando...
-                    </span>
+                <div class="flex flex-col items-center w-full">
+                    <div class="my-2">
+                        <form>
+                            <input type="file" accept=".xlsx , text/xlsx" ref="fileUpload" @change="uploadFile"
+                                class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-blue-900 hover:file:bg-blue-100 ">
+                        </form>
+                        <span v-show="formManiobristas.processing" class="text-sm">
+                            Cargando...
+                        </span>
+                    </div>
+
                     <ActionMessage :on="formManiobristas.recentlySuccessful" class="mr-3 ">
                         <span class="text-green-500">Guarado.</span>
                     </ActionMessage>
+                    <div class="">
+                        <a :href="route('export')">
+                            <BtnDownload>Descargar ejemplo</BtnDownload>
+                        </a>
+                    </div>
                 </div>
-            </slot>
-            <div class="ml-12 lg:-ml-64 lg:-mt-10">
 
-                <a :href="route('export')">
-                    <br><br>
-                    <BtnDownload>Descargar ejemplo</BtnDownload>
-                </a>
-            </div>
+            </slot>
+
         </template>
         <br><br><br>
         <template #table-header>

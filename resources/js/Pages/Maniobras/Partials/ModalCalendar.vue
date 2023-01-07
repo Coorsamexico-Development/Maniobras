@@ -147,8 +147,8 @@ const selectedTurn = (turno) => {
                 </div>
 
                 <div>
-                    <div class="hidden modal_scroll sm:grid">
-                        <div class="grid grid-cols-4 gap-5 m-5 text-center -mt-36 place-items-center">
+                    <div class="hidden sm:grid">
+                        <div class="grid items-center justify-center grid-cols-4 gap-4 text-center">
                             <BtnCalendar class="p-4" v-for="turno in turnos" :key="turno.id"
                                 @click="selectedTurn(turno)">{{ turno.name }}</BtnCalendar>
                         </div>
