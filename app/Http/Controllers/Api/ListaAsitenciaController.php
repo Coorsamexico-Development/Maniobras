@@ -60,16 +60,17 @@ class ListaAsitenciaController extends Controller
 
         $file = $request->file('imagen');
         $extension = $file->extension();
-        $disk =  Storage::disk('public');
+        $disk = Storage::disk('gcs');
 
         $maniobrista = $listaAsitencia->maniobrista;
         $maniobristaSlug =  str($maniobrista->name . ' ' . $maniobrista->ap_paterno . ' ' . $maniobrista->ap_materno)->slug();
 
         $path =  $disk->putFileAs('asistencias/' . $listaAsitencia->turno_fecha_id, $file, $maniobristaSlug . '.' . $extension);
 
+
         $listaAsitencia->update([
             'asistencia' => $request->input('asistencia'),
-            'imagen_url' => asset('storage/' . $path)
+            'imagen_url' => $disk->url($path)
         ]);
     }
 }

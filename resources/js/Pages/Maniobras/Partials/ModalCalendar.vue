@@ -89,9 +89,11 @@ const selectedTurn = (turno) => {
 
     if (date.value != null) {
         let formatDate = new Date(date.value);
-        const dia = formatDate.getDate();
-        const mes = formatDate.getMonth() + 1;
+        let dia = formatDate.getDate();
+        let mes = (formatDate.getMonth() + 1);
         const año = formatDate.getFullYear();
+        mes = mes < 10 ? '0' + mes : mes;
+        dia = dia < 10 ? '0' + dia : dia;
 
         let mesToString =mes.toString();
         let diaToString = dia.toString();
