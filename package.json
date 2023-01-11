@@ -24,6 +24,7 @@
     "dependencies": {
         "@amcharts/amcharts4": "^4.10.32",
         "@amcharts/amcharts5": "^5.2.47",
+        "qs": "^6.11.0",
         "v-calendar": "^3.0.0-alpha.8",
         "vue-tailwind-datepicker": "^1.2.3"
     }

@@ -93,7 +93,46 @@ const selectedTurn = (turno) => {
         const mes = formatDate.getMonth() + 1;
         const año = formatDate.getFullYear();
 
-        let fechaCompleta = año + "-" + mes + "-" + dia;
+        let mesToString =mes.toString();
+        let diaToString = dia.toString();
+
+        let cero = "0"; 
+        let newMes = "";
+        let newDia = "";
+        let fechaCompleta = "";
+
+        if(mesToString.length < 2)
+        {
+             //console.log(cero+mesToString)
+             newMes =  cero+mesToString;
+
+             if(diaToString.length < 2)
+             {
+                newDia = cero+diaToString;
+                fechaCompleta = año+ '-' + newMes + '-' +newDia
+
+             }
+             else
+             {
+              fechaCompleta = año + '-' + newMes + '-' + dia; 
+             }
+        }
+        else
+        {
+            if(diaToString.length < 2)
+             {
+                newDia = cero+diaToString;
+                fechaCompleta = año+ '-' + mes + '-' +newDia
+
+             }
+             else
+             {
+              fechaCompleta = año + '-' + mes + '-' + dia; 
+             } 
+        }
+
+   
+       
         Inertia.visit(route("maniobras"), {
             data: {
                 turno_id: turnoSelect.value,
