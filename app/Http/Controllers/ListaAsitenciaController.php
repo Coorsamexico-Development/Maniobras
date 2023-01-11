@@ -47,18 +47,15 @@ class ListaAsitenciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $turnoFecha = TurnoFecha::updateOrCreate([
-            'fecha' => $request['fecha'],
-            'turno_id' => $request['turno'],
-            'cant_asistencia' => 1  //definir como crear esto
-        ]);
-
-
         $turno_maniobra = Turno::select('turnos.*')
             ->where('turnos.id', '=', $request['turno'])
             ->get();
 
+        $turnoFecha = TurnoFecha::updateOrCreate([
+            'fecha' => $request['fecha'],
+            'turno_id' => $request['turno'],
+            'cant_asistencia' => $turno_maniobra->cant_personal //definir como crear esto
+        ]);
 
         $maniobra_salario = Maniobra::select('maniobras.*')
             ->where('maniobras.id', '=', $turno_maniobra[0]->maniobra_id)

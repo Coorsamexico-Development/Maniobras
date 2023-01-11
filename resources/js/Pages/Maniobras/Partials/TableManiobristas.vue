@@ -9,13 +9,15 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { Inertia } from '@inertiajs/inertia';
 import BtnDownload from '@/Components/ButtonDownload.vue';
 import ActionMessage from '@/Components/ActionMessage.vue';
+import { Fancybox } from "@fancyapps/ui/src/Fancybox/Fancybox.js";
+import "@fancyapps/ui/dist/fancybox.css";
 
 var props = defineProps({
     date: {
-        type: String,
+        type: Date,
         required: true
     },
-    turno: Object,
+    turno: Number,
     maniobristas: Object
 });
 
@@ -99,7 +101,7 @@ const uploadFile = () => {
                 </th>
                 <th
                     class="px-5 py-3 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-200 border-b-2 border-gray-300 shadow-2xl">
-                    #
+                    Foto
                 </th>
             </tr>
         </template>
@@ -107,6 +109,17 @@ const uploadFile = () => {
             <tr v-for="maniobrista in maniobristas" :key="maniobrista.id">
                 <td>
                     {{ maniobrista.name + ' ' + maniobrista.ap_paterno + ' ' + maniobrista.ap_materno }}
+                </td>
+                <td>
+                    <a v-if="maniobrista.imagen_url !== '-'" data-fancybox data-type="image"
+                        :href="maniobrista.imagen_url" class="inline-block mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-image" viewBox="0 0 16 16">
+                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                            <path
+                                d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                        </svg>
+                    </a>
                 </td>
             </tr>
         </template>
