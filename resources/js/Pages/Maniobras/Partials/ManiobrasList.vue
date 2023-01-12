@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
 import { Link } from '@inertiajs/inertia-vue3'
+import ModalFechasRango from '../Partials/ModalFechasRango.vue';
 
 
 const emit = defineEmits(['selected', 'showTurnos', 'showCalendar']);
@@ -35,82 +36,10 @@ const emision = (id) =>
 */
 const consultar = (maniobra_id) => {
     //console.log(maniobra_id);
+
     axios
-        .get("consultarReporteRH/" + maniobra_id, { maniobra_id: maniobra_id, }) //enviamos el dato a la ruta
-        .then((resp) => {
-            let data = resp.data;
-            let arregloTemporal = [];
-            let fechaTemporal = null;
-            let nombreTemporal = null;
-            for (let index = 0; index < data.length; index++) {
-                const element = data[index];
-                let newObj = {};//se declara un objeto vacio por cada recorrido
-                let fechas = []; //se declara arreglo vacio de las fechas por usuario
-                let ObjFecha = {}; //se declara un objeto vacio para almacenar la fecha y si asistio o no
-
-                //console.log(element);
-                if (element == data[0]) //si el primer obj es igual al primero, se crea en el arreglo
-                {
-                    ObjFecha.fecha = element.FECHA;
-                    ObjFecha.asistencia = element.ASISTENCIA;
-                    fechas.push(ObjFecha);
-                    //console.log(fechas);
-                    newObj.name = element.NOMBRE;
-                    newObj.fechas = fechas;
-                    arregloTemporal.push(newObj);
-
-                    fechaTemporal = element.FECHA;
-                    //console.log(fechaTemporal);
-                    nombreTemporal = element.NOMBRE;
-                }
-                else {
-                    if (nombreTemporal == element.NOMBRE) //son el mismo maniobrista
-                    {
-                        for (let x = 0; x < arregloTemporal.length; x++) //recorremos el arreglo que llevamos
-                        {
-                            const element2 = arregloTemporal[x];//lo almacenamos
-                            if (element2.name == element.NOMBRE) {
-                                ObjFecha.fecha = element.FECHA;
-                                ObjFecha.asistencia = element.ASISTENCIA;
-                                element2.fechas.push(ObjFecha);
-
-                                //console.log(element2);
-                                nombreTemporal = element.NOMBRE;
-                            }
-                        }
-                    } //sino es el mismo maniobrista
-                    else {
-                        ObjFecha.fecha = element.FECHA;
-                        ObjFecha.asistencia = element.ASISTENCIA;
-                        fechas.push(ObjFecha);
-                        //console.log(fechas);
-                        newObj.name = element.NOMBRE;
-                        newObj.fechas = fechas;
-                        arregloTemporal.push(newObj);
-
-                        fechaTemporal = element.FECHA;
-                        //console.log(fechaTemporal);
-                        nombreTemporal = element.NOMBRE;
-                    }
-                }
-            }
-
-            downloadReportRH(arregloTemporal);
-
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-
-const downloadReportRH = (arregloPorManiobra) => {
-    /*
-    console.log(arregloPorManiobra);
-
-    let objtArreglo = {arreglo:arregloPorManiobra};
-    axios
-    .get("downloadReportRh/" + objtArreglo, {arreglo: objtArreglo, }) //enviamos el dato a la ruta
+    .get('consultarReporteRH/'+maniobra_id , {maniobra_id:maniobra_id}
+    ) //enviamos el dato a la ruta
     .then((resp) =>
     {
        console.log(resp.data);
@@ -119,8 +48,49 @@ const downloadReportRH = (arregloPorManiobra) => {
     .catch(function (error) {
         console.log(error);
     });
- */
 
+}
+
+
+const downloadReportRH = (arregloPorManiobra) => {
+    
+ //   console.log(arregloPorManiobra);
+
+/*
+    axios
+    .get("downloadReportRh/" , {
+        params:{
+            arreglo:[1,2,3]
+        },
+        paramsSerializer: params => {
+            return qs.stringify(params)
+         }
+
+    }) //enviamos el dato a la ruta
+    .then((resp) =>
+    {
+       console.log(resp.data);
+
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+ 
+*/
+}
+
+
+let modalRango = ref(false);
+
+const openModalRango = () => 
+{
+    modalRango.value = true;
+}
+
+
+const closeModalRango = () => 
+{
+    modalRango.value = false;
 }
 
 </script>
@@ -209,64 +179,66 @@ const downloadReportRH = (arregloPorManiobra) => {
             </transition>
             <transition name="slide-fade">
                 <div v-if="message">
-                    <button @click="consultar(maniobra_id)" type="button"
-                        class="p-1 px-5 my-2 ml-3 text-sm text-white bg-orange-500 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25.568" height="20.846"
-                            viewBox="0 0 33.568 23.836">
-                            <g id="Grupo_12" data-name="Grupo 12" transform="translate(-1497.935 487.069)">
-                                <path id="Trazado_29" data-name="Trazado 29"
-                                    d="M1585.282-327.9c-1.7,0-3.392,0-5.088,0a3.556,3.556,0,0,1-3.468-2.329,3.531,3.531,0,0,1,.7-4.082,10.183,10.183,0,0,1,3.188-2.311.489.489,0,0,1,.569.046,7.1,7.1,0,0,0,8.232.014.526.526,0,0,1,.6-.059,10.018,10.018,0,0,1,3.169,2.28,3.628,3.628,0,0,1,.7,4.133,3.517,3.517,0,0,1-3.408,2.3c-1.733.026-3.467.006-5.2.006Z"
-                                    transform="translate(-70.592 -135.344)" fill="#fff" />
-                                <path id="Trazado_30" data-name="Trazado 30"
-                                    d="M1606.249-447.026a5.958,5.958,0,0,1,6.085-5.976,5.882,5.882,0,0,1,5.789,5.884,5.93,5.93,0,0,1-5.928,6A6.053,6.053,0,0,1,1606.249-447.026Z"
-                                    transform="translate(-97.483 -30.661)" fill="#fff" />
-                                <path id="Trazado_31" data-name="Trazado 31"
-                                    d="M1721.361-482.1a4.964,4.964,0,0,1-6.709,4.668.638.638,0,0,1-.493-.665,6.813,6.813,0,0,0-2.316-4.9.516.516,0,0,1-.164-.642,4.98,4.98,0,0,1,5.37-3.376A4.945,4.945,0,0,1,1721.361-482.1Z"
-                                    transform="translate(-192.329)" fill="#fff" />
-                                <path id="Trazado_32" data-name="Trazado 32"
-                                    d="M1522.707-481.914a4.957,4.957,0,0,1,4-4.916,5,5,0,0,1,5.638,3.218.648.648,0,0,1-.2.828,6.786,6.786,0,0,0-2.246,4.889.523.523,0,0,1-.381.544A4.942,4.942,0,0,1,1522.707-481.914Z"
-                                    transform="translate(-22.295 -0.141)" fill="#fff" />
-                                <path id="Trazado_33" data-name="Trazado 33"
-                                    d="M1507.708-388.531a7.4,7.4,0,0,0,1.652,3.342,2.441,2.441,0,0,1-.247.165,11.33,11.33,0,0,0-3.3,2.538.62.62,0,0,1-.407.179c-1.447.012-2.894.028-4.341,0a2.979,2.979,0,0,1-2.827-1.977,2.974,2.974,0,0,1,.532-3.374,7.671,7.671,0,0,1,2.332-1.786.486.486,0,0,1,.417.008,6.153,6.153,0,0,0,6.009.938A1.413,1.413,0,0,1,1507.708-388.531Z"
-                                    transform="translate(0 -87.825)" fill="#fff" />
-                                <path id="Trazado_34" data-name="Trazado 34"
-                                    d="M1719.473-385.4a7.354,7.354,0,0,0,1.643-3.33c.118.032.22.056.32.088a6.078,6.078,0,0,0,5.769-.939.467.467,0,0,1,.59-.046,8.122,8.122,0,0,1,2.332,1.849,2.972,2.972,0,0,1,.435,3.358,2.958,2.958,0,0,1-2.758,1.91c-1.459.031-2.919.012-4.378,0a.572.572,0,0,1-.388-.146,11.263,11.263,0,0,0-3.484-2.664C1719.533-385.329,1719.519-385.354,1719.473-385.4Z"
-                                    transform="translate(-199.386 -87.622)" fill="#fff" />
-                            </g>
-                        </svg>
-                    </button>
+                    <a :href="route('consultaRh', maniobra_id)">
+                         <button type="button"
+                           class="p-1 px-5 my-2 ml-3 text-sm text-white bg-orange-500 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="25.568" height="20.846"
+                               viewBox="0 0 33.568 23.836">
+                               <g id="Grupo_12" data-name="Grupo 12" transform="translate(-1497.935 487.069)">
+                                   <path id="Trazado_29" data-name="Trazado 29"
+                                       d="M1585.282-327.9c-1.7,0-3.392,0-5.088,0a3.556,3.556,0,0,1-3.468-2.329,3.531,3.531,0,0,1,.7-4.082,10.183,10.183,0,0,1,3.188-2.311.489.489,0,0,1,.569.046,7.1,7.1,0,0,0,8.232.014.526.526,0,0,1,.6-.059,10.018,10.018,0,0,1,3.169,2.28,3.628,3.628,0,0,1,.7,4.133,3.517,3.517,0,0,1-3.408,2.3c-1.733.026-3.467.006-5.2.006Z"
+                                       transform="translate(-70.592 -135.344)" fill="#fff" />
+                                   <path id="Trazado_30" data-name="Trazado 30"
+                                       d="M1606.249-447.026a5.958,5.958,0,0,1,6.085-5.976,5.882,5.882,0,0,1,5.789,5.884,5.93,5.93,0,0,1-5.928,6A6.053,6.053,0,0,1,1606.249-447.026Z"
+                                       transform="translate(-97.483 -30.661)" fill="#fff" />
+                                   <path id="Trazado_31" data-name="Trazado 31"
+                                       d="M1721.361-482.1a4.964,4.964,0,0,1-6.709,4.668.638.638,0,0,1-.493-.665,6.813,6.813,0,0,0-2.316-4.9.516.516,0,0,1-.164-.642,4.98,4.98,0,0,1,5.37-3.376A4.945,4.945,0,0,1,1721.361-482.1Z"
+                                       transform="translate(-192.329)" fill="#fff" />
+                                   <path id="Trazado_32" data-name="Trazado 32"
+                                       d="M1522.707-481.914a4.957,4.957,0,0,1,4-4.916,5,5,0,0,1,5.638,3.218.648.648,0,0,1-.2.828,6.786,6.786,0,0,0-2.246,4.889.523.523,0,0,1-.381.544A4.942,4.942,0,0,1,1522.707-481.914Z"
+                                       transform="translate(-22.295 -0.141)" fill="#fff" />
+                                   <path id="Trazado_33" data-name="Trazado 33"
+                                       d="M1507.708-388.531a7.4,7.4,0,0,0,1.652,3.342,2.441,2.441,0,0,1-.247.165,11.33,11.33,0,0,0-3.3,2.538.62.62,0,0,1-.407.179c-1.447.012-2.894.028-4.341,0a2.979,2.979,0,0,1-2.827-1.977,2.974,2.974,0,0,1,.532-3.374,7.671,7.671,0,0,1,2.332-1.786.486.486,0,0,1,.417.008,6.153,6.153,0,0,0,6.009.938A1.413,1.413,0,0,1,1507.708-388.531Z"
+                                       transform="translate(0 -87.825)" fill="#fff" />
+                                   <path id="Trazado_34" data-name="Trazado 34"
+                                       d="M1719.473-385.4a7.354,7.354,0,0,0,1.643-3.33c.118.032.22.056.32.088a6.078,6.078,0,0,0,5.769-.939.467.467,0,0,1,.59-.046,8.122,8.122,0,0,1,2.332,1.849,2.972,2.972,0,0,1,.435,3.358,2.958,2.958,0,0,1-2.758,1.91c-1.459.031-2.919.012-4.378,0a.572.572,0,0,1-.388-.146,11.263,11.263,0,0,0-3.484-2.664C1719.533-385.329,1719.519-385.354,1719.473-385.4Z"
+                                       transform="translate(-199.386 -87.622)" fill="#fff" />
+                               </g>
+                           </svg>
+                       </button>
+                    </a>
                 </div>
             </transition>
             <transition name="slide-fade">
                 <div v-if="message">
-                    <button type="button"
-                        class="p-1 px-4 my-2 ml-16 text-sm text-white bg-orange-500 lg:-ml-2 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="27.74" height="20.846"
-                            viewBox="0 0 27.74 29.896">
-                            <g id="Grupo_15" data-name="Grupo 15" transform="translate(-2095.371 770.026)">
-                                <path id="Trazado_35" data-name="Trazado 35"
-                                    d="M2110.778-659.4a9.779,9.779,0,0,0-5.8,9.924c-.392,0-.811.024-1.226,0a22.09,22.09,0,0,1-8.2-2.353.36.36,0,0,1-.178-.265c.168-3.372,1.218-6.349,3.99-8.48a8.432,8.432,0,0,1,11.308,1.045C2110.706-659.491,2110.738-659.447,2110.778-659.4Z"
-                                    transform="translate(0 -98.144)" fill="#fff" />
-                                <path id="Trazado_36" data-name="Trazado 36"
-                                    d="M2153.389-770.026a4.274,4.274,0,0,1,4.263,4.268,4.277,4.277,0,0,1-4.293,4.273,4.277,4.277,0,0,1-4.246-4.286A4.272,4.272,0,0,1,2153.389-770.026Z"
-                                    transform="translate(-48.953)" fill="#fff" />
-                                <g id="Grupo_14" data-name="Grupo 14" transform="translate(2106.032 -757.213)">
-                                    <path id="Trazado_37" data-name="Trazado 37"
-                                        d="M2304.66-475.952c0-.005-.005-.008,0,0Z"
-                                        transform="translate(-2296.667 489.351)" fill="#fff" />
-                                    <path id="Trazado_38" data-name="Trazado 38"
-                                        d="M2223.579-626.255A8.553,8.553,0,0,0,2215-617.7a8.55,8.55,0,0,0,8.5,8.533,8.546,8.546,0,0,0,8.581-8.517A8.544,8.544,0,0,0,2223.579-626.255Zm3.152,9.177a2.341,2.341,0,0,1,.539,1.574c-.038,1.426-1.189,2.379-3.2,2.623,0,.314,0,.633,0,.952-.006.386-.221.627-.545.62s-.513-.241-.521-.61c-.007-.309-.008-.618-.012-.927a9.977,9.977,0,0,1-1.251-.269,2.687,2.687,0,0,1-1.91-2.114,1.5,1.5,0,0,1-.024-.365.518.518,0,0,1,.512-.512.512.512,0,0,1,.54.446,1.887,1.887,0,0,0,2.12,1.672v-3.175a3.313,3.313,0,0,1-2.691-1.258,2.314,2.314,0,0,1-.48-1.592c.073-1.113,1.067-2.45,3.2-2.522,0-.333-.006-.643,0-.952a.525.525,0,0,1,.543-.58.521.521,0,0,1,.521.57c.008.31,0,.62,0,.935a8.932,8.932,0,0,1,1.05.181,2.755,2.755,0,0,1,2.124,2.193,1.405,1.405,0,0,1,.022.365.52.52,0,0,1-.52.5.513.513,0,0,1-.533-.455,1.876,1.876,0,0,0-2.122-1.658v3.173A3.316,3.316,0,0,1,2226.731-617.078Z"
-                                        transform="translate(-2214.996 626.255)" fill="#fff" />
-                                </g>
-                                <path id="Trazado_39" data-name="Trazado 39"
-                                    d="M2282.871-572.347v3.2a2.129,2.129,0,0,1-1.881-.864,1.212,1.212,0,0,1-.024-1.437A2.118,2.118,0,0,1,2282.871-572.347Z"
-                                    transform="translate(-168.851 -180.062)" fill="#fff" />
-                                <path id="Trazado_40" data-name="Trazado 40"
-                                    d="M2317-521.22v-3.205a2.122,2.122,0,0,1,1.9.9,1.211,1.211,0,0,1,0,1.41A2.127,2.127,0,0,1,2317-521.22Z"
-                                    transform="translate(-201.876 -223.714)" fill="#fff" />
-                            </g>
-                        </svg>
-                    </button>
+                    <button type="button" @click="openModalRango"
+                         class="p-1 px-4 my-2 ml-16 text-sm text-white bg-orange-500 lg:-ml-2 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="27.74" height="20.846"
+                             viewBox="0 0 27.74 29.896">
+                             <g id="Grupo_15" data-name="Grupo 15" transform="translate(-2095.371 770.026)">
+                                 <path id="Trazado_35" data-name="Trazado 35"
+                                     d="M2110.778-659.4a9.779,9.779,0,0,0-5.8,9.924c-.392,0-.811.024-1.226,0a22.09,22.09,0,0,1-8.2-2.353.36.36,0,0,1-.178-.265c.168-3.372,1.218-6.349,3.99-8.48a8.432,8.432,0,0,1,11.308,1.045C2110.706-659.491,2110.738-659.447,2110.778-659.4Z"
+                                     transform="translate(0 -98.144)" fill="#fff" />
+                                 <path id="Trazado_36" data-name="Trazado 36"
+                                     d="M2153.389-770.026a4.274,4.274,0,0,1,4.263,4.268,4.277,4.277,0,0,1-4.293,4.273,4.277,4.277,0,0,1-4.246-4.286A4.272,4.272,0,0,1,2153.389-770.026Z"
+                                     transform="translate(-48.953)" fill="#fff" />
+                                 <g id="Grupo_14" data-name="Grupo 14" transform="translate(2106.032 -757.213)">
+                                     <path id="Trazado_37" data-name="Trazado 37"
+                                         d="M2304.66-475.952c0-.005-.005-.008,0,0Z"
+                                         transform="translate(-2296.667 489.351)" fill="#fff" />
+                                     <path id="Trazado_38" data-name="Trazado 38"
+                                         d="M2223.579-626.255A8.553,8.553,0,0,0,2215-617.7a8.55,8.55,0,0,0,8.5,8.533,8.546,8.546,0,0,0,8.581-8.517A8.544,8.544,0,0,0,2223.579-626.255Zm3.152,9.177a2.341,2.341,0,0,1,.539,1.574c-.038,1.426-1.189,2.379-3.2,2.623,0,.314,0,.633,0,.952-.006.386-.221.627-.545.62s-.513-.241-.521-.61c-.007-.309-.008-.618-.012-.927a9.977,9.977,0,0,1-1.251-.269,2.687,2.687,0,0,1-1.91-2.114,1.5,1.5,0,0,1-.024-.365.518.518,0,0,1,.512-.512.512.512,0,0,1,.54.446,1.887,1.887,0,0,0,2.12,1.672v-3.175a3.313,3.313,0,0,1-2.691-1.258,2.314,2.314,0,0,1-.48-1.592c.073-1.113,1.067-2.45,3.2-2.522,0-.333-.006-.643,0-.952a.525.525,0,0,1,.543-.58.521.521,0,0,1,.521.57c.008.31,0,.62,0,.935a8.932,8.932,0,0,1,1.05.181,2.755,2.755,0,0,1,2.124,2.193,1.405,1.405,0,0,1,.022.365.52.52,0,0,1-.52.5.513.513,0,0,1-.533-.455,1.876,1.876,0,0,0-2.122-1.658v3.173A3.316,3.316,0,0,1,2226.731-617.078Z"
+                                         transform="translate(-2214.996 626.255)" fill="#fff" />
+                                 </g>
+                                 <path id="Trazado_39" data-name="Trazado 39"
+                                     d="M2282.871-572.347v3.2a2.129,2.129,0,0,1-1.881-.864,1.212,1.212,0,0,1-.024-1.437A2.118,2.118,0,0,1,2282.871-572.347Z"
+                                     transform="translate(-168.851 -180.062)" fill="#fff" />
+                                 <path id="Trazado_40" data-name="Trazado 40"
+                                     d="M2317-521.22v-3.205a2.122,2.122,0,0,1,1.9.9,1.211,1.211,0,0,1,0,1.41A2.127,2.127,0,0,1,2317-521.22Z"
+                                     transform="translate(-201.876 -223.714)" fill="#fff" />
+                             </g>
+                         </svg>
+                      </button>
                 </div>
             </transition>
             <transition name="slide-fade">
@@ -306,6 +278,7 @@ const downloadReportRH = (arregloPorManiobra) => {
             </div>
         </div>
     </div>
+    <ModalFechasRango @close="closeModalRango" :show="modalRango" :maniobra_id="maniobra_id "></ModalFechasRango>
 </template>
 
 <style>
