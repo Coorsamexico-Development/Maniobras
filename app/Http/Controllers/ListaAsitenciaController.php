@@ -48,8 +48,8 @@ class ListaAsitenciaController extends Controller
     public function store(Request $request)
     {
         $turno_maniobra = Turno::select('turnos.*')
-            ->where('turnos.id', '=', $request['turno'])
-            ->get();
+            ->firstWhere('turnos.id', '=', $request['turno']);
+
 
         $turnoFecha = TurnoFecha::updateOrCreate([
             'fecha' => $request['fecha'],
@@ -58,7 +58,7 @@ class ListaAsitenciaController extends Controller
         ]);
 
         $maniobra_salario = Maniobra::select('maniobras.*')
-            ->where('maniobras.id', '=', $turno_maniobra[0]->maniobra_id)
+            ->where('maniobras.id', '=', $turno_maniobra->maniobra_id)
             ->get();
 
         $turno_fecha_id = $turnoFecha->id;

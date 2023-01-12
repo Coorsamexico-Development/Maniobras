@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Turno extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'name',
         'cant_personal',
