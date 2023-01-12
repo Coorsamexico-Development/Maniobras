@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmpleadosNominasExport;
 use App\Exports\EmpleadosRhExport;
 use App\Exports\ManiobristasExampleExport;
 use App\Imports\ManiobristasImport;
@@ -84,9 +85,9 @@ class ListaAsitenciaController extends Controller
     }
 
 
-    public function consultarReporteNomina($maniobra_id)
+    public function consultarReporteNomina($maniobra_id, $fecha_inicial, $fecha_final)
     {
-        echo "hola";
+        return Excel::download(new EmpleadosNominasExport($maniobra_id, $fecha_inicial, $fecha_final), 'reportNominas.xlsx');
     }
 
     /*

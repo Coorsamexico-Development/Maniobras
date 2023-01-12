@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
 import { Link } from '@inertiajs/inertia-vue3'
+import ModalFechasRango from '../Partials/ModalFechasRango.vue';
 
 
 const emit = defineEmits(['selected', 'showTurnos', 'showCalendar']);
@@ -76,6 +77,20 @@ const downloadReportRH = (arregloPorManiobra) => {
     });
  
 */
+}
+
+
+let modalRango = ref(false);
+
+const openModalRango = () => 
+{
+    modalRango.value = true;
+}
+
+
+const closeModalRango = () => 
+{
+    modalRango.value = false;
 }
 
 </script>
@@ -196,8 +211,7 @@ const downloadReportRH = (arregloPorManiobra) => {
             </transition>
             <transition name="slide-fade">
                 <div v-if="message">
-                    <a :href="route('consultaNominas', maniobra_id)">
-                         <button type="button"
+                    <button type="button" @click="openModalRango"
                          class="p-1 px-4 my-2 ml-16 text-sm text-white bg-orange-500 lg:-ml-2 rounded-3xl hover:bg-orange-400 focus:outline-none focus:shadow-outline">
                          <svg xmlns="http://www.w3.org/2000/svg" width="27.74" height="20.846"
                              viewBox="0 0 27.74 29.896">
@@ -225,7 +239,6 @@ const downloadReportRH = (arregloPorManiobra) => {
                              </g>
                          </svg>
                       </button>
-                    </a>
                 </div>
             </transition>
             <transition name="slide-fade">
@@ -265,6 +278,7 @@ const downloadReportRH = (arregloPorManiobra) => {
             </div>
         </div>
     </div>
+    <ModalFechasRango @close="closeModalRango" :show="modalRango" :maniobra_id="maniobra_id "></ModalFechasRango>
 </template>
 
 <style>

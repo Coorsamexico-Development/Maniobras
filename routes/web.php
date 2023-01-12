@@ -94,7 +94,7 @@ Route::controller(ListaAsitenciaController::class)->group(
         Route::get('/example', 'exportExample')->name('export');
        // Route::get('/downloadReportRh/{lista}', 'exportReporteRh')->name('reportRh');
         Route::get('/consultarReporteRH/{maniobra_id}', 'consultarReporteRH')->name('consultaRh');
-        Route::get('/consultaReporteNominas/{maniobra_id}','consultarReporteNomina')->name('consultaNominas');
+        Route::get('/consultaReporteNominas/{maniobra_id}/{fecha_inicial}/{fecha_final}','consultarReporteNomina')->name('consultaNominas');
     }
 );
 
