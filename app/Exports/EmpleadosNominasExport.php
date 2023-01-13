@@ -34,14 +34,15 @@ class EmpleadosNominasExport implements FromQuery, WithHeadings
             SUM(lista_asitencias.salario),
             maniobristas.faltas_totales
          '))
-       ->join('turnos','turnos.maniobra_id','=','maniobras.id')
+       ->join('turnos','turnos.maniobra_id' ,'=','maniobras.id')
        ->join('turno_fechas','turno_fechas.turno_id','=','turnos.id')
        ->join('lista_asitencias','lista_asitencias.turno_fecha_id','turno_fechas.id')
        ->join('maniobristas','lista_asitencias.maniobrista_id','maniobristas.id')
        ->groupBy('maniobristas.id')
        ->orderBy('maniobristas.id')
        ->where('maniobra_id','=',$this->maniobra_id)
-       ->where('lista_asitencias.asistencia','=',1);
+       ->where('lista_asitencias.asistencia','=',1)
+       ->whereBetween('turno_fechas.fecha',[$this->fecha_inicial, $this->fecha_final]);
     }
 
     public function headings(): array
