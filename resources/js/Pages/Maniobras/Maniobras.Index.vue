@@ -32,9 +32,17 @@ const maniobraSelected = ref({ turnos: [] });
 
 
 const showCalendarManiobra = (maniobra) => {
-    maniobraSelected.value = maniobra
+    maniobraSelected.value = maniobra;
+    console.log(maniobraSelected.value.id);
+    Inertia.visit(route('maniobras'), {
+        data: {
+            id_maniobra:maniobraSelected.value.id
+        },
+        preserveState: true,
+        preserveScroll: true,
+        only: ['total_turnos_fecha'],
+    })
     modalCalendar.value = true;
-
 };
 
 const closeCalendar = () => {
@@ -58,10 +66,7 @@ let turnoTemporal = "";
 let ObjetoTemporalFecha = {};
 let ObjetoTemporalTurno = {};
 
-
 //console.log(props.data_grafico_series);
-
-
 // a computed ref
 const arregloGraphSeries = computed(() => {
     //console.log(props.data_grafico_series);
@@ -102,18 +107,9 @@ const arregloGraphSeries = computed(() => {
     return newArreglo;
 
 });
-
-
-//console.log(arregloGraphSeries.value);
-
-//console.log(arregloGraphSeries);
-
 /*Fin recorrido reestructuracion data para grafico series*/
 
-
 /*Recorrido reestructuracion data para grafico circular*/
-
-
 const arregloGraphCircular = computed(() => {
     let turnoTemp = "";
     let arregloGraphCircularaux = [];
@@ -158,6 +154,7 @@ const arregloGraphCircular = computed(() => {
     }
 
 
+//ARREGLO DE CALENDARIO
 
     //Variables
     //console.log(this.data);
@@ -215,55 +212,58 @@ const arregloGraphCircular = computed(() => {
 
     return newDatos;
 });
-
-
 /*Fin recorrido reestructuracion data para grafico circular*/
 
-/*Recorrido */
-
-let arregloCalendar = ref([]);
-let varTemp = "";
-for (
-    let index = 0;
-    index < props.total_turnos_fecha.length;
-    index++ //recorrido general
-) {
+/*Recorrido  grafico calendario*/
+const arregloCalendar = computed(() => {
+    let  arregloCalendarAux = [];
+    let varTemp = "";
+    //recorrido general
+    for (let index = 0; index < props.total_turnos_fecha.length; index++)
+     {
     const element = props.total_turnos_fecha[index];
 
     if (element.fecha == props.total_turnos_fecha[0].fecha) {
         //agregamos el primero al arreglo de objetos
-        arregloCalendar.value.push({
+         arregloCalendarAux.push({
             //si es igual crea el primer objeto del arreglo
             fecha: element.fecha,
             lista_asistencia: element.lista_asistencia,
             cant_asistencia: element.cant_asistencia,
-        });
+         });
 
         varTemp = element.fecha;
-    } else {
-        if (varTemp != element.fecha) {
+    } 
+    else
+     {
+        if (varTemp != element.fecha) 
+        {
             //si es diferente a la varibale temporal la cambia
             varTemp = element.fecha;
-            arregloCalendar.value.push({
+            arregloCalendarAux.push({
                 fecha: element.fecha,
                 lista_asistencia: element.lista_asistencia,
                 cant_asistencia: element.cant_asistencia,
             });
-        } else {
-            for (
-                let index2 = 0;
-                index2 < arregloCalendar.value.length;
-                index2++
-            ) {
-                const element2 = arregloCalendar.value[index2];
-                if (element2.fecha == element.fecha) {
+        } 
+        else 
+        {
+          for (let index2 = 0; index2 < arregloCalendarAux.length; index2++) 
+          {
+                const element2 = arregloCalendarAux[index2];
+                if (element2.fecha == element.fecha) 
+                {
                     (element2.lista_asistencia += element.lista_asistencia),
-                        (element2.cant_asistencia += element.cant_asistencia);
+                    (element2.cant_asistencia += element.cant_asistencia);
                 }
             }
         }
     }
 }
+
+return arregloCalendarAux;
+    
+});
 
 /*Modales*/
 const openModalNewManiobra = ref(false);

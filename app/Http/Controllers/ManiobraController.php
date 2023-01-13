@@ -23,6 +23,9 @@ class ManiobraController extends Controller
     public function index(Request $request)
     {
         //
+        
+  
+
         $maniobras = Maniobra::select(
             'maniobras.id',
             'maniobras.id AS maniobra_id',
@@ -58,10 +61,15 @@ class ManiobraController extends Controller
             DB::raw('COUNT(lista_asitencias.maniobrista_id) AS lista_asistencia')
         )
             ->join('lista_asitencias', 'turno_fechas.id', 'lista_asitencias.turno_fecha_id')
-            ->groupby('lista_asitencias.turno_fecha_id')
+            ->join('turnos', 'turno_fechas.turno_id','turnos.id')
+            ->join('maniobras','turnos.maniobra_id','maniobras.id')
             ->where('lista_asitencias.active', '=', '1')
-            ->get();
+            ->groupBy('lista_asitencias.turno_fecha_id');
 
+        if($request->has('id_maniobra'))
+        {
+           $total_turno_fecha->where('maniobras.id','=',$request['id_maniobra']);
+        }
 
         //Datos para graficas
 
@@ -97,10 +105,18 @@ class ManiobraController extends Controller
         $turnos = Turno::selectRaw('CONCAT(turnos.id,"_",turnos.name) AS identificador_turno,turnos.name')
             ->join('maniobras', 'turnos.maniobra_id', 'maniobras.id');
 
-        if ($request->has('maniobra_id')) {
+        if ($request->has('maniobra_id')) 
+        {
             $data_grafico_circulo->where('maniobras.id', '=', $request['maniobra_id']);
             $data_grafico_series->where('maniobras.id', '=', $request['maniobra_id']);
             // $turnos->where('maniobras.id', '=', $request['maniobra_id']);
+        }
+        else
+        {
+         
+
+            $data_grafico_circulo->where('maniobras.id', '=', 1);
+            $data_grafico_series->where('maniobras.id', '=', 1);
         }
 
 
@@ -115,7 +131,7 @@ class ManiobraController extends Controller
                 'clientes' => $clientes,
                 'status_maniobras' => $status_maniobras,
                 'maniobristas' => $maniobristas,
-                'total_turnos_fecha' => $total_turno_fecha,
+                'total_turnos_fecha' => fn() => $total_turno_fecha->get(),
                 'data_grafico_circulo' => fn () => $data_grafico_circulo->get(),
                 'data_grafico_series' => fn () => $data_grafico_series->get()->groupBy('fecha')
             ]

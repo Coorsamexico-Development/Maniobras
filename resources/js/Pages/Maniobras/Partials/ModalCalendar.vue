@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import DialogModal from "@/Components/DialogModal2.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
@@ -29,20 +29,10 @@ const close = () => {
 
 let date = ref(null);
 
-let attributes = ref([
-    /*{
-          highlight: 'red',
-          dates: new Date(2022,11,21),
 
-    }*/
-]);
-
-
-//console.log(props.arregloCalendar)
-
-
-//console.log(attributes.value)
-for (let index = 0; index < props.arregloCalendar.length; index++) {
+const attributes = computed(() => {
+    let  attributesAux = [];
+    for (let index = 0; index < props.arregloCalendar.length; index++) {
     const element = props.arregloCalendar[index];
     let total = 0;
 
@@ -56,7 +46,7 @@ for (let index = 0; index < props.arregloCalendar.length; index++) {
 
             //console.log(año +'-'+mes+'-'+dia);
 
-            attributes.value.push(
+              attributesAux.push(
                 {
                     dates: new Date(año, mes, dia),
                     highlight: 'red'
@@ -69,8 +59,7 @@ for (let index = 0; index < props.arregloCalendar.length; index++) {
             const mes = formatDate.getMonth();
             const año = formatDate.getFullYear();
 
-
-            attributes.value.push(
+            attributesAux.push(
                 {
                     dates: new Date(año, mes, dia),
                     highlight: 'green'
@@ -80,6 +69,14 @@ for (let index = 0; index < props.arregloCalendar.length; index++) {
     }
 
 }
+
+return attributesAux;
+});
+
+//console.log(props.arregloCalendar)
+
+
+//console.log(attributes.value)
 
 
 let turnoSelect = ref(null);
@@ -155,6 +152,7 @@ const selectedTurn = (turno) => {
                 <div class="border-r-0 border-none sm:border-r-4 sm:border-solid modal_scroll">
                     <div class="hidden sm:grid">
                         <h3 class="mb-2 ml-56 text-xl font-bold text-blue-900 sm:mr-0">
+                            {{ props.arregloCalendar }}
                             Calendario
                         </h3>
                     </div>
