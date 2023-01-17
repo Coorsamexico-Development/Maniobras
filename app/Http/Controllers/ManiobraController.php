@@ -23,9 +23,6 @@ class ManiobraController extends Controller
     public function index(Request $request)
     {
         //
-        
-  
-
         $maniobras = Maniobra::select(
             'maniobras.id',
             'maniobras.id AS maniobra_id',
@@ -34,9 +31,9 @@ class ManiobraController extends Controller
             'maniobras.salario AS maniobra_salario',
             'maniobras.status_maniobra_id AS maniobra_status',
             'clientes.name AS cliente_name'
-        )->with('turnos')
-            ->join('clientes', 'maniobras.cliente_id', 'clientes.id');
-
+            )->with('turnos')
+            ->join('clientes', 'maniobras.cliente_id', 'clientes.id')
+            ->orderBy('maniobras.id','desc');
 
         $maniobristas = [];
 
@@ -53,7 +50,6 @@ class ManiobraController extends Controller
                     ->get();
             }
         }
-
 
         $total_turno_fecha = TurnoFecha::select(
             'turno_fechas.fecha',
@@ -113,10 +109,16 @@ class ManiobraController extends Controller
         }
         else
         {
-         
+              $ultimaManobra = Maniobra::select(
+                "maniobras.id",
+              )
+                ->groupby('maniobras.id')
+                ->orderBy('maniobras.id','desc')
+                ->get()
+                ->first();
 
-            $data_grafico_circulo->where('maniobras.id', '=', 1);
-            $data_grafico_series->where('maniobras.id', '=', 1);
+            $data_grafico_circulo->where('maniobras.id', '=', $ultimaManobra->id);
+            $data_grafico_series->where('maniobras.id', '=', $ultimaManobra->id);
         }
 
 

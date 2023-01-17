@@ -36,6 +36,12 @@ class LogActivoController extends Controller
     public function store(Request $request)
     {
         //
+        LogActivo::create([
+            'maniobrista_id' => $request['maniobrista_id'],
+            'user_id' => $request['user_id'],
+            'fecha' => $request['fecha'], 
+            'descripcion' => $request['descripcion'],
+        ]);
     }
 
     /**

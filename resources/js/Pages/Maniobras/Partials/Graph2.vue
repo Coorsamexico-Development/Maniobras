@@ -162,6 +162,7 @@ export default {
         series2.fill = chart.colors.getIndex(0).lighten(0.5);
         series2.strokeWidth = 0;
         series2.clustered = false;
+        series2.le
         series2.toBack();
 
         var series3 = chart.series.push(new am4charts.LineSeries());
@@ -198,8 +199,7 @@ export default {
         chart.cursor = new am4charts.XYCursor();
 
         // Add legend
-        chart.legend = new am4charts.Legend();
-        chart.legend.position = "top";
+      
 
         // Add scrollbar
         chart.scrollbarX = new am4charts.XYChartScrollbar();
@@ -226,12 +226,11 @@ export default {
             return series1;
         }
 
-        for (let index = 0; index < this.turnos.length; index++) {
+        for (let index = 0; index < this.turnos.length; index++) 
+        {
             const element = this.turnos[index];
             // console.log(element);
-
             createSeries(element.identificador_turno, element.name, index !== 0);
-
         }
 
         this.chart = chart;
@@ -245,7 +244,8 @@ export default {
 
 
     beforeDestroy() {
-        if (this.chart) {
+        if (this.chart) 
+        {
             this.chart.dispose();
         }
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ListaAsitenciaController;
+use App\Http\Controllers\LogActivoController;
 use App\Http\Controllers\ManiobraController;
 use App\Http\Controllers\ManiobristaController;
 use App\Http\Controllers\TurnoController;
@@ -109,5 +110,12 @@ Route::controller(TurnoController::class)->group(
     function () {
         Route::get('/turnos', 'index')->name('turnos');
         Route::post('/turnos', 'store')->name('turnos.store');
+    }
+);
+
+Route::controller(LogActivoController::class)->group(
+    function ()
+    {
+        Route::post('/logActivo','store')->name('logActivos.store');
     }
 );

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class LogActivo extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'maniobrista_id',
+        'user_id',
+        'fecha',
+        'descripcion',
+    ];
 }

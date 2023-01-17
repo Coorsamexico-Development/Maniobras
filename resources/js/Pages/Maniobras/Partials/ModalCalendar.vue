@@ -62,7 +62,7 @@ const attributes = computed(() => {
             attributesAux.push(
                 {
                     dates: new Date(año, mes, dia),
-                    highlight: 'green'
+                    highlight: 'purple'
                 }
             );
         }
@@ -152,7 +152,6 @@ const selectedTurn = (turno) => {
                 <div class="border-r-0 border-none sm:border-r-4 sm:border-solid modal_scroll">
                     <div class="hidden sm:grid">
                         <h3 class="mb-2 ml-56 text-xl font-bold text-blue-900 sm:mr-0">
-                            {{ props.arregloCalendar }}
                             Calendario
                         </h3>
                     </div>

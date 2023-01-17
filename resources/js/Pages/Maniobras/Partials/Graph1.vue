@@ -24,15 +24,19 @@ export default {
       data(newData, oldData) 
       {
          chart.invalidateRawData();
+         chart.invalidateData();
+         //console.log(chart.data);
          am4core.array.each(chart.data, function (item)
           {
             //recorrer children y vaciar las propiedades
             //console.log(item);
-            item.children =[];
-         
+            item.children= "";
+            item.name="";
+            item = [];
+            console.log(item);
           })
+          //console.log (newData);
           chart.data = newData;
-          //console.log(chart.data);
       }
     },
 

@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import DataTable from '@/Components/DataTable.vue';
 import Buscador from '@/Components/Buscador.vue';
 import SwitchButton from '@/Components/SwitchButton.vue';
+import ModalLog from '../Partials/ModalLog.vue';
 import axios from 'axios';
 import { useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from '@inertiajs/inertia';
@@ -34,13 +35,14 @@ watch(params, (newValue) => {
 
 //Funciones switch
 
+const modalLog = ref(false);
+const maniobristaObj = ref({});
 
-const change = (maniobrista_id, check) =>
+const change = (maniobrista_id, check, maniobrista) =>
 {
    let newCheck = -1;
    if(check == 1)
    {
-
       newCheck = !check;
    }
    else
@@ -48,14 +50,14 @@ const change = (maniobrista_id, check) =>
      newCheck = !check;
    }
    
-   console.log(newCheck)
    axios.post(route('maniobristas.update', maniobrista_id),
          {
                     maniobristaid: maniobrista_id,
                     checkChange: newCheck,
 
              }).catch( error =>{
-                    if (error.response) {
+                    if (error.response) 
+                    {
                         let messageError = '';
                         const messageServer = error.response.data.message
                         if(error.response.status != 500){
@@ -65,9 +67,15 @@ const change = (maniobrista_id, check) =>
                         }
                     }
                 });
-  
- 
+   maniobristaObj.value = maniobrista;
+   modalLog.value=true;
 }
+
+const closModalLog = () => 
+{
+    modalLog.value = false;
+}
+
 </script>
 <template>
     <DataTable>
@@ -76,7 +84,7 @@ const change = (maniobrista_id, check) =>
         </template>
         <template #table-header>
            <tr>
-            <th class="px-8 py-3 ml-12  -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Nombre</th>
+            <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Nombre</th>
             <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Apellido paterno</th>
             <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Apellido materno</th>
             <th class="px-8 py-3 ml-12 -mt-4 text-xs font-semibold tracking-wider text-center text-gray-600 uppercase bg-gray-300 border-b-2 border-gray-300">Telefono</th>
@@ -86,18 +94,21 @@ const change = (maniobrista_id, check) =>
            </tr>
         </template>
         <template #table-body>
-             <tr v-for="maniobrista in maniobristas" :key="maniobrista.id" class="hover:table-fixed hover:bg-gray-200 px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                <td class="w-1/12 px-4 py-4 text-sm  ">{{maniobrista.name}}</td>
+             <tr v-for="maniobrista in maniobristas" :key="maniobrista.id" class="px-5 py-5 text-sm bg-white border-b border-gray-200 hover:table-fixed hover:bg-gray-200">
+                <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.name}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.ap_paterno}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.ap_materno}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.telefono}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.faltas_seguidas}}</td>
                 <td class="w-1/12 px-4 py-4 text-sm ">{{maniobrista.faltas_totales}}</td>
                 <td>
-                    <SwitchButton v-if="maniobrista.active" @change="change(maniobrista.id, maniobrista.active)" checked></SwitchButton>
-                    <SwitchButton v-if="!maniobrista.active" @change="change(maniobrista.id, maniobrista.active)" ></SwitchButton>
+                    <SwitchButton v-if="maniobrista.active" @change="change(maniobrista.id, maniobrista.active, maniobrista)" checked></SwitchButton>
+                    <SwitchButton v-if="!maniobrista.active" @change="change(maniobrista.id, maniobrista.active, maniobrista)" ></SwitchButton>
+
                 </td>
              </tr>    
         </template>
     </DataTable>
+    <ModalLog :show="modalLog" :maniobrista = "maniobristaObj" @close="closModalLog"></ModalLog>
+
 </template>

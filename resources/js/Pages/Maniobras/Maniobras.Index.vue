@@ -8,7 +8,6 @@ import ModalAddManiobra from "../Maniobras/Partials/ModalAddManiobra.vue";
 import ManiobrasList from "../Maniobras/Partials/ManiobrasList.vue";
 import Graph1 from "../Maniobras/Partials/Graph1.vue";
 import Graph2 from "../Maniobras/Partials/Graph2.vue";
-import CalendarModule from '../Maniobras/Partials/CalendarModule.vue';
 import ModalCalendar from "./Partials/ModalCalendar.vue";
 import ModalTurno from "./Partials/ModalTurno.vue";
 
@@ -33,7 +32,7 @@ const maniobraSelected = ref({ turnos: [] });
 
 const showCalendarManiobra = (maniobra) => {
     maniobraSelected.value = maniobra;
-    console.log(maniobraSelected.value.id);
+    //console.log(maniobraSelected.value.id);
     Inertia.visit(route('maniobras'), {
         data: {
             id_maniobra:maniobraSelected.value.id
@@ -309,7 +308,6 @@ const message = ref(true);
                 <!----<button
                 class="px-2 py-2 text-xs font-bold text-gray-800 bg-gray-300 rounded-l opacity-50 cursor-not-allowed hover:bg-gray-400"
             >-->
-                <CalendarModule></CalendarModule>
                 <button @click="message = !message" type="button"
                     class="inline-flex items-center px-2 py-2 -mr-16 text-xs text-blue-600 uppercase bg-white rounded-xl font-xs hover:bg-slate-100 border-slate-200">
                     <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
