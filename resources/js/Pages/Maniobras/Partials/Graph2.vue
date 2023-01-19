@@ -162,7 +162,6 @@ export default {
         series2.fill = chart.colors.getIndex(0).lighten(0.5);
         series2.strokeWidth = 0;
         series2.clustered = false;
-        series2.le
         series2.toBack();
 
         var series3 = chart.series.push(new am4charts.LineSeries());
@@ -199,8 +198,10 @@ export default {
         chart.cursor = new am4charts.XYCursor();
 
         // Add legend
-      
+        chart.legend = new am4charts.Legend();
+        chart.legend.position = "top";
 
+  
         // Add scrollbar
         chart.scrollbarX = new am4charts.XYChartScrollbar();
         //chart.scrollbarX.series.push(series1);
@@ -232,15 +233,12 @@ export default {
             // console.log(element);
             createSeries(element.identificador_turno, element.name, index !== 0);
         }
+        chart.legend.data = chart.legend.data.slice(0,3);
 
         this.chart = chart;
         //chart.zoomOutButton.dispatchImmediately("hit");
     },
 
-    methods:
-    {
-
-    },
 
 
     beforeDestroy() {
